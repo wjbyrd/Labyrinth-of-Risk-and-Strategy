@@ -392,7 +392,7 @@ font-weight:600;
 <div id="gameBox">
       <img src="torch.gif" class="torch left-torch">
      <img src="torch.gif" class="torch right-torch">
-    <h2>The Labyrinth of Choice</h2>
+    <h2>The Labyrinth of Risk and Strategy</h2>
     <p id="areaDisplay" class="area-title"></p>
     <div id="progressBar"><div id="progressFill"></div></div>
     <div id="mazeTrack"></div>
@@ -601,22 +601,22 @@ document.getElementById("usernameInput").addEventListener("keypress", function(e
 
 // 5. Your Lore & Logic (Area Names)
 function getAreaName(r) {
-    if (r <= 9) return "The Dimly Lit Archives";
-    if (r === 10) return "The Tyrant's Pit";
-    if (r <= 19) return "The Hall of Substitutions";
+    if (r <= 9) return "The Vault of Chance";
+    if (r === 10) return "The Dice Tyrant's Pit";
+    if (r <= 19) return "The Hall of Uncertainty";
     if (r === 20) return "The Underwriter's Lair";
-    if (r <= 25) return "The Vault of Elasticity";
+    if (r <= 25) return "The Chamber of Risk";
     if (r <= 29) return "The Strategic Corridor";
-    return "The Sovereign's Throne";
-};
+    return "The Grand Strategist's Throne";
+}
   
 // --- Question Pools follow below ---
   
 const questionBanks = {
 easyBoss:[
-{q:"The Warden of Indifference challenges you. A consumer buys goods X and Y. Which condition must hold at the optimal bundle on an indifference curve?",options:["The marginal rate of substitution equals the price ratio","The consumer buys equal quantities of both goods","Income equals total utility","Prices of goods must be identical"],a:0,feedback:"Utility maximization occurs where the marginal rate of substitution equals the price ratio."},
-{q:"The Warden reveals the numbers. A consumer has MUx = 24 and MUy = 12. Prices are Px = $6 and Py = $3. Are they currently maximizing utility?",options:["Yes, MU per dollar is equal","No, they should buy more X","No, they should buy more Y","Not enough information"],a:0,feedback:"MUx/Px = 24/6 = 4 and MUy/Py = 12/3 = 4. Marginal utility per dollar is equal, so the consumer is maximizing utility."},
-{q:"The Warden disrupts the balance. Now MUx/Px = 6 and MUy/Py = 3. What should the consumer do to restore equilibrium?",options:["Buy more X and less Y","Buy more Y and less X","Buy equal amounts of both goods","Reduce consumption of both goods"],a:0,feedback:"Consumers increase consumption of the good with the higher marginal utility per dollar until the ratios equalize."}
+{q:"The Dice Tyrant whispers: 'Fortune favors those who understand the odds.' What does expected value represent in a gamble?",options:["The long-run average payoff if the gamble were repeated many times","The most likely payoff from a single outcome","The largest possible payoff","The payoff with the highest probability"],a:0,feedback:"Expected value represents the long-run average payoff when probabilities are used to weight each possible outcome."},
+{q:"The Dice Tyrant rolls three glowing dice. A gamble pays $100 with probability 0.4, $50 with probability 0.4, and $0 with probability 0.2. What is the expected value?",options:["$60","$70","$50","$80"],a:0,feedback:"Expected value = (100×0.4) + (50×0.4) + (0×0.2) = 40 + 20 + 0 = $60."},
+{q:"The Dice Tyrant offers two gambles. Gamble A has an expected value of $45. Gamble B has an expected value of $60. A risk-neutral player would choose...",options:["Gamble B","Gamble A","Either gamble","The gamble with the highest variance"],a:0,feedback:"Risk-neutral decision makers choose the option with the highest expected value."}
 ],
 mediumBoss:[
 {q:"The Decomposer of Choice lowers the price of a good. What two forces determine how consumption changes?",options:["Substitution effect and income effect","Marginal cost and marginal revenue","Demand and supply","Utility and profit"],a:0,feedback:"A price change affects behavior through substitution and income effects."},
