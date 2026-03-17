@@ -1366,7 +1366,10 @@ function loadQuestion() {
             bossPool = shuffle(pool);
         }
 
-        currentQuestion = shuffleOptions(bossPool[3 - bossHealth]);
+        let index = 3 - bossHealth;
+        index = Math.max(0, Math.min(index, bossPool.length - 1));
+
+        currentQuestion = shuffleOptions(bossPool[index]);
 
         let bTitle = room === 10 ? "THE DICE TYRANT" : room === 20 ? "THE UNDERWRITER OF FATE" : "THE GRAND STRATEGIST";
         let bColor = room === 10 ? "#fbbf24" : room === 20 ? "#a855f7" : "#ef4444";
