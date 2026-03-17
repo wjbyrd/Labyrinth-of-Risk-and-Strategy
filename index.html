@@ -1344,7 +1344,6 @@ function pickRandom(pool){
 function loadQuestion() {
     updateMazeTrack();
     const questionElement = document.getElementById("question");
-    const msgElement = document.getElementById("message");
     const gameBox = document.getElementById("gameBox");
     const bossMsg = document.getElementById("bossMessage");
 
@@ -1352,10 +1351,11 @@ function loadQuestion() {
 
     // 1. Determine Difficulty and Boss Status
     let diff = (room <= 9) ? "easy" : (room === 10) ? "easyBoss" : (room <= 19) ? "medium" : (room === 20) ? "mediumBoss" : (room <= 25) ? "hard" : (room <= 29) ? "calculation" : "finalBoss";
-    if(diff.includes("Boss")){
-    playBossMusic();
-    }else{
-    playExplorationMusic();
+    
+    if (diff.includes("Boss")) {
+        playBossMusic();
+    } else {
+        playExplorationMusic();
     }
 
     const isBoss = diff.includes("Boss");
@@ -1367,106 +1367,79 @@ function loadQuestion() {
     document.getElementById("srAnnouncements").innerText = `Entering ${getAreaName(room)}. Room ${room} of 30.`;
 
     // 3. Select the Question
-if (isBoss) {
-    if (bossHealth === 3) {
-        const pool = questionBanks[diff].map(q => ({
-            ...q,
-            options: [...q.options]
-        }));
-        bossPool = shuffle(pool);
-    }
+    if (isBoss) {
+        if (bossHealth === 3) {
+            const pool = questionBanks[diff].map(q => ({
+                ...q,
+                options: [...q.options]
+            }));
+            bossPool = shuffle(pool);
+        }
 
-    currentQuestion = shuffleOptions(bossPool[3 - bossHealth]);
+        currentQuestion = shuffleOptions(bossPool[3 - bossHealth]);
 
-    let bTitle = room === 10 ? "THE DICE TYRANT" : room === 20 ? "THE UNDERWRITER OF FATE" : "THE GRAND STRATEGIST";
-    let bColor = room === 10 ? "#fbbf24" : room === 20 ? "#a855f7" : "#ef4444";
-    document.getElementById("srAnnouncements").innerText = `Boss encounter. ${bTitle}. Prepare yourself`;
-    bossMsg.innerText = "⚠ BOSS ENCOUNTER ⚠";
-    bossMsg.style.color = bColor;
-    gameBox.style.setProperty('--bossColor', bColor);
+        let bTitle = room === 10 ? "THE DICE TYRANT" : room === 20 ? "THE UNDERWRITER OF FATE" : "THE GRAND STRATEGIST";
+        let bColor = room === 10 ? "#fbbf24" : room === 20 ? "#a855f7" : "#ef4444";
+        
+        document.getElementById("srAnnouncements").innerText = `Boss encounter. ${bTitle}. Prepare yourself`;
+        bossMsg.innerText = "⚠ BOSS ENCOUNTER ⚠";
+        bossMsg.style.color = bColor;
+        gameBox.style.setProperty('--bossColor', bColor);
 
-    let bossImage = "";
-    let bossClass = "";
+        let bossImage = room === 10 ? "tyrant.png" : room === 20 ? "underwriter.png" : "strategist.png";
+        let bossClass = room === 10 ? "tyrantGlow" : room === 20 ? "underwriterGlow" : "finalBoss";
 
-    if(room === 10){
-        bossImage = "tyrant.png";
-        bossClass = "tyrantGlow";
-    } else if(room === 20){
-        bossImage = "underwriter.png";
-        bossClass = "underwriterGlow";
+        questionElement.innerHTML = `
+            <img src="${bossImage}" class="bossIcon ${bossClass}">
+            <span class="boss-title" style="color:${bColor}">${bTitle}</span>
+            <div class="boss-q" style="--bossColor:${bColor}">
+                ${currentQuestion.q}
+            </div>`;
     } else {
-        bossImage = "strategist.png";
-        bossClass = "finalBoss";
+        // --- 1. SPECIAL ROOMS ---
+        if(room === 18) currentQuestion = shuffleOptions(getRiskMedium());
+        else if(room === 19) currentQuestion = shuffleOptions(getInsuranceMedium());
+        else if(room === 26) currentQuestion = shuffleOptions(getStrategicDominant());
+        else if(room === 27) currentQuestion = shuffleOptions(getStrategicNash());
+        else if(room === 28) currentQuestion = shuffleOptions(getStrategicBestResponse());
+        else if(room === 29) currentQuestion = shuffleOptions(getStrategicCooperation());
+
+        // --- 2. NORMAL FLOW ---
+        else if(diff === "easy") currentQuestion = shuffleOptions(randomEasy());
+        else if(diff === "medium") currentQuestion = shuffleOptions(randomMedium());
+        else if(diff === "hard") currentQuestion = shuffleOptions(randomQuestion("hard"));
+        else if(diff === "calculation") {
+            const generator = pickCalcGenerator();
+            currentQuestion = shuffleOptions(generator());
+        }
+
+        // --- UI for Normal Rooms ---
+        bossMsg.innerText = (room === 9 || room === 19 || room === 29)
+            ? "⚠️ DANGER: BOSS DETECTED IN NEXT ROOM ⚠️"
+            : "";
+        bossMsg.style.color = "#ef4444";
+        questionElement.innerText = currentQuestion.q;
     }
 
-    questionElement.innerHTML = `
-        <img src="${bossImage}" class="bossIcon ${bossClass}">
-        <span class="boss-title" style="color:${bColor}">${bTitle}</span>
-        <div class="boss-q" style="--bossColor:${bColor}">
-            ${currentQuestion.q}
-        </div>`;
-} else {
+    // --- 4. FINAL EXECUTION (Shared by Boss and Normal) ---
+    if (!currentQuestion) {
+        console.error("No question generated");
+        return;
+    }
 
-// --- 1. SPECIAL ROOMS (ABSOLUTE PRIORITY) ---
-if(room === 18){
-    currentQuestion = shuffleOptions(getRiskMedium());
-}
-else if(room === 19){
-    currentQuestion = shuffleOptions(getInsuranceMedium());
-}
-else if(room === 26){
-    currentQuestion = shuffleOptions(getStrategicDominant());
-}
-else if(room === 27){
-    currentQuestion = shuffleOptions(getStrategicNash());
-}
-else if(room === 28){
-    currentQuestion = shuffleOptions(getStrategicBestResponse());
-}
-else if(room === 29){
-    currentQuestion = shuffleOptions(getStrategicCooperation());
-}
-
-// --- 2. NORMAL FLOW ---
-else if(diff === "easy"){
-    currentQuestion = shuffleOptions(randomEasy());
-}
-else if(diff === "medium"){
-    currentQuestion = shuffleOptions(randomMedium());
-}
-else if(diff === "hard"){
-    currentQuestion = shuffleOptions(randomQuestion("hard"));
-}
-else if(diff === "calculation"){
-    const generator = pickCalcGenerator();
-    currentQuestion = shuffleOptions(generator());
-}
-
-// --- SAFETY CHECK ---
-if(!currentQuestion){
-    console.error("No question generated");
-    return;
-}
-// --- UI ---
-bossMsg.innerText = (room === 9 || room === 19 || room === 29)
-    ? "⚠️ DANGER: BOSS DETECTED IN NEXT ROOM ⚠️"
-    : "";
-
-bossMsg.style.color = "#ef4444";
-
-questionElement.innerText = currentQuestion.q;
-
-    // 4. Update Hints and Draw Buttons
+    // Update Hints and Draw Buttons
     document.getElementById("formulaHint").innerText = currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
+    
+    // This call is now OUTSIDE the 'else' block
     displayQuestion();
-  // --- Final Boss Entrance Shake ---
-if(diff === "finalBoss"){
-setTimeout(()=>{
-triggerBossShake();
-setTimeout(triggerBossShake,450);
-},200);
-}
-}
+
+    // Final Boss Entrance Shake
+    if (diff === "finalBoss") {
+        setTimeout(() => {
+            triggerBossShake();
+            setTimeout(triggerBossShake, 450);
+        }, 200);
+    }
 }
 function displayQuestion() {
     const optionsElement = document.getElementById("answers");
@@ -1484,122 +1457,122 @@ function displayQuestion() {
 function answer(choice) {
     totalAttempts++;
     const msgElement = document.getElementById("message");
+    const questionElement = document.getElementById("question");
     if (bgMusic.paused) bgMusic.play();
 
+    // --- 1. CORRECT ANSWER LOGIC ---
     if (choice === currentQuestion.a) {
-        // If this was a concept detour question, return player to main path
-        if(detourActive){
-        detourActive = false;
-        msgElement.innerHTML = `<span class='fade-out-text'>Correct! Concept restored. Moving deeper...</span>`;
-        room = detourReturnRoom + 1;
-        localStorage.setItem("gauntletRoom", room);
-        setTimeout(loadQuestion, 1000);
-        return;
-    }
+        // Handle Concept Detour Success
+        if (detourActive) {
+            detourActive = false;
+            msgElement.innerHTML = `<span class='fade-out-text'>Correct! Concept restored. Moving deeper...</span>`;
+            room = detourReturnRoom + 1;
+            localStorage.setItem("gauntletRoom", room);
+            setTimeout(loadQuestion, 1200);
+            return;
+        }
 
         correctAnswers++;
         streak++;
         if (streak > maxStreak) maxStreak = streak;
         handleStreakVisuals();
 
+        // Handle Boss Hit
         if (room === 10 || room === 20 || room === 30) {
             bossHealth--;
             if (bossHealth > 0) {
                 sfxMilestone.play(); 
                 msgElement.innerHTML = `<span style='color:#f87171;font-weight:bold;'>⚔ HIT! Boss Health: ${bossHealth}/3</span>`;
-                setTimeout(loadQuestion, 1800); // Refresh to next boss question
+                // Add a shake effect to the boss icon
+                const icon = document.querySelector(".bossIcon");
+                if(icon) icon.classList.add("boss-shake");
+                
+                setTimeout(() => {
+                    if(icon) icon.classList.remove("boss-shake");
+                    loadQuestion(); 
+                }, 1500);
                 return; 
             } else {
+                // Boss Defeated
+                if(room === 10) unlockArtifact('dice');
+                if(room === 20) unlockArtifact('shield');
+                if(room === 30) unlockArtifact('crown');
 
-    if(room === 10){
-      document.getElementById("vaultDice").classList.add("unlocked");
-      localStorage.setItem("vaultDice", "true");
-      showArtifact(
-            artifacts.dice.img,
-            artifacts.dice.title,
-            artifacts.dice.text
-        );
-    }
-
-    if(room === 20){
-      document.getElementById("vaultShield").classList.add("unlocked");
-      localStorage.setItem("vaultShield", "true");
-      showArtifact(
-            artifacts.shield.img,
-            artifacts.shield.title,
-            artifacts.shield.text
-        );
-    }
-
-    if(room === 30){
-       document.getElementById("vaultCrown").classList.add("unlocked");
-      localStorage.setItem("vaultCrown", "true");
-      showArtifact(
-            artifacts.crown.img,
-            artifacts.crown.title,
-            artifacts.crown.text
-        );
-    }
-
-    showKnowledgeRoom(room);
-    bossHealth = 3;
-    return;
-}
+                showKnowledgeRoom(room);
+                bossHealth = 3; // Reset for next boss
+                return;
+            }
         }
 
-msgElement.innerHTML = "";
-
-room++;
-localStorage.setItem("gauntletRoom", room);
-showHallwayTransition(currentQuestion.feedback);
-return;
+        // Normal Progression
+        msgElement.innerHTML = "";
+        room++;
+        localStorage.setItem("gauntletRoom", room);
+        showHallwayTransition(currentQuestion.feedback);
+        return;
 
     } else {
+        // --- 2. INCORRECT ANSWER LOGIC ---
         streak = 0;
-        // If question has a concept tag, trigger a reinforcement detour
-// --- Adaptive Concept Detour ---
-if(!detourActive && currentQuestion.tag){
-    conceptMemory[currentQuestion.tag]++;
+        document.getElementById("streakDisplay").innerText = "";
+
+        // a) Handle Detour Failure (Don't loop detours, just kick them back)
+        if (detourActive) {
+            detourActive = false;
+            room = Math.max(1, detourReturnRoom - 1);
+            localStorage.setItem("gauntletRoom", room);
+            alert("The concept remains clouded. You fall back to recover your strength.");
+            loadQuestion();
+            return;
+        }
+
+        // b) Handle Boss Failure (Complete Reset of health and significant setback)
+        const isBossRoom = (room % 10 === 0);
+        if (isBossRoom) {
+            bossHealth = 3;
+            room = room - 3; // Kick back 3 rooms from a boss fail
+        } else {
+            // c) Trigger Adaptive Concept Detour
+            if (currentQuestion.tag) {
+                conceptMemory[currentQuestion.tag]++;
+                let conceptPool = null;
+                
+                if (room <= 9 && easyConceptPools[currentQuestion.tag]) {
+                    conceptPool = easyConceptPools[currentQuestion.tag];
+                } else if (room >= 11 && room <= 19 && mediumConceptPools[currentQuestion.tag]) {
+                    conceptPool = mediumConceptPools[currentQuestion.tag];
+                }
+
+                if (conceptPool) {
+                    detourActive = true;
+                    detourReturnRoom = room;
+                    currentQuestion = shuffleOptions(pickRandom(conceptPool));
+                    
+                    questionElement.innerText = "Concept Check: " + currentQuestion.q;
+                    document.getElementById("formulaHint").innerText = currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
+                    msgElement.innerHTML = `<span class='fade-out-text' style='color:#fbbf24'>You falter… The labyrinth demands a concept check.</span>`;
+                    displayQuestion();
+                    return;
+                }
+            }
+            
+            // d) Standard room fail (1 or 2 rooms back)
+            room = Math.max(1, room - (room >= 21 ? 2 : 1));
+        }
+
+        localStorage.setItem("gauntletRoom", room);
+        alert(`Incorrect! You trip in the darkness and tumble back to Room ${room}.`);
+        loadQuestion();
+    }
 }
 
+// Helper for cleaner artifact logic
+function unlockArtifact(key) {
+    const id = "vault" + key.charAt(0).toUpperCase() + key.slice(1);
+    document.getElementById(id).classList.add("unlocked");
+    localStorage.setItem(id, "true");
+    showArtifact(artifacts[key].img, artifacts[key].title, artifacts[key].text);
 }
-
-    let conceptPool = null;
-
-    // Determine difficulty based on room
-    if(room <= 9 && easyConceptPools[currentQuestion.tag]){
-        conceptPool = easyConceptPools[currentQuestion.tag];
-    }
-
-    if(room >= 11 && room <= 19 && mediumConceptPools[currentQuestion.tag]){
-        conceptPool = mediumConceptPools[currentQuestion.tag];
-    }
-
-   if(conceptPool){
-
-    detourActive = true;
-    detourReturnRoom = room;
-
-    currentQuestion = shuffleOptions(pickRandom(conceptPool));
-
-    document.getElementById("question").innerText = "Concept Check: " + currentQuestion.q;
-    document.getElementById("formulaHint").innerText = currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
-
-    msgElement.innerHTML = `<span class='fade-out-text'>You falter… The labyrinth demands a concept check.</span>`;
-
-    displayQuestion();
-    return;
-}
-
-// Normal failure handling
-document.getElementById("streakDisplay").innerText = "";
-bossHealth = 3;
-
-room = Math.max(1, room - (room % 10 === 0 ? 3 : (room >= 21 ? 2 : 1)));
-localStorage.setItem("gauntletRoom", room);
-alert(`Incorrect! You trip in the darkness and tumble back to Room ${room}.`);
-loadQuestion();
-    }
     
 // Helper to keep the answer function clean
 function handleStreakVisuals() {
