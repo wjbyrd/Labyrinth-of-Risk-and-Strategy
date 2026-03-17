@@ -57,7 +57,6 @@ h2{ text-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(251,191,36,0.2); 
 #progressBar{ width:100%; height:22px; background:#2d3748; border-radius:12px; margin-bottom:20px; overflow:hidden; }
 #progressFill{ height:100%; width:0%; background:linear-gradient(90deg,#f59e0b,#ef4444); transition:width 0.4s ease; }
 .boss-title { font-size: 28px; font-weight: bold; margin-bottom: 15px; display: block; }
-.boss-q { font-style: italic; font-size: 19px; border-left: 4px solid var(--bossColor); padding-left: 15px; margin: 20px 0; text-align: left; }
 .area-title { color: #9ca3af; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; }
 .hint-box { font-size: 13px; color: #fbbf24; margin-top: 15px; opacity: 0.8; height: 18px; }
 
@@ -584,6 +583,24 @@ function startGame() {
     username = inputName;
     localStorage.setItem("gauntletUser", username);
 
+  questionHistory = {
+  easy: [], medium: [], hard: [], calculation: [],
+  easyBoss: [], mediumBoss: [], finalBoss: []
+  };
+
+  easyIndex = {
+  risk:{definition:0,interpretation:0,calculation:0},
+  insurance:{definition:0,interpretation:0,calculation:0},
+  game_theory:{definition:0,interpretation:0,calculation:0}
+  };
+
+  mediumIndex = JSON.parse(JSON.stringify(easyIndex));
+
+  easyCycle = 0;
+  mediumCycle = 0;
+  easyTagCycle = 0;
+  mediumTagCycle = 0;
+
     // RESET GAME STATE
     room = 1;
     bossHealth = 3;
@@ -844,101 +861,60 @@ calculation: questionBanks.medium.filter(q => q.tag === "game_theory" && q.type 
 }
 };
  
-function randomEasy(){
+function randomEasy() {
+    const types = ["definition","interpretation","calculation"];
+    const type = types[Math.floor(Math.random() * types.length)];
+    const tag = easyTags[Math.floor(Math.random() * easyTags.length)];
 
-let type;
-if(easyCycle === 0) type = "definition";
-if(easyCycle === 1) type = "interpretation";
-if(easyCycle === 2) type = "calculation";
-easyCycle = (easyCycle + 1) % 3;
+    let pool = easyPools[tag][type] || [];
+    const recent = questionHistory.easy.slice(-3);
+    let workingPool = pool.filter(q => !recent.includes(q.id));
 
-let tag = easyTags[easyTagCycle];
-easyTagCycle = (easyTagCycle + 1) % easyTags.length;
+    if (workingPool.length === 0) {
+        workingPool = pool;
+    }
 
-let pool = easyPools[tag][type];
-let recent = questionHistory.easy.slice(-3);
-let filteredPool = pool.filter(q => !recent.includes(q.id));
+    if (workingPool.length === 0) {
+        console.warn("Missing easy pool:", tag, type);
+        return null;
+    }
 
-if(filteredPool.length > 0){
-    pool = filteredPool;
+    const question = workingPool[Math.floor(Math.random() * workingPool.length)];
+
+    questionHistory.easy.push(question.id);
+    if (questionHistory.easy.length > 10) {
+        questionHistory.easy.shift();
+    }
+
+    return question;
 }
 
-if(!pool || pool.length === 0){
-console.warn("Missing pool:", tag, type);
+function randomMedium() {
+    const types = ["definition","interpretation","calculation"];
+    const type = types[Math.floor(Math.random() * types.length)];
+    const tag = mediumTags[Math.floor(Math.random() * mediumTags.length)];
 
-// fallback: grab any available question in this difficulty
-let fallbackPool = Object.values(easyPools)
-    .flatMap(t => Object.values(t))
-    .filter(p => p.length > 0);
+    let pool = mediumPools[tag][type] || [];
+    const recent = questionHistory.medium.slice(-3);
+    let workingPool = pool.filter(q => !recent.includes(q.id));
 
-if(fallbackPool.length === 0) return null;
+    if (workingPool.length === 0) {
+        workingPool = pool;
+    }
 
-pool = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
-}
+    if (workingPool.length === 0) {
+        console.warn("Missing medium pool:", tag, type);
+        return null;
+    }
 
-let question = pool[easyIndex[tag][type]];
-// 🔥 TRACK HISTORY HERE
-questionHistory.easy.push(question.id);
-if(questionHistory.easy.length > 10){
-    questionHistory.easy.shift();
-}
+    const question = workingPool[Math.floor(Math.random() * workingPool.length)];
 
-easyIndex[tag][type]++;
+    questionHistory.medium.push(question.id);
+    if (questionHistory.medium.length > 10) {
+        questionHistory.medium.shift();
+    }
 
-if(easyIndex[tag][type] >= pool.length){
-shuffleArray(pool);
-easyIndex[tag][type] = 0;
-}
-
-return question;
-}
-
-function randomMedium(){
-
-let type;
-if(mediumCycle === 0) type = "definition";
-if(mediumCycle === 1) type = "interpretation";
-if(mediumCycle === 2) type = "calculation";
-mediumCycle = (mediumCycle + 1) % 3;
-
-let tag = mediumTags[mediumTagCycle];
-mediumTagCycle = (mediumTagCycle + 1) % mediumTags.length;
-
-let pool = mediumPools[tag][type];
-let recent = questionHistory.medium.slice(-3);
-let filteredPool = pool.filter(q => !recent.includes(q.id));
-
-if(filteredPool.length > 0){
-    pool = filteredPool;
-}
-
-if(!pool || pool.length === 0){
-console.warn("Missing pool:", tag, type);
-
-// fallback: grab any available question in this difficulty
-let fallbackPool = Object.values(mediumPools)
-    .flatMap(t => Object.values(t))
-    .filter(p => p.length > 0);
-
-if(fallbackPool.length === 0) return null;
-
-pool = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
-}
-
-let question = pool[mediumIndex[tag][type]];
-// 🔥 TRACK HISTORY HERE
-questionHistory.medium.push(question.id);
-if(questionHistory.medium.length > 10){
-    questionHistory.medium.shift();
-}
-mediumIndex[tag][type]++;
-
-if(mediumIndex[tag][type] >= pool.length){
-shuffleArray(pool);
-mediumIndex[tag][type] = 0;
-}
-
-return question;
+    return question;
 }
   
 function shuffleOptions(question){
@@ -1391,58 +1367,49 @@ function loadQuestion() {
     document.getElementById("srAnnouncements").innerText = `Entering ${getAreaName(room)}. Room ${room} of 30.`;
 
     // 3. Select the Question
-    if (isBoss) {
-        if (bossHealth === 3) {
-        const pool = questionBanks[diff].map(q => ({...q}));
+if (isBoss) {
+    if (bossHealth === 3) {
+        const pool = questionBanks[diff].map(q => ({
+            ...q,
+            options: [...q.options]
+        }));
         bossPool = shuffle(pool);
-        }
-        currentQuestion = bossPool[3 - bossHealth];
-        
-        let bTitle = room === 10 ? "THE DICE TYRANT" : room === 20 ? "THE UNDERWRITER OF FATE" : "THE GRAND STRATEGIST";
-        let bColor = room === 10 ? "#fbbf24" : room === 20 ? "#a855f7" : "#ef4444";
-        document.getElementById("srAnnouncements").innerText =`Boss encounter. ${bTitle}. Prepare yourself`;
-        bossMsg.innerText = "⚠ BOSS ENCOUNTER ⚠";
-        bossMsg.style.color = bColor;
-        gameBox.style.setProperty('--bossColor', bColor);
-        let bossImage = "";
-        let bossClass = "";
-  
-        if(room === 10){
+    }
+
+    currentQuestion = shuffleOptions(bossPool[3 - bossHealth]);
+
+    let bTitle = room === 10 ? "THE DICE TYRANT" : room === 20 ? "THE UNDERWRITER OF FATE" : "THE GRAND STRATEGIST";
+    let bColor = room === 10 ? "#fbbf24" : room === 20 ? "#a855f7" : "#ef4444";
+    document.getElementById("srAnnouncements").innerText = `Boss encounter. ${bTitle}. Prepare yourself`;
+    bossMsg.innerText = "⚠ BOSS ENCOUNTER ⚠";
+    bossMsg.style.color = bColor;
+    gameBox.style.setProperty('--bossColor', bColor);
+
+    let bossImage = "";
+    let bossClass = "";
+
+    if(room === 10){
         bossImage = "tyrant.png";
         bossClass = "tyrantGlow";
-        }
-        else if(room === 20){
+    } else if(room === 20){
         bossImage = "underwriter.png";
         bossClass = "underwriterGlow";
-        }
-        else{
+    } else {
         bossImage = "strategist.png";
         bossClass = "finalBoss";
-        }
-        
-        questionElement.innerHTML =
-        `<img src="${bossImage}" class="bossIcon ${bossClass}">
+    }
+
+    questionElement.innerHTML = `
+        <img src="${bossImage}" class="bossIcon ${bossClass}">
         <span class="boss-title" style="color:${bColor}">${bTitle}</span>
         <div class="boss-q" style="--bossColor:${bColor}">
-        ${currentQuestion.q}
-      </div>`;
-  } else {
- // --- DEFAULT QUESTION FIRST ---
-if(diff === "easy"){
-    currentQuestion = shuffleOptions(randomEasy());
-}
-else if(diff === "medium"){
-    currentQuestion = shuffleOptions(randomMedium());
-}
-else if(diff === "hard"){
-    currentQuestion = shuffleOptions(randomQuestion("hard"));
-}
-else if(diff === "calculation"){
-    const generator = pickCalcGenerator();
-    currentQuestion = shuffleOptions(generator());
-}
+            ${currentQuestion.q}
+        </div>`;
+} else {
+// --- DETERMINE QUESTION SOURCE ---
+let diff = difficulty();
 
-// --- HARD OVERRIDES ---
+// --- 1. SPECIAL ROOMS (ABSOLUTE PRIORITY) ---
 if(room === 18){
     currentQuestion = shuffleOptions(getRiskMedium());
 }
@@ -1461,13 +1428,35 @@ else if(room === 28){
 else if(room === 29){
     currentQuestion = shuffleOptions(getStrategicCooperation());
 }
+// --- 2. BOSS ROOMS ---
+else if(diff === "easyBoss" || diff === "mediumBoss" || diff === "finalBoss"){
+    let bossPool = questionBanks[diff];
+    let index = Math.max(0, 3 - bossHealth);
+    index = Math.max(0, Math.min(index, bossPool.length - 1));
+    currentQuestion = shuffleOptions(bossPool[index]);
+}
+
+// --- 3. NORMAL FLOW ---
+else if(diff === "easy"){
+    currentQuestion = shuffleOptions(randomEasy());
+}
+else if(diff === "medium"){
+    currentQuestion = shuffleOptions(randomMedium());
+}
+else if(diff === "hard"){
+    currentQuestion = shuffleOptions(randomQuestion("hard"));
+}
+else if(diff === "calculation"){
+    const generator = pickCalcGenerator();
+    currentQuestion = shuffleOptions(generator());
+}
 
 // --- SAFETY CHECK ---
 if(!currentQuestion){
     console.error("No question generated");
     return;
 }
-
+document.getElementById("formulaHint").innerText = currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
 // --- UI ---
 bossMsg.innerText = (room === 9 || room === 19 || room === 29)
     ? "⚠️ DANGER: BOSS DETECTED IN NEXT ROOM ⚠️"
@@ -1770,7 +1759,9 @@ if (bossRoom === 10) {
     `;
     
     // logic to ensure Room 30 triggers the end game, while 10 and 20 trigger the next level
-    let nextAction = bossRoom === 30 ? "handleVictory()" : "room++; loadQuestion();";
+    let nextAction = bossRoom === 30
+    ? "handleVictory()"
+    : "room++; localStorage.setItem('gauntletRoom', room); loadQuestion();";
     let buttonLabel = bossRoom === 30 ? "FINALIZE THE ARCHIVE CONQUEST →" : `CONTINUE TO ROOM ${bossRoom + 1} →`;
 
     aContainer.innerHTML = `
