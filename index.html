@@ -1404,37 +1404,49 @@ function loadQuestion() {
         ${currentQuestion.q}
       </div>`;
   } else {
-  if(diff === "calculation"){
-    // --- HARD OVERRIDES FIRST ---
-    if(room === 18){
-        currentQuestion = shuffleOptions(getRiskMedium());
-    }
-    else if(room === 19){
-        currentQuestion = shuffleOptions(getInsuranceMedium());
-    }
-    else if(room === 26){
-        currentQuestion = shuffleOptions(getStrategicDominant());
-    }
-    else if(room === 27){
-        currentQuestion = shuffleOptions(getStrategicNash());
-    }
-    else if(room === 28){
-        currentQuestion = shuffleOptions(getStrategicBestResponse());
-    }
-    else if(room === 29){
-        currentQuestion = shuffleOptions(getStrategicCooperation());
-    }
-    else{
-        const generator = pickCalcGenerator();
-        currentQuestion = shuffleOptions(generator());
-    }
-  }
-    bossMsg.innerText = (room === 9 || room === 19 || room === 29)
-        ? "⚠️ DANGER: BOSS DETECTED IN NEXT ROOM ⚠️"
-        : "";
-    bossMsg.style.color = "#ef4444";
-    questionElement.innerText = currentQuestion.q;
+ // --- DEFAULT QUESTION FIRST ---
+if(diff === "easy"){
+    currentQuestion = shuffleOptions(randomFromPool(questionBanks.easy));
 }
+else if(diff === "medium"){
+    currentQuestion = shuffleOptions(randomFromPool(questionBanks.medium));
+}
+else if(diff === "hard"){
+    currentQuestion = shuffleOptions(randomFromPool(questionBanks.hard));
+}
+else if(diff === "calculation"){
+    const generator = pickCalcGenerator();
+    currentQuestion = shuffleOptions(generator());
+}
+
+// --- HARD OVERRIDES AFTER ---
+if(room === 18){
+    currentQuestion = shuffleOptions(getRiskMedium());
+}
+else if(room === 19){
+    currentQuestion = shuffleOptions(getInsuranceMedium());
+}
+else if(room === 26){
+    currentQuestion = shuffleOptions(getStrategicDominant());
+}
+else if(room === 27){
+    currentQuestion = shuffleOptions(getStrategicNash());
+}
+else if(room === 28){
+    currentQuestion = shuffleOptions(getStrategicBestResponse());
+}
+else if(room === 29){
+    currentQuestion = shuffleOptions(getStrategicCooperation());
+}
+
+// --- UI ---
+bossMsg.innerText = (room === 9 || room === 19 || room === 29)
+    ? "⚠️ DANGER: BOSS DETECTED IN NEXT ROOM ⚠️"
+    : "";
+
+bossMsg.style.color = "#ef4444";
+
+questionElement.innerText = currentQuestion.q;
 
     // 4. Update Hints and Draw Buttons
     document.getElementById("formulaHint").innerText = currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
