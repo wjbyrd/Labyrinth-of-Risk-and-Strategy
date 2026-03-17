@@ -898,7 +898,7 @@ if(!pool || pool.length === 0){
 console.warn("Missing pool:", tag, type);
 
 // fallback: grab any available question in this difficulty
-let fallbackPool = Object.values(easyPools)
+let fallbackPool = Object.values(mediumPools)
     .flatMap(t => Object.values(t))
     .filter(p => p.length > 0);
 
@@ -1406,20 +1406,20 @@ function loadQuestion() {
   } else {
  // --- DEFAULT QUESTION FIRST ---
 if(diff === "easy"){
-    currentQuestion = shuffleOptions(randomFromPool(questionBanks.easy));
+    currentQuestion = shuffleOptions(randomEasy());
 }
 else if(diff === "medium"){
-    currentQuestion = shuffleOptions(randomFromPool(questionBanks.medium));
+    currentQuestion = shuffleOptions(randomMedium());
 }
 else if(diff === "hard"){
-    currentQuestion = shuffleOptions(randomFromPool(questionBanks.hard));
+    currentQuestion = shuffleOptions(randomQuestion("hard"));
 }
 else if(diff === "calculation"){
     const generator = pickCalcGenerator();
     currentQuestion = shuffleOptions(generator());
 }
 
-// --- HARD OVERRIDES AFTER ---
+// --- HARD OVERRIDES ---
 if(room === 18){
     currentQuestion = shuffleOptions(getRiskMedium());
 }
@@ -1437,6 +1437,12 @@ else if(room === 28){
 }
 else if(room === 29){
     currentQuestion = shuffleOptions(getStrategicCooperation());
+}
+
+// --- SAFETY CHECK ---
+if(!currentQuestion){
+    console.error("No question generated");
+    return;
 }
 
 // --- UI ---
