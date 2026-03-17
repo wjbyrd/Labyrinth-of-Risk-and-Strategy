@@ -650,14 +650,14 @@ easyBoss:[
 {q:"The Dice Tyrant offers two gambles. Gamble A has an expected value of $45. Gamble B has an expected value of $60. A risk-neutral player would choose...",options:["Gamble B","Gamble A","Either gamble","The gamble with the highest variance"],a:0,feedback:"Risk-neutral decision makers choose the option with the highest expected value."}
 ],
 mediumBoss:[
-{q:"The Decomposer of Choice lowers the price of a good. What two forces determine how consumption changes?",options:["Substitution effect and income effect","Marginal cost and marginal revenue","Demand and supply","Utility and profit"],a:0,feedback:"A price change affects behavior through substitution and income effects."},
-{q:"The Decomposer continues. The price of a normal good falls. What direction do the substitution and income effects move?",options:["Both increase quantity demanded","Substitution increases demand while income decreases demand","Both decrease demand","Income increases demand but substitution decreases demand"],a:0,feedback:"For normal goods both substitution and income effects increase quantity demanded."},
-{q:"Final strike from the Decomposer. Suppose the good is inferior. The substitution effect increases demand but the income effect decreases demand. If the substitution effect is stronger, what happens overall?",options:["Quantity demanded rises","Quantity demanded falls","Demand disappears","Price rises"],a:0,feedback:"If substitution dominates, demand still increases even though the income effect moves the other direction."}
+{q:"The Underwriter of Fate studies your choices. A gamble has an expected value of $0, yet you refuse to take it. What does this reveal?",options:["You are risk averse due to diminishing marginal utility","You miscalculated the expected value","You are risk loving","You prefer higher variance outcomes"],a:0,feedback:"Risk-averse individuals reject fair gambles because the expected utility is lower than the utility of a certain outcome due to diminishing marginal utility."},
+{q:"The Underwriter presents a contract. Fair insurance has a premium equal to the expected loss. Why might a risk-averse person still be willing to pay more than this?",options:["They value certainty more than the expected monetary outcome","They expect to make a profit from insurance","They misunderstand probabilities","They are risk neutral"],a:0,feedback:"Risk-averse individuals maximize expected utility, not expected value, and are willing to pay extra to eliminate uncertainty."},
+{q:"Final judgment from the Underwriter. If insurance companies offered only fair insurance, what problem would most directly threaten their survival?",options:["Administrative costs exceeding premiums","Consumers becoming risk neutral","Demand for insurance disappearing","All risks becoming insurable"],a:0,feedback:"Even if premiums equal expected losses, insurers must cover administrative costs and profit margins, making purely fair insurance unsustainable."}
 ],
 finalBoss:[
-{q:"The Sovereign of Elasticity begins the final trial. When demand is elastic, what happens to total revenue if price increases?",options:["Total revenue decreases","Total revenue increases","Total revenue stays constant","Revenue becomes unpredictable"],a:0,feedback:"With elastic demand, price and total revenue move in opposite directions."},
-{q:"The Sovereign now tests your calculation. Price rises from $10 to $12 and quantity demanded falls from 100 to 80. Using the midpoint method, what is the elasticity?",options:["About 0.82 (inelastic)","About 1.22 (elastic)","Exactly 1 (unit elastic)","About 2.5"],a:1,feedback:"Elasticity ≈ 1.22, meaning demand is elastic."},
-{q:"Final blow. Given the elasticity you calculated, what happens to total revenue when price rises from $10 to $12?",options:["Total revenue decreases","Total revenue increases","Total revenue stays the same","Total revenue becomes zero"],a:0,feedback:"Because demand is elastic, increasing price reduces total revenue."}
+{q:"The Strategist of Eternity begins. In a one-shot Prisoner's Dilemma, both players choose to betray even though mutual cooperation is better. Why?",options:["Betrayal is a dominant strategy and each player best responds to the other","Players care about total welfare","Communication enforces cooperation","Random strategies dominate"],a:0,feedback:"In a one-shot game, each player’s best response is to betray regardless of what the other does, leading to a Nash equilibrium that is not socially optimal."},
+{q:"The Strategist advances. In a sequential game, Player A moves first and Player B responds after observing A’s choice. What solution concept rules out empty threats?",options:["Subgame perfect equilibrium","Dominant strategy equilibrium","Mixed strategy equilibrium","Pareto efficiency"],a:0,feedback:"Subgame perfect equilibrium requires strategies to be optimal in every subgame, eliminating non-credible threats."},
+{q:"Final judgment. A Prisoner's Dilemma is repeated indefinitely. Under what condition can cooperation be sustained?",options:["When the probability of future interaction is high enough","Only when players are risk neutral","Only in one-shot games","When players cannot observe each other"],a:0,feedback:"In repeated games, cooperation can emerge if players value future payoffs enough—meaning the probability of continuation is sufficiently high."}
 ],
     easy: [
 {id:1,q:"Expected value represents...",options:["The average outcome weighted by probabilities","The highest possible payoff","The lowest payoff","The most common outcome"],a:0,tag:"risk",type:"definition",feedback:"Expected value multiplies each outcome by its probability and sums the results."},
@@ -688,76 +688,53 @@ finalBoss:[
 {id:26,q:"Buying insurance reduces financial risk by...",options:["Transferring risk to an insurer","Eliminating probabilities","Increasing expected value","Reducing prices"],a:0,tag:"insurance",type:"interpretation",feedback:"Insurance transfers potential losses to the insurance provider."},
 {id:27,q:"If expected value equals the cost of playing a gamble, the gamble is...",options:["Fair","Risk free","Profitable","Guaranteed"],a:0,tag:"risk",type:"definition",feedback:"A fair gamble has expected value equal to the price of entry."},
 {id:28,q:"If two firms both follow dominant strategies that lead to lower profits for both, this illustrates...",options:["The Prisoner's Dilemma","Risk pooling","Insurance markets","Expected value"],a:0,tag:"game_theory",type:"interpretation",feedback:"The Prisoner's Dilemma shows how individually rational decisions can lead to worse outcomes."},
-{id:29,q:"Insurance premiums must exceed expected losses in order for insurers to...",options:["Cover administrative costs and earn profit","Eliminate risk","Increase probabilities","Reduce uncertainty"],a:0,tag:"insurance",type:"interpretation",feedback:"Insurance premiums include administrative costs and profit margins."}
+{id:29,q:"Insurance premiums must exceed expected losses in order for insurers to...",options:["Cover administrative costs and earn profit","Eliminate risk","Increase probabilities","Reduce uncertainty"],a:0,tag:"insurance",type:"interpretation",feedback:"Insurance premiums include administrative costs and profit margins."},
+{id:30,q:"A risk-averse individual prefers...",options:["A certain outcome over a risky one with the same expected value","A risky outcome with higher variance","Any gamble with zero expected value","Only outcomes with losses"],a:0,type:"definition",tag:"risk",feedback:"Risk-averse individuals prefer certainty to a gamble with the same expected value."},
+{id:31,q:"Expected value is best defined as...",options:["The probability-weighted average of all possible outcomes","The highest possible payoff","The most likely outcome","The difference between gains and losses"],a:0,type:"definition",tag:"risk",feedback:"Expected value is calculated by weighting each outcome by its probability."},
+{id:32,q:"Insurance primarily works by...",options:["Transferring risk from individuals to a larger group","Eliminating all losses","Increasing uncertainty","Guaranteeing profit"],a:0,type:"definition",tag:"insurance",feedback:"Insurance spreads risk across many individuals, reducing individual uncertainty."},
+{id:33,q:"A person refuses a fair gamble with a 50% chance to win $100 and 50% chance to lose $100. This suggests the person is...",options:["Risk averse","Risk loving","Risk neutral","Indifferent to outcomes"],a:0,type:"interpretation",tag:"risk",feedback:"Rejecting a fair gamble indicates risk aversion due to diminishing marginal utility."},
+{id:34,q:"An individual buys insurance even though they rarely file claims. This behavior suggests...",options:["They prefer certainty over risk","They are risk loving","They misunderstand probabilities","They expect frequent losses"],a:0,type:"interpretation",tag:"insurance",feedback:"Buying insurance reflects a preference for certainty and protection from risk."},
+{id:35,q:"Two players both choose strategies that are best responses to each other. This situation describes...",options:["A Nash equilibrium","A dominant strategy","A random outcome","A cooperative agreement"],a:0,type:"interpretation",tag:"game_theory",feedback:"A Nash equilibrium occurs when each player is playing a best response to the other."},
+{id:36,q:"A gamble gives $50 with 50% probability and $0 with 50% probability. What is the expected value?",options:["$25","$50","$0","$100"],a:0,type:"calculation",tag:"risk",feedback:"Expected value = (0.5×50) + (0.5×0) = $25."},
+{id:37,q:"An insurance policy has a 10% chance of a $1,000 loss. What is the expected loss?",options:["$100","$1,000","$10","$900"],a:0,type:"calculation",tag:"insurance",feedback:"Expected loss = 0.10 × 1000 = $100."},
+{id:38,q:"If both players in a Prisoner's Dilemma choose to betray, what outcome do they reach?",options:["Nash equilibrium","Pareto efficient outcome","Mixed strategy outcome","Dominant cooperation"],a:0,type:"calculation",tag:"game_theory",feedback:"Mutual betrayal is the Nash equilibrium because both are playing best responses."}
 ],
 medium: [
-{ id:39, q:"The substitution effect of a price decrease occurs because...",options:["Relative prices change while utility is held constant","Income increases","Preferences change","Demand shifts"],a:0,tag:"income_substitution",type:"definition",feedback:"The substitution effect isolates the impact of a change in relative prices while holding utility constant."},
-{ id:40, q:"A demand curve can be interpreted as...",options:["The consumer’s willingness to pay for additional units","A firm's marginal cost curve","Total utility over time","Market supply"],a:0,tag:"demand",type:"definition",feedback:"Each point on the demand curve reflects the consumer’s willingness to pay for one more unit."},
-{ id:41, q:"Consumer equilibrium requires that...",options:["Marginal utility per dollar is equal across goods","Income equals zero","Demand equals supply","Prices are identical"],a:0,tag:"consumer_equilibrium",type:"definition",feedback:"Consumers maximize utility when the marginal utility gained per dollar spent is equal across goods."},
-{ id:42, q:"Price elasticity of demand measures...",options:["The responsiveness of quantity demanded to price changes","Total spending","Changes in consumer income","Production efficiency"],a:0,tag:"elasticity",type:"definition",feedback:"Elasticity measures how sensitive buyers are to price changes."},
-{ id:43, q:"A demand curve can be interpreted as...",options:["The consumer’s willingness to pay for additional units","A firm's marginal cost curve","Total utility over time","Market supply"],a:0,tag:"demand",type:"definition",feedback:"Each point on the demand curve reflects the consumer’s willingness to pay for one more unit."},
-{ id:44, q:"Consumer equilibrium requires that...",options:["Marginal utility per dollar is equal across goods","Income equals zero","Demand equals supply","Prices are identical"],a:0,tag:"consumer_equilibrium",type:"definition",feedback:"Consumers maximize utility when the marginal utility gained per dollar spent is equal across goods."},
-{ id:45, q:"The substitution effect of a price change occurs because...",options:["Relative prices change","Income changes","Preferences change","Demand shifts"],a:0,tag:"income_substitution",type:"definition",feedback:"The substitution effect isolates the impact of relative price changes."},
-{ id:46, q:"A normal good is defined as one where...",options:["Demand rises as income rises","Demand falls as income rises","Demand stays constant","Price always rises"],a:0,tag:"normal_inferior",type:"definition",feedback:"Normal goods experience increased demand as income increases."},
-{ id:47, q:"An inferior good is defined as one where...",options:["Demand falls as income rises","Demand rises as income rises","Demand is perfectly elastic","Demand disappears"],a:0,tag:"normal_inferior",type:"definition",feedback:"Inferior goods are consumed less when income increases."},
-{ id:48, q:"Price elasticity of demand measures...",options:["Responsiveness of quantity demanded to price changes","Total consumer spending","Production efficiency","Market supply"],a:0,tag:"elasticity",type:"definition",feedback:"Elasticity measures how sensitive quantity demanded is to price changes."},
-{ id:49, q:"A price decrease causes quantity demanded to rise substantially. What does this suggest about elasticity?",options:["Demand is elastic","Demand is inelastic","Demand is perfectly inelastic","Demand is unit elastic"],a:0,tag:"elasticity",type:"interpretation",feedback:"Large quantity responses indicate elastic demand."},
-{ id:50, q:"If the substitution effect increases consumption but the income effect decreases it, the good must be...",options:["Inferior","Normal","Perfect substitute","Perfect complement"],a:0,tag:"income_substitution",type:"interpretation",feedback:"For inferior goods the income effect works opposite the substitution effect."},
-{ id:51, q:"If MRS is greater than the price ratio, what should the consumer do?",options:["Consume more of good X","Consume less of good X","Increase income","Reduce utility"],a:0,tag:"consumer_equilibrium",type:"interpretation",feedback:"If MRS exceeds the price ratio, the consumer gains more utility per dollar from X."},
-{ id:52, q:"If demand is elastic, a price increase will...",options:["Reduce total revenue","Increase total revenue","Leave revenue unchanged","Eliminate demand"],a:0,tag:"elasticity",type:"interpretation",feedback:"With elastic demand, quantity falls proportionally more than price rises."},
-{ id:53, q:"If both substitution and income effects increase consumption after a price decrease, the good must be...",options:["Normal","Inferior","Giffen","Perfectly elastic"],a:0,tag:"income_substitution",type:"interpretation",feedback:"For normal goods both effects reinforce each other."},
-{ id:54, q:"If the price of a good falls and quantity demanded rises substantially, demand is likely...",options:["Elastic","Inelastic","Perfectly inelastic","Unit elastic"],a:0,tag:"elasticity",type:"interpretation",feedback:"Large quantity responses indicate elastic demand."},
-{ id:55, q:"If both substitution and income effects increase consumption after a price decrease, the good must be...",options:["Normal","Inferior","Giffen","Perfect substitute"],a:0,tag:"income_substitution",type:"interpretation",feedback:"For normal goods both effects reinforce each other."},
-{ id:56, q:"If the substitution effect increases consumption but the income effect reduces it, the good must be...",options:["Inferior","Normal","Perfect substitute","Complement"],a:0,tag:"income_substitution",type:"interpretation",feedback:"Inferior goods have income effects that oppose substitution effects."},
-{ id:57, q:"If the price of coffee rises and consumers buy more tea, the goods are...",options:["Substitutes","Complements","Inferior","Giffen"],a:0,tag:"demand",type:"interpretation",feedback:"Substitutes replace each other when prices change."},
-{ id:58, q:"If the price of printers rises and demand for ink falls, the goods are...",options:["Complements","Substitutes","Inferior goods","Luxury goods"],a:0,tag:"demand",type:"interpretation",feedback:"Complementary goods are used together."},
-{ id:59, q:"If MRS exceeds the price ratio, the consumer should...",options:["Consume more of good X","Consume less of good X","Increase income","Consume less of both goods"],a:0,tag:"consumer_equilibrium",type:"interpretation",feedback:"If MRS exceeds the price ratio, X provides greater marginal utility per dollar."},
-{ id:60, q:"If the price of a good rises and total revenue falls, demand must be...",options:["Elastic","Inelastic","Unit elastic","Perfectly inelastic"],a:0,tag:"elasticity",type:"interpretation",feedback:"With elastic demand, price increases reduce revenue."},
-{ id:61, q:"If the price of a good rises and total revenue increases, demand must be...",options:["Inelastic","Elastic","Unit elastic","Perfectly elastic"],a:0,tag:"elasticity",type:"interpretation",feedback:"Inelastic demand means quantity responds weakly to price changes."},
-{ id:62, q:"If income rises and demand increases, the good is...",options:["Normal","Inferior","Perfect substitute","Perfect complement"],a:0,tag:"normal_inferior",type:"interpretation",feedback:"Normal goods experience increased demand when income rises."},
-{ id:63, q:"If income rises and demand decreases, the good is...",options:["Inferior","Normal","Elastic","Substitute"],a:0,tag:"normal_inferior",type:"interpretation",feedback:"Inferior goods see demand fall as income increases."},
-{ id:64, q:"A steeper budget constraint indicates...",options:["One good has become relatively more expensive","Income increased","Utility increased","Demand increased"],a:0,tag:"consumer_equilibrium",type:"interpretation",feedback:"The slope of the budget line reflects relative prices."},
-{ id:65, q:"A steeper indifference curve indicates...",options:["Greater willingness to trade Y for X","Lower income","Higher prices","Lower demand"],a:0,tag:"consumer_equilibrium",type:"interpretation",feedback:"Steeper curves indicate a higher marginal rate of substitution."},
-{ id:66, q:"If a consumer moves to a higher indifference curve after a price decrease, this indicates...",options:["Higher utility","Lower income","Lower prices overall","Demand collapse"],a:0,tag:"consumer_equilibrium",type:"interpretation",feedback:"Higher indifference curves represent higher levels of satisfaction."},
-{ id:67, q:"If demand is elastic, lowering price will...",options:["Increase total revenue","Decrease revenue","Leave revenue unchanged","Eliminate demand"],a:0,tag:"elasticity",type:"interpretation",feedback:"With elastic demand, quantity rises proportionally more than price falls."},
-{ id:68, q:"If quantity demanded barely responds to price changes, demand is...",options:["Inelastic","Elastic","Unit elastic","Perfectly elastic"],a:0,tag:"elasticity",type:"interpretation",feedback:"Inelastic demand means buyers respond weakly to price changes."},
-{ id:69, q:"If the price of X falls and the consumer buys more X and less Y, this reflects...",options:["The substitution effect","The income effect","Demand collapse","Consumer surplus"],a:0,tag:"income_substitution",type:"interpretation",feedback:"Consumers substitute toward relatively cheaper goods."},
-{ id:70, q:"A demand curve becomes steeper. What happens to elasticity?",options:["Elasticity must increase","Elasticity must decrease","Elasticity cannot be determined from slope alone","Demand becomes unit elastic"],a:2,tag:"elasticity",type:"trap",feedback:"Elasticity depends on both slope and position on the curve."},
-{ id:71, q:"If income rises and quantity demanded does not change, the good must be...",options:["Normal","Inferior","Income neutral","Perfect substitute"],a:2,tag:"normal_inferior",type:"trap",feedback:"Some goods are income neutral, meaning demand does not respond to income changes."},
-{ id:72, q:"If MRS equals the price ratio but the bundle lies outside the budget constraint...",options:["It is impossible","It maximizes utility","Prices changed","Income increased"],a:0,tag:"consumer_equilibrium",type:"trap",feedback:"Utility maximization requires the bundle to also be affordable."},
-{ id:73, q:"If demand is perfectly elastic and price rises slightly, quantity demanded will...",options:["Fall to zero","Decrease slightly","Remain constant","Increase"],a:0,tag:"elasticity",type:"trap",feedback:"Perfectly elastic demand means consumers will not buy at any higher price."},
-{ id:74, q:"A demand curve becomes steeper. What happens to elasticity?",options:["Elasticity must increase","Elasticity must decrease","Elasticity cannot be determined from slope alone","Demand becomes unit elastic"],a:2,tag:"elasticity",type:"trap",feedback:"Elasticity depends on both slope and position on the curve."},
-{ id:75, q:"If income rises but demand does not change, the good is...",options:["Normal","Inferior","Income neutral","Perfect substitute"],a:2,tag:"normal_inferior",type:"trap",feedback:"Some goods are income neutral and do not respond to income changes."},
-{ id:76, q:"If MRS equals the price ratio but the bundle lies outside the budget constraint...",options:["It is impossible","It maximizes utility","Prices changed","Income increased"],a:0,tag:"consumer_equilibrium",type:"trap",feedback:"Utility maximization requires affordability."},
-{ id:77, q:"If demand is perfectly elastic and price rises slightly...",options:["Quantity demanded falls to zero","Quantity demanded decreases slightly","Demand stays constant","Demand increases"],a:0,tag:"elasticity",type:"trap",feedback:"Perfectly elastic demand means consumers will not buy at higher prices."},
-{ id:78, q:"A consumer moves along a demand curve after income rises. What happened?",options:["Nothing — demand curves do not move with income","Demand shifted","Supply changed","Prices disappeared"],a:0,tag:"demand",type:"trap",feedback:"Income changes shift demand curves, not movement along them."},
-{ id:79, q:"If the substitution effect dominates the income effect for an inferior good...",options:["Demand still rises when price falls","Demand falls when price falls","Demand disappears","Demand becomes perfectly elastic"],a:0,tag:"income_substitution",type:"trap",feedback:"For most inferior goods the substitution effect still dominates."},
-{ id:80, q:"Two indifference curves intersect. This implies...",options:["Preferences are inconsistent","Utility is maximized","Prices changed","Demand increased"],a:0,tag:"consumer_equilibrium",type:"trap",feedback:"Indifference curves cannot cross if preferences are consistent."},
-{ id:81, q:"A bundle inside the budget constraint must...",options:["Be affordable but not necessarily optimal","Maximize utility","Be impossible","Increase income"],a:0,tag:"consumer_equilibrium",type:"trap",feedback:"Bundles inside the budget line are affordable but may not maximize utility."},
-{ id:82, q:"If demand is unit elastic and price rises...",options:["Total revenue stays the same","Revenue rises","Revenue falls","Demand disappears"],a:0,tag:"elasticity",type:"trap",feedback:"With unit elasticity, revenue remains constant."},
-{ id:83, q:"If both substitution and income effects reduce consumption after a price decrease...",options:["The good is Giffen","The good is normal","Demand is perfectly elastic","Supply increased"],a:0,tag:"income_substitution",type:"trap",feedback:"Giffen goods occur when the income effect dominates the substitution effect."}
+{ id:39, q:"Which statement best explains why expected utility differs from expected value?",options:["Utility depends on the individual’s preferences and may not increase linearly with income","Expected value includes probabilities while utility does not","Utility always equals income","Expected utility ignores risk"],a:0,type:"definition",tag:"risk",feedback:"Expected utility accounts for preferences and diminishing marginal utility, while expected value is purely monetary."},
+{ id:40, q:"Moral hazard occurs when...",options:["Individuals take more risks after obtaining insurance","High-risk individuals are more likely to buy insurance","Insurance eliminates all uncertainty","Premiums exceed expected losses"],a:0,type:"definition",tag:"insurance",feedback:"Moral hazard arises because individuals change behavior after being insured."},
+{ id:41, q:"A dominant strategy is best described as...",options:["A strategy that is optimal regardless of what the other player does","A strategy that depends on beliefs about others","A random strategy","A cooperative agreement"],a:0,type:"definition",tag:"game_theory",feedback:"A dominant strategy yields the highest payoff no matter what the opponent chooses."},
+{ id:42, q:"A person buys partial insurance instead of full insurance even though full coverage is available. What does this suggest?",options:["They are balancing cost and risk rather than eliminating all uncertainty","They are risk loving","They misunderstand insurance","They face no risk"],a:0,type:"interpretation",tag:"insurance",feedback:"Partial insurance reflects a tradeoff between the cost of premiums and the benefit of reducing risk."},
+{ id:43, q:"A firm chooses a strategy that is not its best response to a rival’s action. What does this imply?",options:["The outcome is not a Nash equilibrium","The firm has a dominant strategy","The firm is maximizing profit","The rival has no strategy"],a:0,type:"interpretation",tag:"game_theory",feedback:"In a Nash equilibrium, all players must be playing best responses."},
+{ id:44, q:"A risk-neutral individual faces a gamble with a 50% chance of $200 and 50% chance of $0. How will they value it?",options:["At $100, equal to its expected value","At $200, the highest payoff","At $0, the lowest payoff","They will reject it"],a:0,type:"interpretation",tag:"risk",feedback:"Risk-neutral individuals evaluate outcomes based solely on expected value."},
+{ id:45, q:"A gamble offers $100 with probability 0.3 and $0 otherwise. What is the expected value?",options:["$30","$70","$100","$0"],a:0,type:"calculation",tag:"risk",feedback:"Expected value = 0.3 × 100 = $30."},
+{ id:46, q:"An insurance policy covers a loss of $2,000 with a 5% probability. What is the expected loss?",options:["$100","$2,000","$50","$400"],a:0,type:"calculation",tag:"insurance",feedback:"Expected loss = 0.05 × 2000 = $100."},
+{ id:47, q:"In a payoff matrix, Player A’s best response to Player B’s action yields a payoff of 5, while an alternative yields 3. What should Player A choose?",options:["The strategy yielding 5","The strategy yielding 3","Randomize between both","Neither strategy"],a:0,type:"calculation",tag:"game_theory",feedback:"A best response is the strategy that gives the highest payoff given the opponent’s action."}
+{ id:48, q:"Expected utility theory predicts that individuals...",options:["Make choices based on utility rather than monetary value","Always choose the highest monetary payoff","Ignore probabilities","Prefer risky options"],a:0,type:"definition",tag:"risk",feedback:"Expected utility incorporates preferences and risk attitudes, not just monetary outcomes."},
+{ id:49, q:"Adverse selection occurs when...",options:["Higher-risk individuals are more likely to purchase insurance","Insured individuals take more risks","Firms misprice their products","Markets eliminate uncertainty"],a:0,type:"definition",tag:"insurance",feedback:"Adverse selection arises from asymmetric information before a transaction occurs."},
+{ id:50, q:"A Nash equilibrium occurs when...",options:["Each player’s strategy is a best response to the other’s","All players cooperate","Payoffs are maximized for all players","Strategies are randomized"],a:0,type:"definition",tag:"game_theory",feedback:"In Nash equilibrium, no player has an incentive to deviate unilaterally."},
+{ id:51, q:"A person refuses insurance when premiums are very high relative to expected loss. What does this suggest?",options:["They are weighing cost against risk reduction","They are risk loving","They misunderstand probabilities","They face no uncertainty"],a:0,type:"interpretation",tag:"insurance",feedback:"Even risk-averse individuals may reject insurance if the cost exceeds the benefit."},
+{ id:52, q:"Two firms repeatedly compete and begin cooperating over time. What likely explains this shift?",options:["Future interactions make cooperation more valuable","They became risk neutral","The payoff matrix disappeared","Competition no longer exists"],a:0,type:"interpretation",tag:"game_theory",feedback:"Repeated interaction allows for punishment strategies that sustain cooperation."},
+{ id:53, q:"An individual prefers a gamble with the same expected value but higher risk. This suggests...",options:["They are risk loving","They are risk averse","They are risk neutral","They ignore utility"],a:0,type:"interpretation",tag:"risk",feedback:"Risk-loving individuals prefer higher variance outcomes."},
+{ id:54, q:"A gamble pays $200 with probability 0.25 and $0 otherwise. What is the expected value?",options:["$50","$200","$25","$0"],a:0,type:"calculation",tag:"risk",feedback:"Expected value = 0.25 × 200 = $50."},
+{ id:55, q:"An insurance loss is $500 with a 20% probability. What is the expected loss?",options:["$100","$500","$20","$400"],a:0,type:"calculation",tag:"insurance",feedback:"Expected loss = 0.20 × 500 = $100."},
+{ id:56, q:"If a player has two strategies yielding payoffs of 8 and 5 given the opponent’s choice, what is the best response?",options:["Choose the strategy yielding 8","Choose the strategy yielding 5","Randomize between both","Avoid both strategies"],a:0,type:"calculation",tag:"game_theory",feedback:"A best response maximizes payoff given the opponent’s action."}
 ], 
 hard:[
-{ id:84, q:"A firm lowers its price and observes that total revenue falls. What must be true about demand at the original price?",options:["Demand was inelastic","Demand was elastic","Demand was unit elastic","Demand was perfectly elastic"],a:0,feedback:"If lowering price reduces revenue, quantity did not increase enough to offset the price drop. Demand must have been inelastic."},
-{ id:85, q:"A price increase causes total revenue to stay the same. What does this imply about demand at that price?",options:["Demand is unit elastic","Demand is elastic","Demand is inelastic","Demand is perfectly inelastic"],a:0,feedback:"When elasticity equals one, the percentage change in quantity exactly offsets the percentage change in price."},
-{ id:86, q:"A firm raises its price and observes that quantity demanded falls sharply and revenue decreases. What does this indicate?",options:["Demand is elastic","Demand is inelastic","Demand is unit elastic","Demand is perfectly inelastic"],a:0,feedback:"When price rises and revenue falls, demand must be elastic."},
-{ id:87, q:"A good has many close substitutes and consumers can easily switch between them. What is most likely true about demand?",options:["Demand is highly elastic","Demand is highly inelastic","Demand is perfectly inelastic","Demand is unrelated to price"],a:0,feedback:"More substitutes increase consumers' responsiveness to price changes."},
-{ id:88, q:"A price decrease causes consumers to buy more of good X even though X is an inferior good. Why?",options:["The substitution effect outweighs the income effect","The income effect outweighs the substitution effect","Preferences changed","Demand shifted outward"],a:0,feedback:"Even for inferior goods, the substitution effect usually dominates, increasing consumption when price falls."},
-{ id:89, q:"If a good takes a large share of consumer income and has many substitutes, demand will most likely be...",options:["Highly elastic","Highly inelastic","Perfectly inelastic","Unit elastic"],a:0,feedback:"Large budget share and many substitutes both increase elasticity."},
-{ id:90, q:"A demand curve becomes flatter. What does this imply about consumer responsiveness to price?",options:["Consumers are more responsive to price changes","Consumers are less responsive to price changes","Consumers ignore price changes","Consumers stop buying the good"],a:0,feedback:"Flatter demand curves indicate more elastic demand."},
-{ id:91, q:"A firm lowers price and sees quantity demanded increase substantially. What will most likely happen to total revenue?",options:["Total revenue increases","Total revenue decreases","Total revenue stays the same","Revenue becomes zero"],a:0,feedback:"A large increase in quantity indicates elastic demand, which raises revenue when price falls."},
-{ id:92, q:"If price falls and consumers buy more units while also gaining more surplus per unit, what happens to total consumer surplus?",options:["Consumer surplus increases","Consumer surplus decreases","Consumer surplus stays the same","Consumer surplus becomes zero"],a:0,feedback:"Lower prices increase the gap between willingness to pay and price and increase quantity purchased."},
-{ id:93, q:"If consumers become less sensitive to price changes, what happens to elasticity?",options:["Demand becomes more inelastic","Demand becomes more elastic","Demand becomes perfectly elastic","Demand becomes unit elastic"],a:0,feedback:"Less responsiveness to price changes means demand is more inelastic."},
-{ id:94, q:"A good has very few substitutes and is a small part of consumer income. Demand is most likely...",options:["Relatively inelastic","Highly elastic","Perfectly elastic","Unit elastic"],a:0,feedback:"Few substitutes and small budget share both reduce price sensitivity."},
-{ id:95, q:"A firm lowers price slightly and sees almost no change in quantity demanded. What does this imply about demand?",options:["Demand is inelastic","Demand is elastic","Demand is unit elastic","Demand is perfectly elastic"],a:0,feedback:"If quantity barely responds to price changes, demand is inelastic."},
-{ id:96, q:"At the optimal consumption bundle, what must be true about the marginal rate of substitution (MRS) and the price ratio?",options:["MRS equals the price ratio","MRS is greater than the price ratio","MRS is less than the price ratio","MRS must equal income"],a:0,feedback:"Utility maximization occurs where the marginal rate of substitution equals the relative price of the goods."},
-{ id:97, q:"If the marginal rate of substitution is greater than the price ratio, what should the consumer do?",options:["Consume more of good X and less of good Y","Consume more of good Y and less of good X","Stop consuming both goods","Increase income"],a:0,feedback:"If MRS exceeds the price ratio, the consumer values X more than the market trade-off, so they should consume more X."},
-{ id:98, q:"If two indifference curves intersect on a graph, what does this imply about consumer preferences?",options:["Preferences are inconsistent","Utility is maximized","Income increased","Demand increased"],a:0,feedback:"Indifference curves cannot cross because that would imply contradictory rankings of bundles."},
-{ id:99, q:"A consumer moves to a higher indifference curve after a price decrease. What must be true?",options:["The consumer is better off","The consumer is worse off","Income decreased","The budget line rotated inward"],a:0,feedback:"Higher indifference curves represent higher utility levels."},
-{ id:100, q:"If indifference curves become flatter as you move to the right along a curve, what does this indicate?",options:["Diminishing marginal rate of substitution","Increasing marginal utility","Perfect substitutes","Perfect complements"],a:0,feedback:"Consumers are willing to give up fewer units of Y for each additional unit of X, which reflects diminishing marginal rate of substitution."},
-{ id:101, q:"If the price of good X falls while income remains constant, what happens to the budget constraint?",options:["It rotates outward along the X-axis","It shifts outward parallel","It rotates inward","It becomes vertical"],a:0,feedback:"A lower price for X allows consumers to buy more X while the Y intercept stays the same."},
-{ id:102, q:"If the marginal rate of substitution is less than the price ratio at a bundle, what should the consumer do?",options:["Consume more of good Y and less of good X","Consume more of good X and less of good Y","Stop consuming both goods","Increase income"],a:0,feedback:"If MRS is less than the price ratio, the consumer values Y more relative to X than the market trade-off, so they should consume more Y."},
-{ id:103, q:"Which statement must be true for a bundle to maximize utility?",options:["An indifference curve is tangent to the budget line","The bundle lies on the highest indifference curve regardless of affordability","The consumer buys equal amounts of both goods","The budget line is horizontal"],a:0,feedback:"Utility maximization occurs where the highest attainable indifference curve is tangent to the budget constraint."}
+{q:"A risk-averse individual faces a gamble with a higher expected value than a certain outcome but still chooses the certain outcome. What must be true?",options:["The expected utility of the gamble is lower than the utility of the certain outcome","The individual miscalculated probabilities","The gamble has lower variance","The individual is risk neutral"],a:0,feedback:"Risk-averse individuals maximize expected utility, not expected value. A higher expected value gamble can still provide lower utility."},
+{q:"Two firms are in a Prisoner’s Dilemma. They both prefer cooperation but end up defecting. What is the core reason this outcome persists?",options:["Each firm’s best response is to defect regardless of the other’s action","Firms cannot calculate payoffs","Cooperation yields lower profits","The game lacks a Nash equilibrium"],a:0,feedback:"Defection is the dominant strategy, making it the Nash equilibrium even though cooperation would be better collectively."},
+{q:"In a sequential game, a firm threatens to cut prices if a rival enters the market, but doing so would reduce its own profits. Why is this threat not credible?",options:["It is not part of a subgame perfect equilibrium","It is not a dominant strategy","It does not change the payoff matrix","It violates Nash equilibrium"],a:0,feedback:"Subgame perfect equilibrium requires that strategies be optimal at every decision point. A threat that harms the firm is not credible."},
+{q:"An insurance company raises premiums after observing that only high-risk individuals are purchasing policies. What problem is the firm facing?",options:["Adverse selection","Moral hazard","Diminishing marginal utility","Strategic commitment"],a:0,feedback:"Adverse selection occurs when higher-risk individuals are more likely to purchase insurance, driving up costs."},
+{q:"In a repeated Prisoner’s Dilemma, cooperation is sustained using a trigger strategy. What is the key mechanism that makes this possible?",options:["The threat of future punishment outweighs short-term gains from cheating","Players become risk neutral over time","The payoff matrix changes each round","Communication becomes enforceable"],a:0,feedback:"If future interaction is likely, the long-term cost of punishment can deter short-term defection."}
+{q:"A consumer buys full insurance even when the premium exceeds the expected loss. What does this behavior imply?",options:["Strong risk aversion and a preference for certainty","The consumer is risk neutral","The insurer is losing money","The expected value is negative"],a:0,feedback:"Risk-averse individuals may pay more than expected loss to eliminate uncertainty because they value certainty in utility terms."},
+{q:"In a coordination game with multiple equilibria, players fail to coordinate on the best outcome. What concept can help them align expectations?",options:["Focal point","Dominant strategy","Mixed strategy","Moral hazard"],a:0,feedback:"Focal points help players coordinate on a likely outcome using shared expectations or context outside the game."},
+{q:"A mixed strategy equilibrium requires players to randomize their actions. What is the purpose of this randomization?",options:["To make opponents indifferent between their available strategies","To maximize total welfare","To eliminate all risk","To guarantee higher payoffs"],a:0,feedback:"Players randomize to keep opponents indifferent, preventing them from exploiting predictable behavior."},
+{q:"An insurer cannot distinguish between high-risk and low-risk individuals, leading to higher average premiums. What is the likely outcome?",options:["Low-risk individuals exit the market","All individuals buy more insurance","Risk disappears","Premiums fall"],a:0,feedback:"Adverse selection drives low-risk individuals out, leaving a riskier pool and higher premiums."},
+{q:"A firm commits to a strategy that limits its future choices to influence competitors’ behavior. What is this an example of?",options:["Strategic commitment","Adverse selection","Diminishing returns","Moral hazard"],a:0,feedback:"By committing to a strategy, a firm can credibly influence rivals’ expectations and actions."},
+{q:"In a sequential entry game, an incumbent builds excess capacity to deter entry. Why might this be effective?",options:["It makes the threat to flood the market more credible","It increases production costs for both firms","It eliminates demand uncertainty","It guarantees monopoly profits"],a:0,feedback:"Excess capacity can signal a credible threat to expand output and lower prices if entry occurs."},
+{q:"A gamble has zero expected value, but a risk-loving individual accepts it. What explains this decision?",options:["The utility of the gamble exceeds the utility of the certain outcome","The probabilities are incorrect","The gamble has no variance","The individual is risk neutral"],a:0,feedback:"Risk-loving individuals prefer higher variance and may gain higher expected utility from the gamble."},
+{q:"In a repeated game with a known final period, why does cooperation typically break down?",options:["Backward induction leads players to defect in every period","Players forget past actions","Payoffs become identical","Communication becomes impossible"],a:0,feedback:"In a finite game, players anticipate defection in the final period, unraveling cooperation backward."},
+{q:"Two players each choose strategies that are best responses to one another. What does this guarantee?",options:["A Nash equilibrium","A dominant strategy equilibrium","A Pareto efficient outcome","A mixed strategy outcome"],a:0,feedback:"A Nash equilibrium occurs when each player’s strategy is a best response to the other’s."},
+{q:"A policy eliminates all risk for individuals but reduces overall expected income. Why might individuals still prefer it?",options:["They maximize expected utility rather than expected value","They are risk loving","They ignore probabilities","They prefer lower income"],a:0,feedback:"Risk-averse individuals may accept lower expected income to eliminate uncertainty and increase utility."}
 ]
 };
 
@@ -788,30 +765,29 @@ game_theory:[
 };
 
 const mediumConceptPools = {
-demand:[
-{q:"A movement along a demand curve occurs when...",options:["The price of the good changes","Income changes","Consumer tastes change","The number of buyers changes"],a:0,feedback:"A change in the good’s own price causes movement along the demand curve."},
-{q:"A demand curve shifts when...",options:["Income or preferences change","The good’s own price changes","Firms change production","Technology changes"],a:0,feedback:"Demand shifts occur when factors other than the good’s own price change."},
-{q:"If the price of coffee rises and demand for tea increases, coffee and tea are...",options:["Substitutes","Complements","Inferior goods","Unrelated goods"],a:0,feedback:"Substitutes are goods consumers switch between when relative prices change."}],
+risk:[
+{id:1301,q:"Expected utility differs from expected value because it...",options:["Accounts for preferences toward risk","Ignores probabilities","Always equals income","Eliminates uncertainty"],a:0,tag:"definition",type:"risk",feedback:"Expected utility reflects how individuals feel about risk, not just monetary outcomes."},
+{id:1302,q:"Diminishing marginal utility implies that...",options:["Each additional dollar provides less additional satisfaction","Utility increases at a constant rate","People prefer risk","All outcomes are equal"],a:0,tag:"definition",type:"risk",feedback:"As wealth increases, each additional unit adds less utility."},
+{id:1303,q:"A risk-loving individual will prefer...",options:["A gamble with higher variance","A certain outcome","Lower expected value","No risk"],a:0,tag:"definition",type:"risk",feedback:"Risk-loving individuals prefer variability in outcomes."},
+{id:1304,q:"If a gamble has a higher expected value but is rejected, this suggests...",options:["Expected utility is lower than the certain option","The gamble is risk free","Probabilities are incorrect","The payoff is zero"],a:0,tag:"interpretation",type:"risk",feedback:"Risk-averse individuals may reject higher expected value gambles due to lower utility."},
+{id:1305,q:"A person who is indifferent between a gamble and its expected value is...",options:["Risk neutral","Risk averse","Risk loving","Irrational"],a:0,tag:"interpretation",type:"risk",feedback:"Risk-neutral individuals care only about expected value."}
+],
 
-income_substitution:[
-{q:"The substitution effect occurs because...",options:["Relative prices change","Income changes","Preferences change","Demand shifts randomly"],a:0,feedback:"The substitution effect occurs because one good becomes relatively cheaper or more expensive."},
-{q:"The income effect occurs because...",options:["A price change changes purchasing power","Consumers always buy less","Preferences suddenly change","Supply conditions shift"],a:0,feedback:"When price changes, the consumer’s real purchasing power changes too."},
-{q:"When the price of a good falls, the substitution effect causes consumers to...",options:["Buy more of the relatively cheaper good","Buy less of the good","Ignore the price change","Buy equal amounts of all goods"],a:0,feedback:"Consumers substitute toward the relatively cheaper good."}],
+insurance:[
+{id:1401,q:"Fair insurance is defined as insurance where...",options:["Premium equals expected loss","Premium exceeds expected loss","Risk is eliminated","Loss probability is zero"],a:0,tag:"definition",type:"insurance",feedback:"Fair insurance charges a premium equal to expected loss."},
+{id:1402,q:"Moral hazard arises because...",options:["Behavior changes after obtaining insurance","High-risk individuals buy insurance","Firms misprice risk","Markets fail"],a:0,tag:"definition",type:"insurance",feedback:"Insurance coverage can lead individuals to take on more risk."},
+{id:1403,q:"Adverse selection is primarily caused by...",options:["Asymmetric information before a transaction","Behavior changes after insurance","Government regulation","Risk elimination"],a:0,tag:"definition",type:"insurance",feedback:"Adverse selection occurs when one side has more information before a deal."},
+{id:1404,q:"If low-risk individuals leave the insurance market, premiums will likely...",options:["Increase","Decrease","Stay the same","Disappear"],a:0,tag:"interpretation",type:"insurance",feedback:"When low-risk individuals exit, the remaining pool is riskier, driving up premiums."},
+{id:1405,q:"Diversification reduces risk because...",options:["Not all outcomes move together","All investments increase","Risk disappears","Returns are guaranteed"],a:0,tag:"interpretation",type:"insurance",feedback:"Diversification spreads exposure across different outcomes."}
+],
 
-normal_inferior:[
-{q:"A normal good is one where...",options:["Demand rises as income rises","Demand falls as income rises","Demand is unrelated to income","Price always rises with income"],a:0,feedback:"Normal goods are purchased more when income increases."},
-{q:"An inferior good is one where...",options:["Demand falls as income rises","Demand rises as income rises","Demand never changes","Price becomes lower as income rises"],a:0,feedback:"Inferior goods are purchased less when income increases."},
-{q:"If income rises and people buy more restaurant meals, restaurant meals are...",options:["Normal goods","Inferior goods","Giffen goods","Complements"],a:0,feedback:"If demand rises with income, the good is normal."}],
-
-consumer_equilibrium:[
-{q:"Consumer equilibrium occurs where...",options:["The highest attainable indifference curve is tangent to the budget line","Income equals spending on one good","Demand equals supply","Utility is zero"],a:0,feedback:"Consumers maximize utility at the point where the best affordable indifference curve touches the budget line."},
-{q:"At the optimal bundle, the marginal rate of substitution equals...",options:["The ratio of prices","Total income","The slope of the demand curve","Total utility"],a:0,feedback:"Consumer equilibrium occurs where MRS equals the price ratio."},
-{q:"If MUx/Px is greater than MUy/Py, the consumer should...",options:["Consume more X and less Y","Consume more Y and less X","Stop consuming both goods","Reduce income"],a:0,feedback:"The consumer should shift spending toward the good with higher marginal utility per dollar."}],
-
-elasticity:[
-{q:"Price elasticity of demand measures...",options:["How responsive quantity demanded is to price changes","How responsive supply is to price changes","How much income consumers earn","How much firms spend on production"],a:0,feedback:"Elasticity measures the responsiveness of quantity demanded to a change in price."},
-{q:"If elasticity is greater than 1, demand is...",options:["Elastic","Inelastic","Unit elastic","Perfectly inelastic"],a:0,feedback:"Elastic demand means quantity demanded responds strongly to price changes."},
-{q:"If elasticity is less than 1, demand is...",options:["Inelastic","Elastic","Unit elastic","Perfectly elastic"],a:0,feedback:"Inelastic demand means quantity demanded responds weakly to price changes."}]
+game_theory:[
+{id:1501,q:"A best response is...",options:["The strategy that yields the highest payoff given others’ actions","A random strategy","Always cooperative","Always dominant"],a:0,tag:"definition",type:"game_theory",feedback:"Best responses depend on what other players choose."},
+{id:1502,q:"A dominant strategy exists when...",options:["One strategy is best regardless of others’ choices","Players cooperate","Outcomes are equal","Strategies are random"],a:0,tag:"definition",type:"game_theory",feedback:"A dominant strategy is always the best choice."},
+{id:1503,q:"Subgame perfect equilibrium refines Nash equilibrium by...",options:["Eliminating non-credible threats","Ensuring cooperation","Maximizing profits","Removing strategies"],a:0,tag:"definition",type:"game_theory",feedback:"It requires optimal decisions at every stage of the game."},
+{id:1504,q:"If a player makes a threat that would hurt themselves if carried out, that threat is...",options:["Not credible","Dominant","Optimal","A Nash equilibrium"],a:0,tag:"interpretation",type:"game_theory",feedback:"Non-credible threats are not part of subgame perfect equilibrium."},
+{id:1505,q:"In repeated games, cooperation can occur because...",options:["Future punishment discourages cheating","Players become identical","Payoffs disappear","Strategies are fixed"],a:0,tag:"interpretation",type:"game_theory",feedback:"Future consequences can sustain cooperation."}
+]
 };
 
 let easyTagCycle = 0;
@@ -868,18 +844,6 @@ calculation: questionBanks.medium.filter(q => q.tag === "game_theory" && q.type 
 }
 };
  
-let easyIndex = {
-definition:0,
-interpretation:0,
-calculation:0
-};
-
-let mediumIndex = {
-definition:0,
-interpretation:0,
-calculation:0
-};
-  
 function randomEasy(){
 
 let type;
@@ -889,13 +853,21 @@ if(easyCycle === 2) type = "calculation";
 easyCycle = (easyCycle + 1) % 3;
 
 let tag = easyTags[easyTagCycle];
-easyTagCycle = (easyTagCycle + 1) % 3;
+easyTagCycle = (easyTagCycle + 1) % easyTags.length;
 
 let pool = easyPools[tag][type];
 
 if(!pool || pool.length === 0){
-console.error("Easy pool missing:", tag, type);
-return null;
+console.warn("Missing pool:", tag, type);
+
+// fallback: grab any available question in this difficulty
+let fallbackPool = Object.values(easyPools)
+    .flatMap(t => Object.values(t))
+    .filter(p => p.length > 0);
+
+if(fallbackPool.length === 0) return null;
+
+pool = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
 }
 
 let question = pool[easyIndex[tag][type]];
@@ -918,13 +890,21 @@ if(mediumCycle === 2) type = "calculation";
 mediumCycle = (mediumCycle + 1) % 3;
 
 let tag = mediumTags[mediumTagCycle];
-mediumTagCycle = (mediumTagCycle + 1) % 3;
+mediumTagCycle = (mediumTagCycle + 1) % mediumTags.length;
 
 let pool = mediumPools[tag][type];
 
 if(!pool || pool.length === 0){
-console.error("Medium pool missing:", tag, type);
-return null;
+console.warn("Missing pool:", tag, type);
+
+// fallback: grab any available question in this difficulty
+let fallbackPool = Object.values(easyPools)
+    .flatMap(t => Object.values(t))
+    .filter(p => p.length > 0);
+
+if(fallbackPool.length === 0) return null;
+
+pool = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
 }
 
 let question = pool[mediumIndex[tag][type]];
@@ -963,114 +943,258 @@ return q;
     
 function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
-function getMUPerDollar() {
-    const mu = Math.floor(Math.random() * 50) + 10;
-    const price = [2, 5, 10][Math.floor(Math.random() * 3)];
-    return {
-        q: `A consumer receives MUx = ${mu} from good X. The price of X is $${price}. What is the Marginal Utility per dollar?`,
-        options: [`${(mu/price).toFixed(1)}`, `${mu}`, `${price/mu}`, `${(mu*price)}`],
-        a: 0, feedback:`MU per dollar = MU / Price = ${mu} / ${price} = ${(mu/price).toFixed(1)}`
-    };
-    
+// generating random questions for medium and hard 
+function getRiskMedium(){
+
+// random probability (0.2 to 0.8)
+let p = (Math.floor(Math.random()*7)+2)/10;
+
+// random payoff ($50 to $200)
+let payoff = (Math.floor(Math.random()*4)+1)*50;
+
+// expected value
+let ev = Math.round(p * payoff);
+
+// distractors
+let wrong1 = payoff;
+let wrong2 = Math.round(payoff/2);
+let wrong3 = 0;
+
+// shuffle options
+let options = [ev, wrong1, wrong2, wrong3];
+let correct = ev;
+
+shuffleArray(options);
+
+return {
+q:`A gamble pays $${payoff} with probability ${p} and $0 otherwise. What is the expected value?`,
+options: options.map(o=>"$"+o),
+a: options.indexOf(correct),
+type:"calculation",
+tag:"risk",
+feedback:`Expected value = ${p} × ${payoff} = $${ev}.`
+};
+
 }
 
-function getEquilibriumCheck() {
-    const muX = Math.floor(Math.random() * 20) + 10;
-    const pX = [2, 5][Math.floor(Math.random() * 2)];
-    const ratio = muX / pX;
-    // We want the student to find the MUy that satisfies MUx/Px = MUy/Py
-    const pY = 10;
-    const correctMUy = ratio * pY;
-    
-    return {
-        q: `A consumer is in equilibrium. MUx = ${muX} and Px = $${pX}. If the price of Good Y (Py) is $${pY}, what must be the Marginal Utility of Good Y (MUy)?`,
-        options: [`${correctMUy}`, `${correctMUy / 2}`, `${correctMUy + 10}`, `${muX}`],
-        a: 0, feedback:`Consumer equilibrium requires MUx/Px = MUy/Py. ${muX}/${pX} = ${ratio}. So MUy must equal ${correctMUy}.`
-    };
+function getInsuranceMedium(){
+
+// probability (0.05 to 0.30)
+let p = (Math.floor(Math.random()*6)+1)*0.05;
+
+// loss ($500 to $2000)
+let loss = (Math.floor(Math.random()*4)+1)*500;
+
+// expected loss
+let ev = Math.round(p * loss);
+
+// premium slightly above expected loss
+let premium = ev + (Math.floor(Math.random()*3)+1)*20;
+
+// distractors
+let wrong1 = loss;
+let wrong2 = Math.round(loss/2);
+let wrong3 = ev - 20;
+
+// correct answer
+let correctText = "Buy the insurance";
+
+// options
+let options = [
+"Buy the insurance",
+"Do not buy the insurance",
+"Indifferent between buying and not buying",
+"Need more information"
+];
+
+// shuffle
+shuffleArray(options);
+
+return {
+q:`An insurance policy covers a $${loss} loss with probability ${p}. The premium is $${premium}. A risk-averse individual will most likely...`,
+options: options,
+a: options.indexOf(correctText),
+type:"interpretation",
+tag:"insurance",
+feedback:`Expected loss is $${ev}. A risk-averse individual may still buy insurance to avoid uncertainty, even if the premium is higher.`
+};
+
 }
-function getElasticityCalc() {
-
-    const p1 = (Math.floor(Math.random() * 5) + 4) * 2;
-    const p2 = p1 + 2;
-
-    const q1 = (Math.floor(Math.random() * 5) + 8) * 10;
-    const q2 = q1 - 20;
-
-    const chgQ = q2 - q1;
-    const midQ = (q1 + q2) / 2;
-    const chgP = p2 - p1;
-    const midP = (p1 + p2) / 2;
-
-    const elasticityVal = Math.abs((chgQ / midQ) / (chgP / midP));
-    const elasticity = elasticityVal.toFixed(2);
-
-    // helper classifier
-    function classify(val){
-        if (val > 1) return "Elastic";
-        if (val < 1) return "Inelastic";
-        return "Unit Elastic";
-    }
-
-    const correct = `${elasticity} (${classify(elasticityVal)})`;
-
-    const d1Val = elasticityVal * 0.7;
-    const d2Val = elasticityVal * 1.3;
-    const d3Val = Math.abs((chgQ / q1) / (chgP / p1));
-
-    const d1 = `${d1Val.toFixed(2)} (${classify(d1Val)})`;
-    const d2 = `${d2Val.toFixed(2)} (${classify(d2Val)})`;
-    const d3 = `${d3Val.toFixed(2)} (${classify(d3Val)})`;
-
-    let options = new Set();
-    options.add(correct);
-    options.add(d1);
-    options.add(d2);
-    options.add(d3);
-
-    while (options.size < 4) {
-        const fillerVal = Math.random() * 2 + 0.5;
-        options.add(`${fillerVal.toFixed(2)} (${classify(fillerVal)})`);
-    }
-
-    options = Array.from(options);
-
-    return {
-        q: `When the price of a good increases from $${p1} to $${p2}, the quantity demanded decreases from ${q1} units to ${q2} units. Using the Midpoint (Arc) Method, what is the price elasticity of demand?`,
-        options: options,
-        a: options.indexOf(correct),
-        hint: "Arc Elasticity = [(Q2-Q1)/((Q1+Q2)/2)] / [(P2-P1)/((P1+P2)/2)]",
-        feedback: `Elasticity ≈ ${elasticity}. Demand is ${classify(elasticityVal)}.`
-    };
-
-    }
   
-function getConsumerSurplusCalc() {
-    const wtp = Math.floor(Math.random() * 20) + 40; // Higher WTP to ensure positive surplus
-    const initialPrice = Math.floor(Math.random() * 10) + 20; // e.g., $20 - $30
-    const priceDrop = Math.floor(Math.random() * 5) + 5; // e.g., $5 - $10 drop
-    const finalPrice = initialPrice - priceDrop;
+function getStrategicDominant(){
 
-    // The increase in surplus is the difference between the price points
-    // New Surplus (wtp - finalPrice) - Old Surplus (wtp - initialPrice) = initialPrice - finalPrice
-    const surplusIncrease = initialPrice - finalPrice;
+// generate payoffs
+let A1 = Math.floor(Math.random()*5)+1;
+let A2 = Math.floor(Math.random()*5)+1;
+let A3 = Math.floor(Math.random()*5)+1;
+let A4 = Math.floor(Math.random()*5)+1;
 
-    return {
-        q: `A buyer is willing to pay $${wtp} for a product. The market price falls from $${initialPrice} to $${finalPrice}. How much does the consumer surplus increase for this buyer?`,
-        options: [
-            `$${surplusIncrease}`, 
-            `$${wtp - finalPrice}`, 
-            `$${priceDrop + 10}`, 
-            `$${wtp - initialPrice}`
-        ],a: 0, feedback:`Consumer surplus increases by the change in price: ${initialPrice} - ${finalPrice} = ${surplusIncrease}.`
-    };
-    
+// force a dominant structure
+// Strategy 1 dominates Strategy 2 for Player A
+let topLeft = A1 + 3;
+let bottomLeft = A1;
+let topRight = A2 + 3;
+let bottomRight = A2;
+
+let question = `Player A chooses between Up or Down. Player B chooses Left or Right.
+
+Payoffs to Player A:
+
+            B: Left     B: Right  
+A: Up       ${topLeft}          ${topRight}  
+A: Down     ${bottomLeft}          ${bottomRight}  
+
+What is Player A’s dominant strategy?`;
+
+let options = ["Up","Down","No dominant strategy","Depends on B"];
+let correct = "Up";
+
+shuffleArray(options);
+
+return {
+q: question,
+options: options,
+a: options.indexOf(correct),
+tag:"game_theory",
+feedback:"Up yields a higher payoff than Down regardless of what Player B does. That’s a dominant strategy."
+};
+
 }
 
+function getStrategicNash(){
+
+// generate base payoffs
+let a = Math.floor(Math.random()*4)+2;
+let b = Math.floor(Math.random()*4)+1;
+
+// build a Prisoner's Dilemma style structure
+let matrix = {
+TL:[a,a],        // cooperate
+TR:[1,b+2],      // A cooperates, B defects
+BL:[b+2,1],      // A defects, B cooperates
+BR:[2,2]         // both defect (Nash)
+};
+
+let question = `Two players choose between Cooperate or Defect.
+
+Payoff matrix (A,B):
+
+                B: Coop        B: Defect  
+A: Coop         (${matrix.TL})      (${matrix.TR})  
+A: Defect       (${matrix.BL})      (${matrix.BR})  
+
+What is the Nash equilibrium?`;
+
+let options = [
+"(Cooperate, Cooperate)",
+"(Cooperate, Defect)",
+"(Defect, Cooperate)",
+"(Defect, Defect)"
+];
+
+let correct = "(Defect, Defect)";
+
+shuffleArray(options);
+
+return {
+q: question,
+options: options,
+a: options.indexOf(correct),
+tag:"game_theory",
+feedback:"Both players defect because it is the best response to the other’s action. Neither can improve by deviating."
+};
+
+}
+
+function getStrategicBestResponse(){
+
+let upLeft = Math.floor(Math.random()*5)+1;
+let downLeft = upLeft + Math.floor(Math.random()*3)+1;
+
+let upRight = Math.floor(Math.random()*5)+1;
+let downRight = upRight - Math.floor(Math.random()*2);
+
+let question = `Player B chooses Left or Right. Player A must respond.
+
+Payoffs to Player A:
+
+            B: Left     B: Right  
+A: Up       ${upLeft}          ${upRight}  
+A: Down     ${downLeft}          ${downRight}  
+
+If Player B chooses Left, what is Player A’s best response?`;
+
+let options = ["Up","Down","Both are equal","Cannot determine"];
+let correct = (downLeft > upLeft) ? "Down" : "Up";
+
+shuffleArray(options);
+
+return {
+q: question,
+options: options,
+a: options.indexOf(correct),
+tag:"game_theory",
+feedback:"A best response is the action that gives the highest payoff given the opponent’s choice."
+};
+
+}
+
+function strategicCooperation(){
+
+// probability game continues (0.3 to 0.9)
+let g = Math.round((Math.random()*0.6 + 0.3)*10)/10;
+
+// cooperation payoff per round
+let coop = Math.floor(Math.random()*3)+2;   // 2–4
+
+// cheat payoff (temptation)
+let cheat = coop + Math.floor(Math.random()*3)+1; // always higher
+
+// punishment payoff after cheating
+let punish = 1;
+
+// present value style comparison (simplified intuition)
+let cooperateValue = coop / (1 - g);
+let cheatValue = cheat + (punish * (g/(1-g)));
+
+// correct answer
+let correct = (cooperateValue >= cheatValue) ? "Cooperate" : "Defect";
+
+let question = `Two players are in a repeated game. Each round:
+
+- If both cooperate, each earns ${coop}
+- If one defects, they earn ${cheat} while the other gets 0
+- After any defection, both players earn ${punish} forever
+
+The probability the game continues each round is ${g}.
+
+What is the best strategy?`;
+
+let options = [
+"Cooperate",
+"Defect",
+"Mix strategies",
+"Depends only on current payoff"
+];
+
+shuffleArray(options);
+
+return {
+q: question,
+options: options,
+a: options.indexOf(correct),
+tag:"game_theory",
+feedback:`Cooperation value ≈ ${cooperateValue.toFixed(1)}, deviation value ≈ ${cheatValue.toFixed(1)}. If future payoffs matter enough, cooperation is sustained.`
+};
+
+}
 const calculationGenerators = [
-    getMUPerDollar,
-    getEquilibriumCheck,
-    getElasticityCalc,
-    getConsumerSurplusCalc
+    getRiskMedium,
+    getInsuranceMedium,
+    getStrategicDominat,
+    getStrategicNash,
+    getStrategicBestResponse,
+    getStrategicCooperation
 ];
     
 // Keep track of the last few questions to prevent repeats
@@ -1082,10 +1206,12 @@ easyBoss: [], mediumBoss: [], finalBoss: []
 function randomQuestion(poolName) {
     // --- SPECIAL CALCULATED ROOMS (26-29) ---
     // These ensure the student practices specific math skills before the boss
-    if (room === 26) return getMUPerDollar();
-    if (room === 27) return getEquilibriumCheck();
-    if (room === 28) return getConsumerSurplusCalc();
-    if (room === 29) return getElasticityCalc();
+    if (room === 18) return getRiskMedium();
+    if (room === 19) return getInsuranceMedium();
+    if (room === 26) return getStrategicDominat();
+    if (room === 27) return getStrategicNash();
+    if (room === 28) return getStrategicBestResponse();
+    if (room === 29) return getStrategicCooperation();
 
 let pool = questionBanks[poolName]
 let used = [
