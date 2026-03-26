@@ -945,44 +945,49 @@ feedback:`Expected value = ${p} × ${payoff} = $${ev}.`
 
 function getInsuranceMedium(){
 
-// probability (0.05 to 0.30)
 let p = (Math.floor(Math.random()*6)+1)*0.05;
-
-// loss ($500 to $2000)
 let loss = (Math.floor(Math.random()*4)+1)*500;
-
-// expected loss
 let ev = Math.round(p * loss);
-
-// premium slightly above expected loss
 let premium = ev + (Math.floor(Math.random()*3)+1)*20;
 
-// distractors
-let wrong1 = loss;
-let wrong2 = Math.round(loss/2);
-let wrong3 = ev - 20;
+// --- RANDOMLY PICK PLAYER TYPE ---
+let isRiskAverse = Math.random() < 0.5;
 
-// correct answer
-let correctText = "Buy the insurance";
+let qText = "";
+let correctText = "";
+let feedback = "";
 
-// options
+// --- OPTIONS (balanced, no giveaways) ---
 let options = [
-"Buy the insurance",
-"Do not buy the insurance",
-"Indifferent between buying and not buying",
-"Need more information"
+"Buy the insurance because reducing risk increases expected utility",
+"Do not buy the insurance because the premium exceeds expected loss",
+"Be indifferent because expected value determines the decision",
+"Buy the insurance because outcomes are uncertain"
 ];
 
-// shuffle
+// --- LOGIC BRANCH ---
+if(isRiskAverse){
+
+    qText = `An individual faces a loss of $${loss} with probability ${p}. Insurance costs $${premium}. Why might a risk-averse individual choose to buy the insurance?`;
+    correctText = "Buy the insurance because reducing risk increases expected utility";
+    feedback = `Risk-averse individuals maximize expected utility, not expected value. Even though the premium ($${premium}) exceeds expected loss ($${ev}), reducing risk can increase overall utility.`;
+
+} else {
+    qText = `An individual faces a loss of $${loss} with probability ${p}. Insurance costs $${premium}. Should a risk-neutral individual buy the insurance?`;
+    correctText = "Do not buy the insurance because the premium exceeds expected loss";
+    feedback = `A risk-neutral individual compares expected value. Since the premium ($${premium}) exceeds expected loss ($${ev}), they do not buy the insurance.`;
+}
+
+// --- SHUFFLE ---
 shuffleArray(options);
 
 return {
-q:`An insurance policy covers a $${loss} loss with probability ${p}. The premium is $${premium}. A risk-averse individual will most likely...`,
+q: qText,
 options: options,
 a: options.indexOf(correctText),
-type:"interpretation",
+type:"calculation",
 tag:"insurance",
-feedback:`Expected loss is $${ev}. A risk-averse individual may still buy insurance to avoid uncertainty, even if the premium is higher.`
+feedback: feedback
 };
 
 }
@@ -993,32 +998,36 @@ function getStrategicDominant(){
 let base1 = Math.floor(Math.random()*5)+1;
 let base2 = Math.floor(Math.random()*5)+1;
 
-// A: Up always better than Down
+// A: Up dominates Down
 let TL_A = base1 + 3;
 let BL_A = base1;
 
 let TR_A = base2 + 3;
 let BR_A = base2;
 
-// --- Generate Player B payoffs (random, irrelevant to A's dominance) ---
+// --- Generate Player B payoffs ---
 let TL_B = Math.floor(Math.random()*5)+1;
 let TR_B = Math.floor(Math.random()*5)+1;
 let BL_B = Math.floor(Math.random()*5)+1;
 let BR_B = Math.floor(Math.random()*5)+1;
 
-// --- Build clean matrix ---
-let question = `Player A chooses between Up or Down. Player B chooses Left or Right.
+// --- PARAGRAPH FORMAT ---
+let question = `Player A must choose between Up or Down, while Player B chooses between Left or Right.
 
-Payoff matrix (A,B):
+If Player B chooses Left, Player A receives ${TL_A} from choosing Up and ${BL_A} from choosing Down.
 
-            B: Left        B: Right  
-A: Up       (${TL_A},${TL_B})     (${TR_A},${TR_B})  
-A: Down     (${BL_A},${BL_B})     (${BR_A},${BR_B})  
+If Player B chooses Right, Player A receives ${TR_A} from choosing Up and ${BR_A} from choosing Down.
 
 What is Player A’s dominant strategy?`;
 
-let options = ["Up","Down","No dominant strategy","Depends on B"];
-let correct = "Up";
+let options = [
+"Up because it yields a higher payoff regardless of Player B’s choice",
+"Down because it provides a more stable payoff across outcomes",
+"No dominant strategy because outcomes depend on Player B",
+"Either strategy since both yield similar payoffs"
+];
+
+let correct = "Up because it yields a higher payoff regardless of Player B’s choice";
 
 shuffleArray(options);
 
@@ -1026,8 +1035,9 @@ return {
 q: question,
 options: options,
 a: options.indexOf(correct),
+type:"interpretation",
 tag:"game_theory",
-feedback:"Compare Player A’s payoffs across each column. Up yields a higher payoff than Down regardless of Player B’s choice."
+feedback:"Compare Player A’s payoffs across both possible actions of Player B. Up always yields a higher payoff, so it is dominant."
 };
 
 }
@@ -1038,32 +1048,32 @@ function getStrategicNash(){
 let a = Math.floor(Math.random()*4)+2;
 let b = Math.floor(Math.random()*4)+1;
 
-// build a Prisoner's Dilemma style structure
-let matrix = {
-TL:[a,a],        // cooperate
-TR:[1,b+2],      // A cooperates, B defects
-BL:[b+2,1],      // A defects, B cooperates
-BR:[2,2]         // both defect (Nash)
-};
+// payoff structure (Prisoner's Dilemma logic)
+let CC = [a,a];
+let CD = [1,b+2];
+let DC = [b+2,1];
+let DD = [2,2];
 
-let question = `Two players choose between Cooperate or Defect.
+let question = `Two players must independently choose between Cooperate or Defect.
 
-Payoff matrix (A,B):
+If both cooperate, each receives ${CC[0]}.
 
-                B: Coop        B: Defect  
-A: Coop         (${matrix.TL})      (${matrix.TR})  
-A: Defect       (${matrix.BL})      (${matrix.BR})  
+If Player A cooperates while Player B defects, Player A receives ${CD[0]} and Player B receives ${CD[1]}.
 
-What is the Nash equilibrium?`;
+If Player A defects while Player B cooperates, Player A receives ${DC[0]} and Player B receives ${DC[1]}.
+
+If both defect, each receives ${DD[0]}.
+
+Which outcome is the Nash equilibrium?`;
 
 let options = [
-"(Cooperate, Cooperate)",
-"(Cooperate, Defect)",
-"(Defect, Cooperate)",
-"(Defect, Defect)"
+"(Cooperate, Cooperate) because it yields the highest joint payoff",
+"(Cooperate, Defect) because Player B gains by deviating",
+"(Defect, Cooperate) because Player A gains by deviating",
+"(Defect, Defect) because neither player can improve by changing alone"
 ];
 
-let correct = "(Defect, Defect)";
+let correct = "(Defect, Defect) because neither player can improve by changing alone";
 
 shuffleArray(options);
 
@@ -1071,8 +1081,9 @@ return {
 q: question,
 options: options,
 a: options.indexOf(correct),
+type:"interpretation",
 tag:"game_theory",
-feedback:"Both players defect because it is the best response to the other’s action. Neither can improve by deviating."
+feedback:"Each player has an incentive to defect regardless of the other’s choice. Defect is the best response, making (Defect, Defect) the Nash equilibrium."
 };
 
 }
@@ -1085,67 +1096,22 @@ let downLeft = upLeft + Math.floor(Math.random()*3)+1;
 let upRight = Math.floor(Math.random()*5)+1;
 let downRight = upRight - Math.floor(Math.random()*2);
 
-let question = `Player B chooses Left or Right. Player A must respond.
+// --- PARAGRAPH FORMAT ---
+let question = `Player A chooses between Up or Down. Player B chooses Left or Right.
 
-Payoffs to Player A:
-
-            B: Left     B: Right  
-A: Up       ${upLeft}          ${upRight}  
-A: Down     ${downLeft}          ${downRight}  
-
+If Player B chooses Left, Player A receives ${upLeft} from choosing Up and ${downLeft} from choosing Down.
+If Player B chooses Right, Player A receives ${upRight} from choosing Up and ${downRight} from choosing Down.
 If Player B chooses Left, what is Player A’s best response?`;
 
-let options = ["Up","Down","Both are equal","Cannot determine"];
-let correct = (downLeft > upLeft) ? "Down" : "Up";
-
-shuffleArray(options);
-
-return {
-q: question,
-options: options,
-a: options.indexOf(correct),
-tag:"game_theory",
-feedback:"A best response is the action that gives the highest payoff given the opponent’s choice."
-};
-
-}
-
-function getStrategicCooperation(){
-
-// probability game continues (0.3 to 0.9)
-let g = Math.round((Math.random()*0.6 + 0.3)*10)/10;
-
-// cooperation payoff per round
-let coop = Math.floor(Math.random()*3)+2;   // 2–4
-
-// cheat payoff (temptation)
-let cheat = coop + Math.floor(Math.random()*3)+1; // always higher
-
-// punishment payoff after cheating
-let punish = 1;
-
-// present value style comparison (simplified intuition)
-let cooperateValue = coop / (1 - g);
-let cheatValue = cheat + (punish * (g/(1-g)));
-
-// correct answer
-let correct = (cooperateValue >= cheatValue) ? "Cooperate" : "Defect";
-
-let question = `Two players are in a repeated game. Each round:
-
-- If both cooperate, each earns ${coop}
-- If one defects, they earn ${cheat} while the other gets 0
-- After any defection, both players earn ${punish} forever
-
-The probability the game continues each round is ${g}.
-
-What is the best strategy?`;
+let correct = (downLeft > upLeft)
+    ? "Down because it yields a higher payoff given Player B’s choice"
+    : "Up because it yields a higher payoff given Player B’s choice";
 
 let options = [
-"Cooperate",
-"Defect",
-"Mix strategies",
-"Depends only on current payoff"
+"Up because it yields a higher payoff given Player B’s choice",
+"Down because it yields a higher payoff given Player B’s choice",
+"Either strategy since both outcomes are possible",
+"Up because it performs better across both possible actions"
 ];
 
 shuffleArray(options);
@@ -1154,8 +1120,59 @@ return {
 q: question,
 options: options,
 a: options.indexOf(correct),
+type:"interpretation",
 tag:"game_theory",
-feedback:`Cooperation value ≈ ${cooperateValue.toFixed(1)}, deviation value ≈ ${cheatValue.toFixed(1)}. If future payoffs matter enough, cooperation is sustained.`
+feedback:"A best response depends only on the opponent’s chosen action. Compare payoffs under Left: the higher payoff determines the best response."
+};
+
+}
+
+function getStrategicCooperation(){
+
+let g = Math.round((Math.random()*0.6 + 0.3)*10)/10;
+
+let coop = Math.floor(Math.random()*3)+2;
+let cheat = coop + Math.floor(Math.random()*3)+1;
+let punish = 1;
+
+// values
+let cooperateValue = coop / (1 - g);
+let cheatValue = cheat + (punish * (g/(1-g)));
+
+let isCooperate = cooperateValue >= cheatValue;
+
+// --- QUESTION ---
+let question = `Two players interact repeatedly. In each round:
+
+- If both cooperate, each earns ${coop}
+- If one defects, they earn ${cheat} while the other earns 0
+- After any defection, both players earn ${punish} forever
+
+The probability the interaction continues each round is ${g}.
+
+Which strategy is optimal for a player?`;
+
+// --- BALANCED OPTIONS ---
+let options = [
+"Cooperate because future losses from punishment outweigh short-term gains",
+"Defect because immediate gains exceed the value of future cooperation",
+"Cooperate because it yields the highest payoff in every single round",
+"Defect because future payoffs do not influence current decisions"
+];
+
+let correct = isCooperate
+? "Cooperate because future losses from punishment outweigh short-term gains"
+: "Defect because immediate gains exceed the value of future cooperation";
+
+shuffleArray(options);
+
+return {
+q: question,
+options: options,
+a: options.indexOf(correct),
+type:"interpretation",
+tag:"game_theory",
+feedback:`Cooperation value ≈ ${cooperateValue.toFixed(1)}, deviation value ≈ ${cheatValue.toFixed(1)}. The decision depends on whether future punishment outweighs the short-term gain from defection.`
 };
 
 }
