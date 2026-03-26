@@ -50,7 +50,8 @@ body {
     margin: 0;
     padding: 18px 20px;
     text-align: center;
-    background: #111827;
+    background: rgba(15,23,42,0.98);
+    backdrop-filter: blur(6px);
     border-radius: 14px;
     box-sizing: border-box;
     box-shadow: 0 0 40px rgba(0,0,0,0.8), 0 0 20px rgba(251,191,36,0.1), inset 0 0 30px rgba(0,0,0,0.6);
@@ -105,7 +106,7 @@ button:active {transform: scale(0.96);}
 
 #mazeTrack { display: grid; grid-template-columns: repeat(10, 36px); justify-content: center; gap: 10px; margin: 25px auto; }
 .maze-box { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 20px; border-radius: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
-.maze-box.active { background: rgba(96,165,250,0.3); border: 2px solid #60a5fa; z-index: 10; animation: activePulse 0.8s infinite alternate; }
+.maze-box.active { background: rgba(96,165,250,0.25); border: 2px solid #60a5fa; z-index: 10; animation: activePulse 0.8s infinite alternate;}
 
 /* Room Specific Glows */
 .maze-box:nth-child(10) { text-shadow: 0 0 10px #60a5fa; }
@@ -161,7 +162,7 @@ button:active {transform: scale(0.96);}
 @keyframes torchFlicker { 0%, 100% { filter: brightness(1); } 25% { filter: brightness(1.05); } 50% { filter: brightness(0.97); } 75% { filter: brightness(1.04); } }
 @keyframes hitshake { 0% { transform: translateX(0); } 25% { transform: translateX(-8px); } 50% { transform: translateX(8px); } 75% { transform: translateX(-6px); } 100% { transform: translateX(0); } }
 @keyframes bossShake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
-@keyframes activePulse { 0% { box-shadow: 0 0 5px #fbbf24; transform: scale(1.1); } 100% { box-shadow: 0 0 20px #fbbf24; transform: scale(1.2); } }
+@keyframes activePulse { 0% { box-shadow: 0 0 5px #60a5fa; transform: scale(1.1); } 100% { box-shadow: 0 0 20px #60a5fa; transform: scale(1.2); } }
 @keyframes victoryGlow { 0%, 100% { transform: scale(1); text-shadow: 0 0 10px gold; } 50% { transform: scale(1.1); text-shadow: 0 0 25px gold, 0 0 40px orange; } }
 @keyframes bossFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @keyframes relicPulse { 0%, 100% { filter: drop-shadow(0 0 8px #38bdf8); } 50% { filter: drop-shadow(0 0 18px #60a5fa); } }
@@ -1419,6 +1420,24 @@ function playFinalBossMusic(){
             currentQuestion = shuffleOptions(generator());
         }
 
+        // --- STREAK ADAPTIVE LOGIC ---
+        let adjustedDiff = diff;
+
+        if(streak >= 5 && room < 25){
+            adjustedDiff = "hard";
+        }
+        else if(streak >= 3 && room < 20){
+            adjustedDiff = "medium";
+        }
+        
+         // --- WIZARD LOGIC (RIGHT HERE) ---
+            if(!currentQuestion.type){
+            currentQuestion.type = "interpretation";
+            }
+
+            const wizardText = getWizardLine(currentQuestion.type);
+          wizardSpeak(wizardText);
+
         // --- UI for Normal Rooms ---
         bossMsg.innerText = (room === 9 || room === 19 || room === 29)
             ? "⚠️ DANGER: BOSS DETECTED IN NEXT ROOM ⚠️"
@@ -1428,10 +1447,10 @@ function playFinalBossMusic(){
     }
 
     // --- 4. FINAL EXECUTION (Shared by Boss and Normal) ---
-    if (!currentQuestion) {
-        console.error("No question generated");
+        if (!currentQuestion) {
+            console.error("No question generated");
         return;
-    }
+        }
 
     // Update Hints and Draw Buttons
     document.getElementById("formulaHint").innerText = currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
