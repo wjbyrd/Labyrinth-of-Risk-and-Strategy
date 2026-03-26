@@ -1715,13 +1715,22 @@ function handleVictory() {
     // --- ARCHIVIST JUDGMENT ---
     let archivistLine = "";
     if(accuracy >= 90){
-        archivistLine = "You have mastered the labyrinth. Few reach this level of clarity.";
+        archivistLine = "You have mastered the Vault. Few reach this level of clarity.";
     }
     else if(accuracy >= 75){
-        archivistLine = "You see much… but not all. The deeper truths still elude you.";
+        archivistLine = "You see much… but not all. The Vault still holds power over you.";
     }
     else{
-        archivistLine = "You survived. Barely. The labyrinth is not finished with you.";
+        archivistLine = "You survived. Barely. The Vault is not finished with you.";
+    }
+
+    let lineColor = "#93c5fd";
+
+    if(accuracy >= 90){
+        lineColor = "#4ade80"; // green
+    }
+    else if(accuracy < 75){
+    lineColor = "#f87171"; // red
     }
 
     const gameBox = document.getElementById("gameBox");
@@ -1738,7 +1747,7 @@ function handleVictory() {
                 <p style="font-size: 0.8em; color: #9ca3af;">🔑 Verification Code: <span id="vCode">${verificationCode}</span></p>
             </div>
 
-            <p id="archivistLine" style="margin-top:20px; font-style:italic; color:#93c5fd; font-size:1.1em; text-shadow: 0 0 6px rgba(147,197,253,0.4); opacity:0;">
+            <p id="archivistLine" style="margin-top:20px; font-style:italic; color:#93c5fd; font-size:1.1em; color:${lineColor}; text-shadow: 0 0 6px rgba(147,197,253,0.4); opacity:0;">
                 ${archivistLine}
             </p>
 
