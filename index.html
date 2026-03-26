@@ -340,15 +340,15 @@ button:active {transform: scale(0.96);}
         <div id="artifactVault">
             <h3>Artifacts Recovered</h3>
             <div class="vaultRow">
-                <div id="vaultSeal" class="artifactSlot">
+                <div id="vaultDice" class="artifactSlot">
                     <img src="dice_of_probability.png">
                     <span>Dice of Probability</span>
                 </div>
-                <div id="vaultPrism" class="artifactSlot">
+                <div id="vaultShield" class="artifactSlot">
                     <img src="shield_of_risk_pooling.png">
                     <span>Shield of Risk Pooling</span>
                 </div>
-                <div id="vaultScepter" class="artifactSlot">
+                <div id="vaultCore" class="artifactSlot">
                     <img src="core_of_equilibrium.png">
                     <span>Core of Equilibrium</span>
                 </div>
@@ -1470,21 +1470,21 @@ function answer(choice) {
 
         // Boss defeated
         if(room === 10){
-        document.getElementById("vaultSeal").classList.add("unlocked");
-        localStorage.setItem("vaultSeal", "true");
-        showArtifact(artifacts.seal.img, artifacts.seal.title, artifacts.seal.text);
+        document.getElementById("vaultDice").classList.add("unlocked");
+        localStorage.setItem("vaultDice", "true");
+        showArtifact(artifacts.dice.img, artifacts.dice.title, artifacts.dice.text);
         }
 
         if(room === 20){
-        document.getElementById("vaultPrism").classList.add("unlocked");
-        localStorage.setItem("vaultPrism", "true");
-        showArtifact(artifacts.prism.img, artifacts.prism.title, artifacts.prism.text);
+        document.getElementById("vaultShield").classList.add("unlocked");
+        localStorage.setItem("vaultShield", "true");
+        showArtifact(artifacts.shield.img, artifacts.shield.title, artifacts.shield.text);
         }
 
         if(room === 30){
-        document.getElementById("vaultScepter").classList.add("unlocked");
-        localStorage.setItem("vaultScepter", "true");
-        showArtifact(artifacts.scepter.img, artifacts.scepter.title, artifacts.scepter.text);
+        document.getElementById("vaultCore").classList.add("unlocked");
+        localStorage.setItem("vaultCore", "true");
+        showArtifact(artifacts.core.img, artifacts.core.title, artifacts.core.text);
         }
 
     showKnowledgeRoom(room);
@@ -1608,7 +1608,7 @@ overlay.style.backgroundSize = "cover";
 overlay.style.backgroundPosition = "center";
 
 text.innerHTML = `
-<div style="font-size:22px;margin-bottom:15px;color:#4ade80;">Correct.</div>
+<div style="font-size:22px;margin-bottom:15px;color:#4ade80;">${getWizardFeedback("correct")}</div>
 <div style="font-size:18px;opacity:.9;">${feedback}</div>
 <div style="margin-top:25px;font-size:14px;opacity:.7;">You move deeper into the archives...</div>
 `;
@@ -1731,11 +1731,21 @@ if (bossRoom === 10) {
     : "room++; localStorage.setItem('gauntletRoom', room); loadQuestion();";
     let buttonLabel = bossRoom === 30 ? "FINALIZE THE ARCHIVE CONQUEST →" : `CONTINUE TO ROOM ${bossRoom + 1} →`;
 
-    aContainer.innerHTML = `
-        <button onclick="${nextAction}" 
-                style="background:#60a5fa; color:black; font-weight:bold; width:100%; padding:20px; font-size:18px; box-shadow: 0 0 20px rgba(96, 165, 250, 0.5); border:none; border-radius:8px; cursor:pointer;">
-                ${buttonLabel}
-        </button>`;
+aContainer.innerHTML = `
+    <button id="continueBtn"
+        style="background:#60a5fa; color:black; font-weight:bold; width:100%; padding:20px; font-size:18px;">
+        ${buttonLabel}
+    </button>`;
+    
+    document.getElementById("continueBtn").onclick = () => {
+    if(bossRoom === 30){
+        handleVictory();
+    } else {
+        room++;
+        localStorage.setItem("gauntletRoom", room);
+        loadQuestion();
+    }
+};
 }
     
 function shuffleArray(arr){
