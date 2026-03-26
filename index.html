@@ -19,7 +19,7 @@ body {
     justify-content: center;
     align-items: center;
     color: white;
-    background: linear-gradient(rgba(2,6,23,.8), rgba(2,6,23,.8)), url('question_background_image.jpeg');
+    background: linear-gradient(rgba(2,6,23,.8), rgba(2,6,23,.8)), url('question_background_image.png');
     background-size: cover;
     background-position: center;
     background-attachment: scroll;
@@ -105,7 +105,7 @@ button:active {transform: scale(0.96);}
 
 #mazeTrack { display: grid; grid-template-columns: repeat(10, 36px); justify-content: center; gap: 10px; margin: 25px auto; }
 .maze-box { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 20px; border-radius: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
-.maze-box.active { background: rgba(251, 191, 36, 0.3); border: 2px solid #fbbf24; z-index: 10; animation: activePulse 0.8s infinite alternate; }
+.maze-box.active { background: rgba(96,165,250,0.3); border: 2px solid #60a5fa; z-index: 10; animation: activePulse 0.8s infinite alternate; }
 
 /* Room Specific Glows */
 .maze-box:nth-child(10) { text-shadow: 0 0 10px #60a5fa; }
@@ -149,7 +149,7 @@ button:active {transform: scale(0.96);}
 /* =========================================
    8. TRANSITIONS & SCREENS
 ========================================= */
-#startScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('start_screen_image.png'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+#startScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('start screen image.png'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 
 #hallwayTransition { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)), url('hallway1.png'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; text-align: center; color: white; font-size: 26px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 1.2s ease; animation: hallwayZoom 3.2s ease-out forwards; }
 #hallwayTransition.active { opacity: 1; }
@@ -313,7 +313,6 @@ button:active {transform: scale(0.96);}
 </head>
 
 <body>
-  body>
   <div id="srAnnouncements"
      aria-live="assertive"
      aria-atomic="true"
@@ -392,15 +391,15 @@ button:active {transform: scale(0.96);}
 <script>
 const bgMusic = new Audio('chamber.wav'); 
 bgMusic.loop = true; 
-bgMusic.volume = 0.1; 
+bgMusic.volume = 0.05; 
 
 const bossMusic = new Audio('boss_battle_music.wav');
 bossMusic.loop = true;
-bossMusic.volume = 0.10;
+bossMusic.volume = 0.05;
 
 const finalBossMusic = new Audio('final_boss_music.wav');
 finalBossMusic.loop = true;
-finalBossMusic.volume = 0.12; // slightly louder, it's the final fight    
+finalBossMusic.volume = 0.08; // slightly louder, it's the final fight    
     
 const sfxMilestone = new Audio('streak.wav');
 const sfxVictory = new Audio('victory.wav');
@@ -636,6 +635,11 @@ function getWizardLine(type){
 function getWizardFeedback(type){
     const pool = wizardFeedback[type];
     return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function wizardSpeak(text){
+    const msg = document.getElementById("message");
+    msg.innerText = text;
 }
   
 // --- Question Pools follow below ---
@@ -1250,7 +1254,7 @@ function updateMazeTrack() {
         } else if (i === room) {
             box.classList.add("active"); // Trigger the gold pulse
             box.setAttribute("aria-label",`Current room ${i} of 30`);
-            box.innerText = "🟥";
+            box.innerText = "🟦";
         } else {
             // Boss icons for future rooms
             if (i === 10) box.innerText = "🎲";
