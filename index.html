@@ -1553,14 +1553,15 @@ return;
         }
        }
 
-// Normal failure handling
-document.getElementById("streakDisplay").innerText = "";
-bossHealth = 3;
+    // Normal failure handling
+    document.getElementById("streakDisplay").innerText = "";
+    bossHealth = 3;
 
-room = Math.max(1, room - (room % 10 === 0 ? 3 : (room >= 21 ? 2 : 1)));
-localStorage.setItem("gauntletRoom", room);
-alert(`Incorrect! You trip in the darkness and tumble back to Room ${room}.`);
-loadQuestion();
+    room = Math.max(1, room - (room % 10 === 0 ? 3 : (room >= 21 ? 2 : 1)));
+    localStorage.setItem("gauntletRoom", room);
+    alert(`Incorrect! You trip in the darkness and tumble back to Room ${room}.`);
+    loadQuestion();
+    }
 }
     
 // Helper for cleaner artifact logic
@@ -1637,6 +1638,7 @@ p.innerText = text;
 drop.style.display = "block";
 
 }
+    
 function triggerBossShake() {
     const icon = document.querySelector(".bossIcon");
     const box = document.getElementById("gameBox");
@@ -1736,7 +1738,6 @@ if (bossRoom === 10) {
         </button>`;
 }
     
-  
 function shuffleArray(arr){
     for(let i=arr.length-1;i>0;i--){ let j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
     return arr;
@@ -1784,6 +1785,7 @@ function copyResults() {
         }, 2000);
     });
 }
+
 </script>
 </body>
 </html>
