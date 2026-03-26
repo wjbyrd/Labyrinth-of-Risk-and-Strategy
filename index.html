@@ -1324,8 +1324,11 @@ function playFinalBossMusic(){
         }
 
    const isBoss = diff.includes("Boss");
-   document.getElementById("gameShell").classList.toggle("boss-mode", isBoss);
-   const shell = document.getElementById("gameShell");
+    const shell = document.getElementById("gameShell");
+
+    // SINGLE SOURCE OF TRUTH
+    shell.classList.toggle("boss-mode", isBoss);
+    gameBox.classList.toggle("boss-mode", isBoss);
    
     // 2. UI & Progress Updates
     gameBox.classList.toggle("boss-mode", isBoss);
@@ -1453,6 +1456,7 @@ function answer(choice) {
     if (choice === currentQuestion.a) {
         sfxCorrect.currentTime = 0;
         sfxCorrect.play().catch(()=>{});
+        wizardSpeak(getWizardFeedback("correct"));
         wizard.style.transform = "scale(1.1)";
         setTimeout(()=>{
         wizard.style.transform = "";
