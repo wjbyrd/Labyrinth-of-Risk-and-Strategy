@@ -563,13 +563,23 @@ Test changes on both:
 
 This controls responsiveness, not game logic.
 ========================================= */
-/* Smaller maze icons for mobile */
-    @media (max-width: 600px) {
-    .maze-box {width:20px; height:20px;}
-/* Slight scale-down to fit game within screen */
-    #gameBox { transform: scale(0.95); transform-origin: top center; }
-/* Stack answer buttons vertically */
-    .answers button { flex: 1 1 100%; }
+@media (max-width: 768px) {
+
+/* Maze scaling */
+#mazeTrack {grid-template-columns: repeat(10, 1fr);
+    gap: 4px;}
+.maze-box {width: 100%; height: 24px; font-size: 14px;}
+
+/* Tighten layout */
+#gameBox {padding: 14px;}
+.top-panel {gap: 6px;}
+
+/* Stack layout properly */
+.main-panel {flex-direction: column; align-items: center;}
+#wizardBox {width: 100%; max-width: 300px;}
+
+/* Full-width buttons */
+.answers button {flex: 1 1 100%;max-width: 100%;}
 }
 
 /* =========================================
