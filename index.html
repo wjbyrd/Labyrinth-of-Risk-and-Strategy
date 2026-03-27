@@ -1042,7 +1042,7 @@ function weightedPick(pool){
         let weight = 1;
         // Weakness boost
         if(q.tag && conceptMemory[q.tag]){
-            weight += conceptMemory[q.tag];
+            weight += Math.min(conceptMemory[q.tag], 2);
         }
         // Coverage boost (if tag not seen recently)
         let recentCount = tagHistory.filter(t => t === q.tag).length;
