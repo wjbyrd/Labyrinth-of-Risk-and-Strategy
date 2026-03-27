@@ -180,7 +180,7 @@ If students can’t read it quickly, the system fails.
 h2 { text-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(251,191,36,0.2); margin-bottom: 5px; }
     
 /* Main question text — keep readable and centered */
-#question { font-size: 20px; line-height: 1.4; font-weight: 500; margin: 14px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+#question { font-size: clamp(20px, 5vw, 26px); line-height: 1.4; font-weight: 600; margin: 14px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
     
 /* Boss/summary title — high emphasis text */
 .boss-title { font-size: 28px; font-weight: bold; margin-bottom: 15px; display: block; }
@@ -576,12 +576,17 @@ This controls responsiveness, not game logic.
 
 /* Stack layout properly */
 .main-panel {flex-direction: column; align-items: center;}
-#wizardBox {width: 100%; max-width: 300px;}
-
+#wizardBox {width: 100%; max-width: 220px;}
+#wizardImage{width: 90px;
+             
 /* Full-width buttons */
 .answers button {flex: 1 1 100%;max-width: 100%;}
 }
 
+#progressBar{margin-bottom: 10px;}
+#question{margin: 10px 0;}
+}
+   
 /* =========================================
 11. PANEL LAYOUT SYSTEM — SAFE TO CUSTOMIZE (WITH LIMITS)
 =========================================
