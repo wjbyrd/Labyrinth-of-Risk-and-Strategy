@@ -1064,47 +1064,98 @@ let questionHistory = {
 // Only advanced users should modify this.
 
 function weightedPick(pool){
-    let weightedPool = [];
-    pool.forEach(q => {
-        let weight = 1;
+    let totalWeight = 0;
+
+    let weights = pool.map(q => {
+        let w = 1;
+
         // Weakness boost
         if(q.tag && conceptMemory[q.tag]){
-            weight += Math.min(conceptMemory[q.tag], 2);
+            w += Math.min(conceptMemory[q.tag], 2);
         }
-        // Coverage boost (if tag not seen recently)
+
+        // Coverage boost
         let recentCount = tagHistory.filter(t => t === q.tag).length;
         if(recentCount === 0){
-            weight += 2;
+            w += 1;
         }
-        for(let i = 0; i < weight; i++){
-            weightedPool.push(q);
-        }
+
+        // Hard cap so one question does not dominate
+        w = Math.min(w, 3);
+
+        totalWeight += w;
+        return { q, w };
     });
-    return weightedPool[Math.floor(Math.random() * weightedPool.length)];
+
+    let r = Math.random() * totalWeight;
+
+    for(let item of weights){
+        r -= item.w;
+        if(r <= 0){
+            return item.q;
+        }
+    }
+
+    // Safety fallback
+    return weights[weights.length - 1].q;
 }
 
 function getAdaptiveQuestion(poolName, targetTag = null){
     let pool = questionBanks[poolName];
+
     // --- 🎯 TARGET SPECIFIC TAG IF PROVIDED ---
     if(targetTag){
         let filtered = pool.filter(q => q.tag === targetTag);
 
-        // Only use filtered if it actually has questions
-        if(filtered.length > 0){
+        if(filtered.length >= Math.max(6, pool.length * 0.25)){
             pool = filtered;
         }
     }
 
-    let recent = questionHistory[poolName].slice(-5);
+    let recent = questionHistory[poolName].slice(-10);
+
+    // First pass — strict
     let available = pool.filter(q => !recent.includes(q.id));
+
+    // Second pass — relax slightly
+    if(available.length < 3){
+        available = pool.filter(q => !questionHistory[poolName].slice(-5).includes(q.id));
+    }
+
+    // Final fallback — still avoid immediate repeats
+    if(available.length === 0){
+        available = pool.filter(q => !questionHistory[poolName].slice(-3).includes(q.id));
+    }
+
+    // Absolute fallback
     if(available.length === 0){
         available = pool;
     }
+
+    // =========================
+    // TAG ANTI-REPEAT FILTER
+    // =========================
+    let lastTags = tagHistory.slice(-2);
+
+    let tagFiltered = available.filter(q => {
+        return !(lastTags.length === 2 && lastTags.every(t => t === q.tag));
+    });
+
+    // Only apply if it doesn't collapse the pool
+    if(tagFiltered.length >= 3){
+        available = tagFiltered;
+    }
+
+    console.log("AVAILABLE:", available.map(q => q.id));
+
     let picked = weightedPick(available);
+
+    console.log("PICKED:", picked.id);
+    console.log("RECENT:", questionHistory[poolName]);
 
     // Track history
     questionHistory[poolName].push(picked.id);
-    if(questionHistory[poolName].length > 10){
+    if(questionHistory[poolName].length > 15){
         questionHistory[poolName].shift();
     }
 
@@ -1115,6 +1166,7 @@ function getAdaptiveQuestion(poolName, targetTag = null){
             tagHistory.shift();
         }
     }
+
     return picked;
 }
 
