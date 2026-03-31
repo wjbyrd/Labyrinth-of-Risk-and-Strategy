@@ -2579,7 +2579,7 @@ function answer(choice) {
         if(detourActive){
         detourActive = false;
         msgElement.innerHTML = `<span class='fade-out-text'>Correct! Concept restored. Moving deeper...</span>`;
-        room = detourReturnRoom + 1;
+        room = Math.min(room + 1, detourReturnRoom);
         localStorage.setItem("gauntletRoom", room);
         setTimeout(loadQuestion, TIMING.normal);
         return;
