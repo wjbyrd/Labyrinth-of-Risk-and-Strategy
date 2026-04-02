@@ -2512,7 +2512,17 @@ function loadQuestion() {
     document.getElementById("artifactDrop").style.display = "none";
 
     // 1. Determine Difficulty and Boss Status
-    let diff = (room <= 9) ? "easy" : (room === 10) ? "easyBoss" : (room <= 19) ? "medium" : (room === 20) ? "mediumBoss" : (room <= 25) ? "hard" : (room <= 29) ? "calculation" : "finalBoss";
+    let diff = (room <= 9) ? "easy"
+             : (room === 10) ? "easyBoss"
+             : (room <= 19) ? "medium"
+             : (room === 20) ? "mediumBoss"
+             : (room <= 25) ? "hard"
+             : (room <= 29) ? "calculation"
+             : "finalBoss";
+
+      if (room === 10 || room === 20 || room === 30) {
+       bossHealth = 3; 
+      }
     
     // --- MUSIC CONTROL ---
     if(diff === "finalBoss"){
@@ -2538,46 +2548,36 @@ function loadQuestion() {
     document.getElementById("areaDisplay").innerText = `${getAreaName(room)} (${room}/30)`;
     document.getElementById("srAnnouncements").innerText = `Entering ${getAreaName(room)}. Room ${room} of 30.`;
 
-    // 3. Select the Question (CHANGE BOSS NAMES AND PNG)
-if (isBoss) {
+    // 3. Select the Question
+   if (isBoss) {
 
-    if (bossHealth === 3 && !bossPool) {
+    if (bossHealth === 3) {
 
-        // ✅ STEP 1: grab correct boss pool
-        let pool = diff === "easyBoss" ? easyBoss
-                  : diff === "mediumBoss" ? mediumBoss
-                  : finalBoss;
+        let pool = [...questionBanks[diff]];
 
         let entries = Object.entries(conceptMemory || {});
         let chosenTag = null;
 
         if (entries.length > 0) {
 
-            let sorted = [...entries].sort((a,b)=> b[1]-a[1]); // highest weakness first
-            let maxWeakness = sorted[0][1];
+            let maxWeakness = Math.max(...entries.map(e => e[1]));
 
             if (maxWeakness < 1) {
-             // randomly pick ANY concept to keep pressure
-             let tags = entries.map(e => e[0]);
-             chosenTag = tags[Math.floor(Math.random() * tags.length)];
+                // no weakness → target strongest
+                chosenTag = entries.sort((a,b)=> a[1]-b[1])[0][0];
             } else {
-                // 🎯 target weakest
-                chosenTag = sorted[0][0];
+                // normal → target weakest
+                chosenTag = entries.sort((a,b)=> b[1]-a[1])[0][0];
             }
         }
 
-        // ✅ STEP 2: filter boss questions by that tag
-         bossPool = chosenTag
-          ? pool.filter(q => q.tag === chosenTag)
-          : pool;
+        // --- BUILD BOSS SEQUENCE ---
+        bossPool = chosenTag
+            ? pool.filter(q => q.tag === chosenTag)
+            : [];
 
-        // ✅ STEP 3: guarantee 3 questions
-        if (bossPool.length >= 3) {
-            bossPool = bossPool
-             .sort((a,b)=> a.id - b.id) // ensures scaffold order
-             .slice(0,3);
-        } else {
-            // fallback: just take any 3 from pool (rare)
+        // --- SAFETY FALLBACK ---
+        if (bossPool.length !== 3) {
             bossPool = pool.slice(0,3);
         }
     }
@@ -2840,7 +2840,6 @@ function answer(choice) {
         }
 
     showKnowledgeRoom(room);
-    bossPool = null;
     bossHealth = 3;
     return;
             }
@@ -2935,6 +2934,14 @@ console.log("DETOUR CHECK VALUE:", conceptMemory[currentQuestion.tag]);
     // =============================================
     // SAFE FALLBACK LOGIC (NO BOSS REGRESSION)
     // =============================================
+   // 1. Reset health and CLEAR the pool 
+    // Doing this BEFORE loadQuestion() is the secret sauce.
+    bossHealth = 3;
+    bossPool = []; 
+
+    // 2. Normal failure handling
+    document.getElementById("streakDisplay").innerText = "";
+
     const bossRooms = [10, 20, 30];
 
     // Original fallback amount
@@ -2943,13 +2950,17 @@ console.log("DETOUR CHECK VALUE:", conceptMemory[currentQuestion.tag]);
 
     // Prevent falling into boss rooms
     while (bossRooms.includes(newRoom)) {
-    newRoom++;
+        newRoom++;
     }
 
-    // Clamp to minimum
+    // 3. Update the room and save
     room = Math.max(1, newRoom);
     localStorage.setItem("gauntletRoom", room);
+
+    // 4. Alert the player
     alert(`Incorrect! You trip in the darkness and tumble back to Room ${room}.`);
+
+    // 5. Final Step: Load the new room state
     loadQuestion();
     }
 }
