@@ -1662,27 +1662,27 @@ easyBoss:[
 {id:1001,q:"The Dice Tyrant rolls again. A gamble pays $100 with probability 0.5 and $40 with probability 0.5. What is the expected value?",options:["$70 because outcomes are probability-weighted","$100 because the highest payoff dominates","$50 because only one outcome matters","$40 because lower outcomes reduce value"],a:0,tag:"risk",type:"calculation",feedback:"EV = (100×0.5)+(40×0.5)=70."},
 {id:1002,q:"The Dice Tyrant leans closer: 'Two gambles. Same expected value. One is riskier.' A risk-neutral player chooses which?",options:["They are indifferent","They prefer the riskier gamble","They prefer the safer gamble","They avoid both"],a:0,tag:"risk",type:"interpretation",feedback:"Risk-neutral players only care about expected value."},
 // ===== INSURANCE =====
-{id:1003,q:"The Underwriter whispers: 'Protection has a cost.' What is the purpose of insurance?",options:["To eliminate all risk entirely","To transfer risk in exchange for a premium","To increase expected value","To guarantee profit"],a:1,tag:"insurance",type:"definition",feedback:"Insurance transfers risk from individuals to insurers."},
-{id:1004,q:"The Underwriter calculates. A person faces a $1,000 loss with probability 0.1. What is the expected loss?",options:["$100 because 1000×0.1","$1,000 because that is the loss","$900 because most outcomes avoid loss","$10 because probability is small"],a:0,tag:"insurance",type:"calculation",feedback:"Expected loss = probability × loss = 100."},
-{id:1005,q:"The Underwriter tests logic. Why would a risk-averse person buy actuarially fair insurance?",options:["They prefer certainty over risk","They expect to gain money","They misunderstand probabilities","They maximize variance"],a:0,tag:"insurance",type:"interpretation",feedback:"Risk-averse individuals value certainty even if expected value is unchanged."},
+{id:1003,q:"The Dice Tyrant whispers: 'Protection has a cost.' What is the purpose of insurance?",options:["To eliminate all risk entirely","To transfer risk in exchange for a premium","To increase expected value","To guarantee profit"],a:1,tag:"insurance",type:"definition",feedback:"Insurance transfers risk from individuals to insurers."},
+{id:1004,q:"The Dice Tyrant calculates. A person faces a $1,000 loss with probability 0.1. What is the expected loss?",options:["$100 because 1000×0.1","$1,000 because that is the loss","$900 because most outcomes avoid loss","$10 because probability is small"],a:0,tag:"insurance",type:"calculation",feedback:"Expected loss = probability × loss = 100."},
+{id:1005,q:"The Dice Tyrant tests logic. Why would a risk-averse person buy actuarially fair insurance?",options:["They prefer certainty over risk","They expect to gain money","They misunderstand probabilities","They maximize variance"],a:0,tag:"insurance",type:"interpretation",feedback:"Risk-averse individuals value certainty even if expected value is unchanged."},
 // ===== GAME THEORY =====
-{id:1006,q:"The Strategist declares: 'Your outcome depends on others.' What defines a Nash equilibrium?",options:["Each player maximizes total payoff","Each player chooses the dominant strategy","No player can improve by changing strategy alone","All players cooperate"],a:2,tag:"game_theory",type:"definition",feedback:"Nash equilibrium occurs when no player benefits from unilateral deviation."},
-{id:1007,q:"The Strategist presents a game. If both players have dominant strategies, what happens?",options:["They reach Nash equilibrium","They randomize choices","They cooperate automatically","They avoid conflict"],a:0,tag:"game_theory",type:"calculation",feedback:"Dominant strategies lead directly to Nash equilibrium."},
-{id:1008,q:"The Strategist tightens the trap. In the Prisoner’s Dilemma, both players confess despite a better joint outcome from silence. Why?",options:["Individual incentives override collective outcomes","Players misunderstand payoffs","Cooperation is impossible","Payoffs are equal"],a:0,tag:"game_theory",type:"interpretation",feedback:"Incentives drive players toward equilibrium even if it is not socially optimal."}
+{id:1006,q:"The Dice Tyrant declares: 'Your outcome depends on others.' What defines a Nash equilibrium?",options:["Each player maximizes total payoff","Each player chooses the dominant strategy","No player can improve by changing strategy alone","All players cooperate"],a:2,tag:"game_theory",type:"definition",feedback:"Nash equilibrium occurs when no player benefits from unilateral deviation."},
+{id:1007,q:"The Dice Tyrant presents a game. If both players have dominant strategies, what happens?",options:["They reach Nash equilibrium","They randomize choices","They cooperate automatically","They avoid conflict"],a:0,tag:"game_theory",type:"calculation",feedback:"Dominant strategies lead directly to Nash equilibrium."},
+{id:1008,q:"The Dice Tyrant tightens the trap. In the Prisoner’s Dilemma, both players confess despite a better joint outcome from silence. Why?",options:["Individual incentives override collective outcomes","Players misunderstand payoffs","Cooperation is impossible","Payoffs are equal"],a:0,tag:"game_theory",type:"interpretation",feedback:"Incentives drive players toward equilibrium even if it is not socially optimal."}
 ],
 mediumBoss:[
 // ===== RISK =====
-{id:2000,q:"The Dice Tyrant observes: 'You reject a fair gamble. Why?' A gamble has expected value $0, yet you decline it. Which explanation is correct?",options:["Expected utility is lower due to diminishing marginal utility","Expected value must be negative","Variance does not affect decisions","Probabilities are incorrect"],a:0,tag:"risk",type:"definition",feedback:"Risk-averse individuals reject fair gambles because utility is concave."},
-{id:2001,q:"The Dice Tyrant calculates. A gamble pays $200 with probability 0.25 and $0 otherwise. What is the expected value?",options:["$50 because 200×0.25","$200 because it is the payoff","$0 because loss is possible","$100 because outcomes average"],a:0,tag:"risk",type:"calculation",feedback:"EV = 200×0.25 = 50."},
-{id:2002,q:"The Dice Tyrant tightens the logic. Two gambles have the same expected value, but one has higher variance. A risk-averse individual chooses which?",options:["The safer gamble","The riskier gamble","They are indifferent","They avoid both"],a:0,tag:"risk",type:"interpretation",feedback:"Risk-averse individuals prefer lower variance for the same expected value."},
+{id:2000,q:"The Underwriter observes: 'You reject a fair gamble. Why?' A gamble has expected value $0, yet you decline it. Which explanation is correct?",options:["Expected utility is lower due to diminishing marginal utility","Expected value must be negative","Variance does not affect decisions","Probabilities are incorrect"],a:0,tag:"risk",type:"definition",feedback:"Risk-averse individuals reject fair gambles because utility is concave."},
+{id:2001,q:"The Underwriter calculates. A gamble pays $200 with probability 0.25 and $0 otherwise. What is the expected value?",options:["$50 because 200×0.25","$200 because it is the payoff","$0 because loss is possible","$100 because outcomes average"],a:0,tag:"risk",type:"calculation",feedback:"EV = 200×0.25 = 50."},
+{id:2002,q:"The Underwriter tightens the logic. Two gambles have the same expected value, but one has higher variance. A risk-averse individual chooses which?",options:["The safer gamble","The riskier gamble","They are indifferent","They avoid both"],a:0,tag:"risk",type:"interpretation",feedback:"Risk-averse individuals prefer lower variance for the same expected value."},
 // ===== INSURANCE =====
 {id:2003,q:"The Underwriter whispers: 'Protection is not free.' Why do individuals buy insurance?",options:["To eliminate uncertainty by transferring risk","To increase expected monetary value","To avoid paying premiums","To maximize variance"],a:0,tag:"insurance",type:"definition",feedback:"Insurance transfers risk, reducing uncertainty."},
 {id:2004,q:"The Underwriter presents a contract. A student claims people buy insurance only when expected value is positive. What is the flaw?",options:["Decisions depend on expected utility, not expected value","Probabilities are miscalculated","Premiums always equal payouts","Insurance requires risk neutrality"],a:0,tag:"insurance",type:"calculation",feedback:"People buy insurance due to utility, not expected value."},
 {id:2005,q:"The Underwriter delivers judgment. An insurer sets premiums equal to expected loss but still fails. Why?",options:["Costs exceed premiums","Consumers underestimate risk","Risk pooling removes profit","Uncertainty disappears"],a:0,tag:"insurance",type:"interpretation",feedback:"Administrative costs require premiums above expected loss."},
 // ===== GAME THEORY =====
-{id:2006,q:"The Strategist declares: 'Your outcome depends on others.' What is a dominant strategy?",options:["A strategy that yields the best outcome regardless of others","A strategy chosen by all players","A strategy with equal payoffs","A cooperative strategy"],a:0,tag:"game_theory",type:"definition",feedback:"A dominant strategy is optimal regardless of others’ actions."},
-{id:2007,q:"The Strategist evaluates. If both players have dominant strategies, what outcome occurs?",options:["Nash equilibrium","Random outcome","Cooperation","No equilibrium"],a:0,tag:"game_theory",type:"calculation",feedback:"Dominant strategies lead to Nash equilibrium."},
-{id:2008,q:"The Strategist tightens the trap. In a coordination game, multiple equilibria exist. What problem arises?",options:["Players may fail to coordinate on the best outcome","No strategies are optimal","All outcomes are equal","Dominant strategies disappear"],a:0,tag:"game_theory",type:"interpretation",feedback:"Multiple equilibria create coordination problems."}
+{id:2006,q:"The Underwriter declares: 'Your outcome depends on others.' What is a dominant strategy?",options:["A strategy that yields the best outcome regardless of others","A strategy chosen by all players","A strategy with equal payoffs","A cooperative strategy"],a:0,tag:"game_theory",type:"definition",feedback:"A dominant strategy is optimal regardless of others’ actions."},
+{id:2007,q:"The Underwriter evaluates. If both players have dominant strategies, what outcome occurs?",options:["Nash equilibrium","Random outcome","Cooperation","No equilibrium"],a:0,tag:"game_theory",type:"calculation",feedback:"Dominant strategies lead to Nash equilibrium."},
+{id:2008,q:"The Underwriter tightens the trap. In a coordination game, multiple equilibria exist. What problem arises?",options:["Players may fail to coordinate on the best outcome","No strategies are optimal","All outcomes are equal","Dominant strategies disappear"],a:0,tag:"game_theory",type:"interpretation",feedback:"Multiple equilibria create coordination problems."}
 ],
 finalBoss:[
 // ===== RISK =====
@@ -2520,9 +2520,10 @@ function loadQuestion() {
              : (room <= 29) ? "calculation"
              : "finalBoss";
 
-      if (room === 10 || room === 20 || room === 30) {
-       bossHealth = 3; 
-      }
+// Only reset health if the bossPool is currently empty (meaning a new encounter)
+if (isBoss && (!bossPool || bossPool.length === 0)) {
+    bossHealth = 3;
+}
     
     // --- MUSIC CONTROL ---
     if(diff === "finalBoss"){
@@ -2548,84 +2549,66 @@ function loadQuestion() {
     document.getElementById("areaDisplay").innerText = `${getAreaName(room)} (${room}/30)`;
     document.getElementById("srAnnouncements").innerText = `Entering ${getAreaName(room)}. Room ${room} of 30.`;
 
-    // 3. Select the Question
-   if (isBoss) {
+// 3. Select the Question
+    if (isBoss) {
+        // 1. If it's a new fight (Health 3), decide the "Theme" of the boss
+        if (bossHealth === 3 || !bossPool || bossPool.length === 0) {
+            const bank = [...questionBanks[diff]];
+            let entries = Object.entries(conceptMemory || {});
+            let chosenTag = null;
 
-    if (bossHealth === 3) {
+            if (entries.length > 0) {
+                entries.sort((a, b) => b[1] - a[1]);
+                chosenTag = entries[0][0];
+            }
 
-        let pool = [...questionBanks[diff]];
+            bossPool = chosenTag 
+                ? bank.filter(q => q.tag === chosenTag) 
+                : [];
 
-        let entries = Object.entries(conceptMemory || {});
-        let chosenTag = null;
-
-        if (entries.length > 0) {
-
-            let maxWeakness = Math.max(...entries.map(e => e[1]));
-
-            if (maxWeakness < 1) {
-                // no weakness → target strongest
-                chosenTag = entries.sort((a,b)=> a[1]-b[1])[0][0];
-            } else {
-                // normal → target weakest
-                chosenTag = entries.sort((a,b)=> b[1]-a[1])[0][0];
+            if (bossPool.length < 3) {
+                bossPool = bank.slice(0, 3);
             }
         }
 
-        // --- BUILD BOSS SEQUENCE ---
-        bossPool = chosenTag
-            ? pool.filter(q => q.tag === chosenTag)
-            : [];
+        // 2. Select the specific question based on boss health
+        currentQuestion = shuffleOptions(bossPool[3 - bossHealth]);
 
-        // --- SAFETY FALLBACK ---
-        if (bossPool.length !== 3) {
-            bossPool = pool.slice(0,3);
-        }
-    }
-
-    currentQuestion = shuffleOptions(bossPool[3 - bossHealth]);
-        
+        // 3. Boss Identity UI (Logic moved ABOVE the return)
         let bTitle = room === 10 ? "DICE TYRANT" : room === 20 ? "UNDERWRITER OF FATE" : "THE CONVERGENCE";
         let bColor = room === 10 ? "#7dd3fc" : room === 20 ? "#38bdf8" : "#0ea5e9";
-        document.getElementById("srAnnouncements").innerText =`Boss encounter. ${bTitle}. Prepare yourself`;
+        
         bossMsg.innerText = "⚠ BOSS ENCOUNTER ⚠";
         bossMsg.style.color = bColor;
         gameBox.style.setProperty('--bossColor', bColor);
+
         let bossImage = "";
         let bossClass = "";
 
-// =============================================
-// BOSS VISUAL CONFIGURATION — SAFE TO EDIT
-// =============================================
-// Change:
-// - boss images
-// - boss class
-//
-// Keep room numbers (10, 20, 30) intact.
-// =============================================
-        
-    if(room === 10){
-    bossImage = "tyrant.png";
-    bossClass = "tyrantGlow";
-    }
-    else if(room === 20){
-    bossImage = "underwriter.png";
-    bossClass = "underwriterGlow";
-    }
-    else{
-    bossImage = "strategist.png";
-    bossClass = "finalBoss";
-    }
+        if(room === 10){
+            bossImage = "tyrant.png";
+            bossClass = "tyrantGlow";
+        } else if(room === 20){
+            bossImage = "underwriter.png";
+            bossClass = "underwriterGlow";
+        } else {
+            bossImage = "strategist.png";
+            bossClass = "finalBoss";
+        }
 
-    questionElement.innerHTML =
-    `<img src="${bossImage}" class="bossIcon ${bossClass}">
-    <span class="boss-title" style="color:${bColor}">${bTitle}</span>
-    <div class="boss-q" style="--bossColor:${bColor}">
-    ${currentQuestion.q}
-    </div>`;
-   return;
-      
-    document.querySelector(".question-directive").textContent = "";   
-   } else {
+        questionElement.innerHTML = `
+            <img src="${bossImage}" class="bossIcon ${bossClass}">
+            <span class="boss-title" style="color:${bColor}">${bTitle}</span>
+            <div class="boss-q" style="--bossColor:${bColor}">
+                ${currentQuestion.q}
+            </div>`;
+
+        // 4. THE CORRECT PLACEMENT OF RETURN
+        // We draw the UI first, THEN we exit the function.
+        displayQuestion(); 
+        return; 
+
+    } else {
 
     // --- STREAK ADAPTIVE LOGIC ---
     let adjustedDiff = diff;
@@ -2812,16 +2795,13 @@ function answer(choice) {
        // --- BOSS HIT LOGIC ---
         if(isBossRoom){
         bossHealth--;
-
         msgElement.innerHTML = `<span style='color:#f87171;font-weight:bold;'>⚔ HIT! Boss Health: ${bossHealth}/3</span>`;
-
         triggerBossShake();
-
         if (bossHealth > 0) {
         setTimeout(loadQuestion, TIMING.boss);
         return;
         }
-
+         bossPool = [];
         // Boss defeated (CHANGE ARTIFACT NAMES)
         if(room === 10){
         document.getElementById("vaultDice").classList.add("unlocked");
@@ -2841,16 +2821,23 @@ function answer(choice) {
         showArtifact(artifacts.core.img, artifacts.core.title, artifacts.core.text);
         }
 
-    showKnowledgeRoom(room);
-    bossHealth = 3;
-    return;
-        }        
-msgElement.innerHTML = "";
+// ... (Inside the Boss Victory check)
+        showKnowledgeRoom(room);
+        bossHealth = 3;
+        bossPool = []; // Clear the pool so the next boss is fresh
+        return; 
+    } // <--- THIS ends the "if(isBossRoom)" block
 
-room++;
-localStorage.setItem("gauntletRoom", room);
-showHallwayTransition(currentQuestion.feedback);
-return;
+    // --- NORMAL ROOM PROGRESSION ---
+    // This code ONLY runs if choice === currentQuestion.a 
+    // AND it wasn't a Boss Room (or a Detour).
+    msgElement.innerHTML = "";
+    room++;
+    localStorage.setItem("gauntletRoom", room);
+    showHallwayTransition(currentQuestion.feedback);
+    return;
+
+} // <--- THIS ends the "if (choice === currentQuestion.a)" block      
 
 // =============================================
 // ❌ WRONG ANSWER BLOCK — ALL FAILURE LOGIC
@@ -2929,7 +2916,6 @@ console.log("DETOUR CHECK VALUE:", conceptMemory[currentQuestion.tag]);
 
     // Normal failure handling
     document.getElementById("streakDisplay").innerText = "";
-    bossPool = null;
     bossHealth = 3;
 
     // =============================================
