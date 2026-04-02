@@ -2622,6 +2622,8 @@ function loadQuestion() {
     <div class="boss-q" style="--bossColor:${bColor}">
     ${currentQuestion.q}
     </div>`;
+   return;
+      
     document.querySelector(".question-directive").textContent = "";   
    } else {
 
@@ -2842,8 +2844,7 @@ function answer(choice) {
     showKnowledgeRoom(room);
     bossHealth = 3;
     return;
-            }
-        
+        }        
 msgElement.innerHTML = "";
 
 room++;
