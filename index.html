@@ -2541,7 +2541,7 @@ function loadQuestion() {
     // 3. Select the Question (CHANGE BOSS NAMES AND PNG)
 if (isBoss) {
 
-    if (bossHealth === 3) {
+    if (bossHealth === 3 && !bossPool) {
 
         // ✅ STEP 1: grab correct boss pool
         let pool = diff === "easyBoss" ? easyBoss
@@ -2840,6 +2840,7 @@ function answer(choice) {
         }
 
     showKnowledgeRoom(room);
+    bossPool = null;
     bossHealth = 3;
     return;
             }
@@ -2928,6 +2929,7 @@ console.log("DETOUR CHECK VALUE:", conceptMemory[currentQuestion.tag]);
 
     // Normal failure handling
     document.getElementById("streakDisplay").innerText = "";
+    bossPool = null;
     bossHealth = 3;
 
     // =============================================
