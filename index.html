@@ -33,7 +33,7 @@ If something breaks, check:
 <meta name="viewport" content="width=device-width, initial-scale=1">
     
 <!-- Title can be changed to whatever the game needs -->
-<title>The Archives of Microeconomics</title>
+<title>The Strategic Vault</title>
    
 <style>
 /* =========================================
@@ -56,21 +56,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
     color: white;
     background: linear-gradient(rgba(2,6,23,.8), rgba(2,6,23,.8)), url('question_background_image.png');
     background-size: cover;
     background-position: center;
-    background-attachment: scroll;
 }
 
-#gameShell{
-    display:flex;
-    gap:20px;
-    max-width:900px;
-    width:100%;
-    margin:0 auto;
-}
-   
 .dungeon-container {
     position: relative;
     display: flex;
@@ -81,6 +73,96 @@ body {
     width: 100%;
     max-width: 1100px;
     margin-top: 20px;
+}
+
+.start-content{
+  width: 100%;
+  max-width: 420px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;   
+  text-align:center;    
+}
+
+.title{
+  font-size:64px;
+  letter-spacing:4px;
+  margin-bottom:10px;
+  text-align:center;
+  color:#67e8f9;
+  text-shadow:
+    0 0 12px rgba(103,232,249,0.9),
+    0 0 30px rgba(56,189,248,0.7),
+    0 0 60px rgba(14,165,233,0.5);
+}
+
+.subtitle{
+  font-size:34px;
+  margin-bottom:30px;
+  letter-spacing:2px;
+  text-align:center;
+  color:#38bdf8;
+  opacity:0.85;
+  text-shadow:
+    0 0 10px rgba(56,189,248,0.5);
+}
+
+.tagline{
+  margin-bottom:28px;
+  font-style:italic;
+  text-align:center;
+  color: rgba(186,230,253,0.65);
+}
+
+.name-input{
+  width:100%;
+  max-width:320px;
+  text-align:center;
+  padding:15px;
+  border-radius:10px;
+  border:1px solid rgba(56,189,248,0.45);
+  background: linear-gradient(
+    180deg,
+    rgba(2,6,23,0.95),
+    rgba(15,23,42,0.85)
+  );
+  color:#e2e8f0;
+  font-size:20px;
+  margin-bottom:20px;
+  outline:none;
+  box-shadow:
+    0 0 12px rgba(56,189,248,0.35),
+    inset 0 0 12px rgba(56,189,248,0.08);
+}
+
+.start-btn{
+  width:100%;
+  max-width:320px;
+  background: linear-gradient(
+    90deg,
+    #22d3ee,
+    #0ea5e9
+  );
+  color:#020617;
+  font-weight:700;
+  letter-spacing:0.5px;
+  box-shadow:
+    0 0 18px rgba(56,189,248,0.8),
+    0 0 35px rgba(14,165,233,0.5);
+  transition: all 0.2s ease;
+}
+
+.start-btn:hover{
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 25px rgba(56,189,248,1),
+    0 0 45px rgba(14,165,233,0.7);
+}
+   
+#username::placeholder{
+  color: rgba(125,211,252,0.35);
+  font-style: italic;
+  letter-spacing: 0.5px;
 }
 
 /* =========================================
@@ -130,12 +212,19 @@ You can restyle it completely—just keep structure intact.
     margin: 0;
     padding: 18px 20px;
     text-align: center;
-    background: rgba(15,23,42,0.98);
+    background: linear-gradient(
+        180deg,
+        rgba(2,6,23,0.98),
+        rgba(15,23,42,0.95)
+    );
     backdrop-filter: blur(6px);
     border-radius: 14px;
     box-sizing: border-box;
-    box-shadow: 0 0 20px rgba(59,130,246,0.25), 0 0 60px rgba(30,64,175,0.15), inset 0 0 25px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(56,189,248,0.15);
+    box-shadow:
+        0 0 25px rgba(56,189,248,0.25),
+        0 0 70px rgba(37,99,235,0.18),
+        inset 0 0 30px rgba(0,0,0,0.7);
     animation: torchFlicker 6s infinite;
     transition: box-shadow .3s ease;
     position: relative;
@@ -143,16 +232,34 @@ You can restyle it completely—just keep structure intact.
 
 /* Boss state styling — triggered during boss fights (DO NOT REMOVE) */
 #gameBox.boss-mode {
-    border: 2px solid #60a5fa;
-    box-shadow: 0 0 40px rgba(96,165,250,0.4);
+    border: 2px solid #38bdf8;
+    box-shadow:
+        0 0 35px rgba(56,189,248,0.6),
+        0 0 80px rgba(37,99,235,0.35),
+        inset 0 0 40px rgba(2,6,23,0.9);
+}
+   
+.boss-icon{
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    pointer-events: none;
 }
 
+/* Tier 1 — Tyrant */
+.boss10 .boss-icon{filter:drop-shadow(0 0 5px rgba(125,211,252,0.8))drop-shadow(0 0 10px rgba(56,189,248,0.4));}
+
+/* Tier 2 — Underwriter */
+.boss20 .boss-icon{filter:drop-shadow(0 0 7px rgba(96,165,250,0.9))drop-shadow(0 0 14px rgba(37,99,235,0.6));}
+
+/* Tier 3 — Strategist */
+.boss30 .boss-icon{filter:drop-shadow(0 0 9px rgba(186,230,253,1))drop-shadow(0 0 20px rgba(56,189,248,0.9));}
+
 /* Damage effect when boss/player is hit (visual feedback) */
-.hit { box-shadow: 0 0 60px #ef4444, inset 0 0 40px #7f1d1d !important; animation: hitshake 0.4s ease; }
+.hit {box-shadow:0 0 50px rgba(239,68,68,0.9),inset 0 0 30px rgba(127,29,29,0.8) !important;animation: hitshake 0.4s ease;}
 
 /* Autosave indicator — positioned relative to gameBox */
-#autosave { position: absolute; top: 15px; right: 15px; font-size: 11px; opacity: 0.5; font-style: italic; }
-
+#autosave {position: absolute;top: 15px;right: 15px;font-size: 11px;opacity: 0.6;font-style: italic;color: rgba(125,211,252,0.7);}
 
 /* =========================================
    3. TEXT & TYPOGRAPHY SYSTEM — SAFE TO CUSTOMIZE
@@ -310,10 +417,20 @@ If it's unclear, motivation drops.
 .maze-box.active { background: rgba(96,165,250,0.25); border: 2px solid #60a5fa; z-index: 10; animation: activePulse 0.8s infinite alternate;}
     
 /* Boss room highlights (10, 20, 30) — visual only */
-.maze-box:nth-child(10) { text-shadow: 0 0 10px #60a5fa; }
-.maze-box:nth-child(20) { text-shadow: 0 0 12px #a855f7; }
-.maze-box:nth-child(30) { text-shadow: 0 0 15px #ef4444; }
+.maze-box:nth-child(10){text-shadow:0 0 6px rgba(125,211,252,0.8),0 0 12px rgba(56,189,248,0.4);}
+.maze-box:nth-child(20){text-shadow:0 0 10px rgba(96,165,250,0.9),0 0 18px rgba(37,99,235,0.6);}
+.maze-box:nth-child(30){text-shadow:0 0 12px rgba(186,230,253,1),0 0 22px rgba(56,189,248,0.9),0 0 40px rgba(14,165,233,0.6);}
 
+
+/* Streak styling — Labyrinth */
+.streak{display:inline-flex;align-items:center;gap:10px;font-weight:600;letter-spacing:0.5px;color: rgba(186,230,253,0.95);
+    text-shadow:0 0 6px rgba(56,189,248,0.6);}
+
+.streak-icon{width:22px;height:22px;object-fit:contain;border-radius:50%;
+    filter:drop-shadow(0 0 5px rgba(125,211,252,0.9)) drop-shadow(0 0 10px rgba(56,189,248,0.7));
+    background: radial-gradient(circle,rgba(186,230,253,0.6) 0%,rgba(56,189,248,0.35) 40%,rgba(2,6,23,0.0) 70%);
+    animation: labyrinthPulse 2.6s ease-in-out infinite;}
+   
 /* =========================================
    6. ARTIFACT SYSTEM (REWARDS) — SAFE TO CUSTOMIZE
 =========================================
@@ -462,7 +579,26 @@ Good transitions = smoother experience.
 ========================================= */
 
 /* Fullscreen start screen — shown before game begins */
-#startScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('start screen image.png'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+#startScreen{position: fixed;inset: 0;
+  background:
+    linear-gradient(
+      rgba(2,6,23,0.65),
+      rgba(2,6,23,0.85)
+    ),
+    url('start screen image.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0px 20px;
+  box-sizing: border-box;
+}
 
 /* Transition overlay — appears between rooms (controlled by JS) */
 #hallwayTransition { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)), url('hallway1.png'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; text-align: center; color: white; font-size: 26px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 1.2s ease; animation: hallwayZoom 3.2s ease-out forwards; }
@@ -537,6 +673,10 @@ Subtle > excessive.
 
 /* General UI entrance animation */    
 @keyframes fadeIn {from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Streak Icon Glow */
+@keyframes pulseControl{0%,100%{transform: scale(1);opacity:0.9;filter: drop-shadow(0 0 5px rgba(125,211,252,0.6));  }
+  50%{transform: scale(1.08);opacity:1;filter:drop-shadow(0 0 10px rgba(125,211,252,0.9)) drop-shadow(0 0 18px rgba(56,189,248,0.8));  }}
     
 /* =========================================
 10. PANEL LAYOUT SYSTEM — SAFE TO CUSTOMIZE (WITH LIMITS)
@@ -620,22 +760,29 @@ This controls layout — not game logic.
     gap:20px;
     justify-content:center;
     width:100%;
-    align-items: flex-start;
+    align-items: stretch;
 }
    
 /* Game Shell Wrapper*/
 /* Core game container — controls overall layout and spacing */
-   #gameShell{
+#gameShell{
     display:flex;
     gap:20px;
-    background:#0f172a;
-    padding:20px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,0.08);
-    box-shadow:0 0 25px rgba(0,0,0,0.6);
     max-width:900px;
     width:100%;
     margin:0 auto;
+    background: linear-gradient(
+        180deg,
+        rgba(2,6,23,0.96),
+        rgba(2,6,23,0.99)
+    );
+    padding:20px;
+    border-radius:16px;
+    border:1px solid rgba(56,189,248,0.22);
+    box-shadow:
+       0 0 30px rgba(0,0,0,0.95),
+       0 0 50px rgba(56,189,248,0.18),
+       inset 0 0 30px rgba(255,255,255,0.02);
 }
    
 /* Wizard Box */
@@ -663,19 +810,18 @@ This controls layout — not game logic.
 /* Wizard Name */
 #wizardName {
     font-size: 12px;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: #93c5fd; /* soft arcane blue */
-    margin-top: 4px;
-    margin-bottom: 6px;
-    opacity: 0.85;
     text-align: center;
+    color: rgba(186,230,253,0.9);
+    margin-top: 6px;
+    margin-bottom: 8px;
     font-weight: 600;
-    border-bottom: 1px solid rgba(147, 197, 253, 0.2);
-    padding-bottom: 2px;
-
-    /* subtle glow */
-    text-shadow: 0 0 6px rgba(147, 197, 253, 0.6);
+    border-bottom: 1px solid rgba(56,189,248,0.25);
+    padding-bottom: 4px;
+    text-shadow:
+        0 0 6px rgba(125,211,252,0.7),
+        0 0 12px rgba(56,189,248,0.4);
 }
 
 /* Wizard Image */
@@ -686,16 +832,6 @@ This controls layout — not game logic.
     filter: drop-shadow(0 0 12px rgba(96,165,250,.6));
     animation: wizardFloat 4s ease-in-out infinite;
 }
-
-/* Game Box adjustment */
-/* Main gameplay area — expands to fill available space */
-#gameBox{
-    flex:1;
-    min-width:0;
-    max-width:720px;
-    width:100%;
-    padding:18px 20px;   /* slightly tighter */
-} 
    
 /* =========================================
    11. BOSS MODE (UI STATE OVERRIDES) — DO NOT MODIFY STRUCTURE
@@ -790,25 +926,27 @@ Test changes on both:
 This controls responsiveness, not game logic.
 ========================================= */
 /* Base mobile rules */
-@media (max-width: 900px){
-#gameShell {padding: 8px;gap: 10px;}
-#question {font-size: 1.2rem; line-height: 1.3;}
-.artifactSlot img {width: 35px;}
-}
-   
-/* Portrait (stacked, bigger wizard) */
-@media (max-width: 600px) and (orientation: portrait){
-.main-panel {flex-direction: column; align-items: center;}
-#wizardBox{width: 100%; max-width: 280px;margin-bottom: 12px;}
-#wizardImage {width: 100px; max-width: 100%;}
-}
-   
-/* Landscape (side-by-side, compact wizard) */   
+@media (max-width: 768px){
+  #gameShell{padding:10px;gap:10px;}
+  .main-panel{flex-direction: column;align-items: center;  }
+  #question{font-size:1.2rem;line-height:1.4;text-align:center;}
+  button{width:100%;padding:14px;font-size:16px;}
+  #wizardBox{width:100%;max-width:260px;margin-bottom:12px;}
+  #wizardImage{width:100%;max-width:120px;}}
+
 @media (max-width: 900px) and (orientation: landscape){
-.main-panel{flex-direction: row;}
-#wizardBox{max-width: 180px;}
-#wizardImage{width: 80px;}
-}
+  .title{font-size: clamp(36px, 5vw, 56px);margin-bottom:6px;}
+  .subtitle{font-size:18px;margin-bottom:12px;}
+  .tagline{font-size:14px;margin-bottom:12px;}
+  .name-input{width:100%;max-width:280px;font-size:16px;padding:12px;margin-bottom:10px;}
+  #startScreen{justify-content: center;overflow: hidden;}
+  .start-content{transform: scale(0.92);}
+  .start-btn{width:100%;max-width:280px;font-size:16px;padding:12px;}}
+
+@media (max-width: 768px) and (orientation: portrait){
+  .main-panel{flex-direction:column;align-items:center;}}
+
+   .fullscreenBtn{top:5px;left:5px;padding:4px 8px;font-size:10px;}
    
 </style>
 </head>
@@ -878,11 +1016,20 @@ Respect structure strictly.
 </div>
 <!-- Start screen / player entry (safe to redesign completely) -->
 <div id="startScreen">
-    <h1 style="color:rgb(48, 187, 221); text-shadow:0 0 30px rgb(48, 187, 221); font-size:60px; margin-bottom:10px;">THE ARCHIVES OF MICROECONOMICS</h1>
-    <h2 style="color:rgb(51, 140, 178); text-shadow:0 0 20px rgb(51, 140, 178); font-size:40px; margin-bottom:50px;">THE STRATEGIC VAULT</h2>
-    <p style="color:#c4cad3; letter-spacing:2px; margin-bottom:30px; font-style:italic;">Identify yourself, Adventurer</p>
-    <input type="text" id="usernameInput" placeholder="Enter Name..." style="padding:15px; border-radius:8px; border:1px solid #374151; background:#1f2937; color:white; font-size:20px; margin-bottom:20px; text-align:center; outline:none; width:300px; box-shadow: 0 0 15px rgba(0,0,0,0.5);">
-    <button onclick="startGame()" style="background:#30bbdd; color:#000; font-weight:bold; padding:15px 50px; font-size:20px; cursor:pointer; border-radius:8px; border:none; transition: transform 0.2s;">ENTER THE ARCHIVES</button>
+  <div class="start-content">
+    <h1 class="title">THE STRATEGIC VAULT</h1>
+    <h2 class="subtitle">Systems. Probability. Strategy.</h2>
+    <p class="tagline">Identify yourself, Adjudicator</p>
+    <input 
+      type="text"
+      id="usernameInput"
+      class="name-input"
+      placeholder="Enter Designation..."
+    >
+    <button class="start-btn" onclick="startGame()">
+      INITIALIZE ACCESS
+    </button>
+  </div>
 </div>
 <div class="dungeon-container">
     <button class="fullscreenBtn" onclick="goFullscreen()">FULLSCREEN</button>
@@ -1510,19 +1657,46 @@ function wizardSpeak(text){
   
 const questionBanks = {
 easyBoss:[
-{id:201,q:"The Dice Tyrant snarls: 'You trust numbers… but do you understand them?' A gamble pays $100 with probability 0.4 and $0 otherwise. A player says its value is $100 because that is the payoff. What is the flaw?",options:["They ignored probabilities when determining the value of outcomes","They treated utility and monetary value as identical concepts","They assumed outcomes occur with equal likelihood","They focused only on the largest possible payoff"],a:0,feedback:"Expected value weights outcomes by probability. Ignoring probabilities leads to incorrect valuation."},
-{id:202,q:"The Dice Tyrant rolls again. A gamble pays $100 with probability 0.5 and $40 with probability 0.5. A student claims the expected value is $100 because it is the highest payoff. What is the correct expected value?",options:["$70 because outcomes must be weighted by their probabilities","$100 because the highest payoff determines value","$50 because only one outcome should be considered","$40 because lower outcomes reduce overall value"],a:0,feedback:"Expected value = (100×0.5)+(40×0.5)=50+20=70. Maximum payoff is irrelevant."},
-{id:203,q:"The Dice Tyrant leans closer: 'Two gambles. Same expected value. One is riskier.' A risk-neutral player chooses which?",options:["They are indifferent because only expected value determines choice","They prefer the riskier option due to higher variance","They prefer the safer option due to lower variance","They choose the option with more consistent outcomes"],a:0,feedback:"Risk-neutral players only care about expected value, not variance."}
+// ===== RISK =====
+{id:1000,q:"The Dice Tyrant snarls: 'You trust numbers… but do you understand them?' A gamble pays $100 with probability 0.4 and $0 otherwise. A player says its value is $100 because that is the payoff. What is the flaw?",options:["They ignored probabilities when determining value","They treated utility and money as identical","They assumed equal likelihood of outcomes","They focused only on the highest payoff"],a:0,tag:"risk",type:"definition",feedback:"Expected value depends on probabilities, not just outcomes."},
+{id:1001,q:"The Dice Tyrant rolls again. A gamble pays $100 with probability 0.5 and $40 with probability 0.5. What is the expected value?",options:["$70 because outcomes are probability-weighted","$100 because the highest payoff dominates","$50 because only one outcome matters","$40 because lower outcomes reduce value"],a:0,tag:"risk",type:"calculation",feedback:"EV = (100×0.5)+(40×0.5)=70."},
+{id:1002,q:"The Dice Tyrant leans closer: 'Two gambles. Same expected value. One is riskier.' A risk-neutral player chooses which?",options:["They are indifferent","They prefer the riskier gamble","They prefer the safer gamble","They avoid both"],a:0,tag:"risk",type:"interpretation",feedback:"Risk-neutral players only care about expected value."},
+// ===== INSURANCE =====
+{id:1003,q:"The Underwriter whispers: 'Protection has a cost.' What is the purpose of insurance?",options:["To eliminate all risk entirely","To transfer risk in exchange for a premium","To increase expected value","To guarantee profit"],a:1,tag:"insurance",type:"definition",feedback:"Insurance transfers risk from individuals to insurers."},
+{id:1004,q:"The Underwriter calculates. A person faces a $1,000 loss with probability 0.1. What is the expected loss?",options:["$100 because 1000×0.1","$1,000 because that is the loss","$900 because most outcomes avoid loss","$10 because probability is small"],a:0,tag:"insurance",type:"calculation",feedback:"Expected loss = probability × loss = 100."},
+{id:1005,q:"The Underwriter tests logic. Why would a risk-averse person buy actuarially fair insurance?",options:["They prefer certainty over risk","They expect to gain money","They misunderstand probabilities","They maximize variance"],a:0,tag:"insurance",type:"interpretation",feedback:"Risk-averse individuals value certainty even if expected value is unchanged."},
+// ===== GAME THEORY =====
+{id:1006,q:"The Strategist declares: 'Your outcome depends on others.' What defines a Nash equilibrium?",options:["Each player maximizes total payoff","Each player chooses the dominant strategy","No player can improve by changing strategy alone","All players cooperate"],a:2,tag:"game_theory",type:"definition",feedback:"Nash equilibrium occurs when no player benefits from unilateral deviation."},
+{id:1007,q:"The Strategist presents a game. If both players have dominant strategies, what happens?",options:["They reach Nash equilibrium","They randomize choices","They cooperate automatically","They avoid conflict"],a:0,tag:"game_theory",type:"calculation",feedback:"Dominant strategies lead directly to Nash equilibrium."},
+{id:1008,q:"The Strategist tightens the trap. In the Prisoner’s Dilemma, both players confess despite a better joint outcome from silence. Why?",options:["Individual incentives override collective outcomes","Players misunderstand payoffs","Cooperation is impossible","Payoffs are equal"],a:0,tag:"game_theory",type:"interpretation",feedback:"Incentives drive players toward equilibrium even if it is not socially optimal."}
 ],
 mediumBoss:[
-{id:204,q:"The Underwriter whispers: 'You reject a fair gamble. Why?' A gamble has expected value $0, yet you decline it. Which explanation is correct?",options:["Expected utility is lower than the utility of a certain outcome due to diminishing marginal utility","Expected value must be negative once risk is considered","Variance does not affect decision making in this context","Probabilities must be miscalculated in the gamble"],a:0,feedback:"Risk-averse individuals reject fair gambles because utility is concave."},
-{id:205,q:"The Underwriter presents a contract. A student claims people buy insurance only when expected value is positive. What is the flaw?",options:["They ignore that decisions depend on expected utility rather than expected value","They assume probabilities are incorrectly calculated by insurers","They believe premiums always equal expected payouts","They confuse insurance demand with risk neutrality"],a:0,feedback:"Insurance decisions depend on utility, not just expected monetary value."},
-{id:206,q:"Final judgment from the Underwriter: An insurer sets premiums equal to expected loss, yet still fails. What is the real reason?",options:["Administrative costs and operational expenses exceed collected premiums","Consumers systematically underestimate their own level of risk","Risk pooling eliminates the need for profit margins","Insurance markets eliminate uncertainty entirely"],a:0,feedback:"Even fair insurance must cover costs, otherwise firms cannot survive."}
+// ===== RISK =====
+{id:2000,q:"The Dice Tyrant observes: 'You reject a fair gamble. Why?' A gamble has expected value $0, yet you decline it. Which explanation is correct?",options:["Expected utility is lower due to diminishing marginal utility","Expected value must be negative","Variance does not affect decisions","Probabilities are incorrect"],a:0,tag:"risk",type:"definition",feedback:"Risk-averse individuals reject fair gambles because utility is concave."},
+{id:2001,q:"The Dice Tyrant calculates. A gamble pays $200 with probability 0.25 and $0 otherwise. What is the expected value?",options:["$50 because 200×0.25","$200 because it is the payoff","$0 because loss is possible","$100 because outcomes average"],a:0,tag:"risk",type:"calculation",feedback:"EV = 200×0.25 = 50."},
+{id:2002,q:"The Dice Tyrant tightens the logic. Two gambles have the same expected value, but one has higher variance. A risk-averse individual chooses which?",options:["The safer gamble","The riskier gamble","They are indifferent","They avoid both"],a:0,tag:"risk",type:"interpretation",feedback:"Risk-averse individuals prefer lower variance for the same expected value."},
+// ===== INSURANCE =====
+{id:2003,q:"The Underwriter whispers: 'Protection is not free.' Why do individuals buy insurance?",options:["To eliminate uncertainty by transferring risk","To increase expected monetary value","To avoid paying premiums","To maximize variance"],a:0,tag:"insurance",type:"definition",feedback:"Insurance transfers risk, reducing uncertainty."},
+{id:2004,q:"The Underwriter presents a contract. A student claims people buy insurance only when expected value is positive. What is the flaw?",options:["Decisions depend on expected utility, not expected value","Probabilities are miscalculated","Premiums always equal payouts","Insurance requires risk neutrality"],a:0,tag:"insurance",type:"calculation",feedback:"People buy insurance due to utility, not expected value."},
+{id:2005,q:"The Underwriter delivers judgment. An insurer sets premiums equal to expected loss but still fails. Why?",options:["Costs exceed premiums","Consumers underestimate risk","Risk pooling removes profit","Uncertainty disappears"],a:0,tag:"insurance",type:"interpretation",feedback:"Administrative costs require premiums above expected loss."},
+// ===== GAME THEORY =====
+{id:2006,q:"The Strategist declares: 'Your outcome depends on others.' What is a dominant strategy?",options:["A strategy that yields the best outcome regardless of others","A strategy chosen by all players","A strategy with equal payoffs","A cooperative strategy"],a:0,tag:"game_theory",type:"definition",feedback:"A dominant strategy is optimal regardless of others’ actions."},
+{id:2007,q:"The Strategist evaluates. If both players have dominant strategies, what outcome occurs?",options:["Nash equilibrium","Random outcome","Cooperation","No equilibrium"],a:0,tag:"game_theory",type:"calculation",feedback:"Dominant strategies lead to Nash equilibrium."},
+{id:2008,q:"The Strategist tightens the trap. In a coordination game, multiple equilibria exist. What problem arises?",options:["Players may fail to coordinate on the best outcome","No strategies are optimal","All outcomes are equal","Dominant strategies disappear"],a:0,tag:"game_theory",type:"interpretation",feedback:"Multiple equilibria create coordination problems."}
 ],
 finalBoss:[
-{id:207,q:"The Convergence begins: 'You think cooperation survives?' In a one-shot Prisoner’s Dilemma, why does cooperation fail?",options:["Defection is each player’s best response regardless of the other’s action","Players fail to correctly interpret the structure of the payoff matrix","Communication between players cannot be enforced or verified","Payoffs are distributed unevenly across outcomes"],a:0,feedback:"Defection is dominant, making it the Nash equilibrium even though cooperation is better."},
-{id:208,q:"The Convergence tightens: A firm threatens to cut prices if entry occurs, but doing so reduces its own profit. Why does this fail?",options:["The threat is not credible because it is not optimal in the relevant subgame","The firm cannot commit to a dominant strategy in advance","The threat changes the payoff matrix faced by competitors","The outcome eliminates equilibrium from the game entirely"],a:0,feedback:"Subgame perfect equilibrium removes non-credible threats."},
-{id:209,q:"Final judgment: Cooperation in an infinitely repeated Prisoner’s Dilemma depends on what?",options:["Future payoffs being valued enough to outweigh short-term gains from defection","Players adjusting strategies based on incomplete information","Repeated interaction changing the structure of payoffs over time","The ability of players to observe each other’s actions consistently"],a:0,feedback:"Cooperation is sustained when future punishment outweighs short-term gains."}
+// ===== RISK =====
+{id:3000,q:"The Convergence begins: 'You reject risk, yet pay for certainty.' A gamble has expected value equal to a certain outcome, yet you choose the certain outcome. What explains this?",options:["Diminishing marginal utility makes expected utility of the gamble lower","Expected value must be incorrectly calculated","Variance has no effect on decisions","Probabilities are irrelevant in choice"],a:0,tag:"risk",type:"integration",feedback:"Risk aversion arises from concave utility, not expected value."},
+{id:3001,q:"The Convergence tightens: A gamble’s expected value rises, yet a risk-averse individual still rejects it. What must be true?",options:["The increase in variance outweighs the gain in expected value","The individual prefers higher risk","Utility is linear in income","Probabilities are misperceived"],a:0,tag:"risk",type:"multi-step",feedback:"Higher variance can offset gains in expected value for risk-averse individuals."},
+{id:3002,q:"Final pressure: A risk-neutral and risk-averse individual face the same gamble. Who accepts and why?",options:["Only the risk-neutral accepts because they maximize expected value","Only the risk-averse accepts because they prefer certainty","Both reject due to uncertainty","Both accept because expected value is positive"],a:0,tag:"risk",type:"integration",feedback:"Risk-neutral agents accept based on expected value, risk-averse may reject."},
+// ===== INSURANCE =====
+{id:3003,q:"The Convergence declares: 'You pay to avoid loss.' Why will a risk-averse individual buy actuarially unfair insurance?",options:["Utility gained from certainty exceeds the cost of the premium","Expected value of insurance must be positive","Insurers misprice risk","Losses are guaranteed without insurance"],a:0,tag:"insurance",type:"integration",feedback:"Risk aversion makes individuals willing to pay above expected loss."},
+{id:3004,q:"The Convergence calculates: Expected loss is $500, premium is $600. Why might insurance still be purchased?",options:["Certainty has higher utility than risky outcomes","Premium equals expected value","Variance increases utility","Risk-neutral behavior dominates"],a:0,tag:"insurance",type:"multi-step",feedback:"Risk-averse individuals prefer certainty even at a cost."},
+{id:3005,q:"Final pressure: If insurers perfectly pool risk but ignore administrative costs, what happens?",options:["Firms fail because premiums are insufficient","Consumers stop buying insurance","Risk disappears entirely","Markets reach perfect equilibrium"],a:0,tag:"insurance",type:"integration",feedback:"Costs must be covered for firms to survive."},
+// ===== GAME THEORY =====
+{id:3006,q:"The Convergence begins: 'You think cooperation survives?' In a one-shot Prisoner’s Dilemma, why does cooperation fail?",options:["Defection is each player’s best response regardless of the other’s action","Players misunderstand payoffs","Communication cannot be verified","Payoffs are unequal"],a:0,tag:"game_theory",type:"definition",feedback:"Defection is dominant, forming the Nash equilibrium."},
+{id:3007,q:"The Convergence tightens: A firm threatens to cut prices if entry occurs, but doing so reduces its own profit. Why does this fail?",options:["The threat is not credible in the subgame","The firm lacks a dominant strategy","The payoff matrix changes","Equilibrium disappears"],a:0,tag:"game_theory",type:"multi-step",feedback:"Subgame perfection eliminates non-credible threats."},
+{id:3008,q:"Final judgment: Cooperation in an infinitely repeated Prisoner’s Dilemma depends on what?",options:["Future payoffs outweigh short-term defection gains","Players lack information","Payoffs change each round","Strategies are random"],a:0,tag:"game_theory",type:"integration",feedback:"Cooperation holds when future punishment is valued enough."}
 ],
 easy: [
 {id:1,q:"Expected value represents...",options:["The average outcome weighted by probabilities","The highest possible payoff","The lowest payoff","The most common outcome"],a:0,tag:"risk",type:"definition",feedback:"Expected value multiplies each outcome by its probability and sums the results."},
@@ -2174,14 +2348,14 @@ function updateMazeTrack() {
             box.innerText = "🟩";
             box.style.opacity = "0.6";
         } else if (i === room) {
-            box.classList.add("active"); // Trigger the gold pulse
+            box.classList.add("active"); // Trigger the pulse
             box.setAttribute("aria-label",`Current room ${i} of 30`);
             box.innerText = "🟦";
         } else {
             // Boss icons for future rooms
-            if (i === 10) box.innerText = "🎲";
-            else if (i === 20) box.innerText = "🛡️";
-            else if (i === 30) box.innerText = "👑";
+            if (i === 10){box.innerHTML = '<img src="tyrant.png" class="boss-icon">';box.classList.add("boss10");}
+            else if (i === 20){box.innerHTML = '<img src="underwriter.png" class="boss-icon">';box.classList.add("boss20");}
+            else if (i === 30){box.innerHTML = '<img src="strategist.png" class="boss-icon">';box.classList.add("boss30");}
             else box.innerText = "⬛";
         }
         
@@ -2365,15 +2539,43 @@ function loadQuestion() {
     document.getElementById("srAnnouncements").innerText = `Entering ${getAreaName(room)}. Room ${room} of 30.`;
 
     // 3. Select the Question (CHANGE BOSS NAMES AND PNG)
-    if (isBoss) {
-        if (bossHealth === 3) {
-        bossPool = [...questionBanks[diff]]; // ← NO SHUFFLE
+if (isBoss) {
+
+    if (bossHealth === 3) {
+
+        let pool = [...questionBanks[diff]];
+
+        let entries = Object.entries(conceptMemory || {});
+        let chosenTag = null;
+
+        if (entries.length > 0) {
+
+            let maxWeakness = Math.max(...entries.map(e => e[1]));
+
+            if (maxWeakness < 1) {
+                // no weakness → target strongest
+                chosenTag = entries.sort((a,b)=> a[1]-b[1])[0][0];
+            } else {
+                // normal → target weakest
+                chosenTag = entries.sort((a,b)=> b[1]-a[1])[0][0];
+            }
         }
+
+        // --- BUILD BOSS SEQUENCE ---
+        bossPool = chosenTag
+            ? pool.filter(q => q.tag === chosenTag)
+            : [];
+
+        // --- SAFETY FALLBACK ---
+        if (bossPool.length !== 3) {
+            bossPool = pool.slice(0,3);
+        }
+    }
 
         currentQuestion = shuffleOptions(bossPool[3 - bossHealth]);
         
         let bTitle = room === 10 ? "DICE TYRANT" : room === 20 ? "UNDERWRITER OF FATE" : "THE CONVERGENCE";
-        let bColor = room === 10 ? "#fbbf24" : room === 20 ? "#a855f7" : "#ef4444";
+        let bColor = room === 10 ? "#7dd3fc" : room === 20 ? "#38bdf8" : "#0ea5e9";
         document.getElementById("srAnnouncements").innerText =`Boss encounter. ${bTitle}. Prepare yourself`;
         bossMsg.innerText = "⚠ BOSS ENCOUNTER ⚠";
         bossMsg.style.color = bColor;
@@ -2787,21 +2989,35 @@ function unlockArtifact(key) {
 // =============================================
 function handleStreakVisuals() {
     let streakMsg = "";
-    let streakColor = "#60a5fa";
+    let streakColor = "#7dd3fc";
 
-if (streak === 5) {streakMsg = "🎲 STREAK: Odds in Your Favor!";streakColor = "#fbbf24";}
-else if (streak === 10) {streakMsg = "🛡️ STREAK: Risk Mastery!";streakColor = "#f87171";}
-else if (streak === 20) {streakMsg = "♟ STREAK: Strategic Dominance!";streakColor = "#a855f7"; 
-}
+    if (streak === 5) {
+        streakMsg = `<span class="streak" data-tier="5">
+            <img src="streakodds.png" class="streak-icon"> ODDS ALIGNED
+        </span>`;
+    }
+    else if (streak === 10) {
+        streakMsg = `<span class="streak" data-tier="10">
+            <img src="streakrisk.png" class="streak-icon"> RISK MASTERED
+        </span>`;
+    }
+    else if (streak === 20) {
+        streakMsg = `<span class="streak" data-tier="20">
+            <img src="streakstrategy.png" class="streak-icon"> STRATEGIC DOMINANCE
+        </span>`;
+    }
+
+    const display = document.getElementById("streakDisplay");
 
     if (streakMsg) {
         sfxMilestone.currentTime = 0;
         sfxMilestone.play();
-        document.getElementById("streakDisplay").innerText = streakMsg;
-        document.getElementById("streakDisplay").style.color = streakColor;
+
+        display.innerHTML = streakMsg;  
+        display.style.color = streakColor;
     } else if (streak > 0) {
-        document.getElementById("streakDisplay").innerText = `Streak: ${streak}`;
-        document.getElementById("streakDisplay").style.color = "#60a5fa";
+        display.innerText = `${streak} IN SEQUENCE`;
+        display.style.color = "#7dd3fc";
     }
 }
 
