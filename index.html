@@ -1020,12 +1020,7 @@ Respect structure strictly.
     <h1 class="title">THE STRATEGIC VAULT</h1>
     <h2 class="subtitle">Systems. Probability. Strategy.</h2>
     <p class="tagline">Identify yourself, Adjudicator</p>
-    <input 
-      type="text"
-      id="Input"
-      class="name-input"
-      placeholder="Enter Designation..."
-    >
+	<input id="usernameInput" type="text" placeholder="Enter Designation" class="name-input" ...>
     <button class="start-btn" onclick="startGame()">
       INITIALIZE ACCESS
     </button>
@@ -1446,7 +1441,7 @@ function startGame() {
     localStorage.setItem("gauntletUser", username);
 
     sendGameData({
-    game: "The Labyrinth of Choice",
+    game: "The Strategic Vault",
     event: "start",
     user: username
 });
