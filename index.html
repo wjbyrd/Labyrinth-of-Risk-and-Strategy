@@ -183,6 +183,14 @@ body {
     0 0 45px rgba(14,165,233,0.7);
 }
    
+.secondary-start-btn{
+  margin-top: 10px;
+  background: linear-gradient(180deg, #0f172a, #020617);
+  border-color: rgba(125,211,252,0.55);
+  color: #bae6fd;
+}
+
+#emailInput::placeholder,
 #username::placeholder{
   color: rgba(125,211,252,0.35);
   font-style: italic;
@@ -339,7 +347,7 @@ h2 { text-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(251,191,36,0.2);
 #question { font-size: clamp(20px, 4vw, 22px); line-height: 1.4; font-weight: 600; margin: 14px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
 /* Boss/summary title — high emphasis text */
-.boss-title { font-size: 28px; font-weight: bold; margin-bottom: 15px; display: block;color: #fbbf24;text-shadow:0 0 10px rgba(251,191,36,0.6),0 0 25px rgba(249,115,22,0.4);}}
+.boss-title { font-size: 28px; font-weight: bold; margin-bottom: 15px; display: block;color: #fbbf24;text-shadow:0 0 10px rgba(251,191,36,0.6),0 0 25px rgba(249,115,22,0.4);}
 
 /* Area/zone label — subtle contextual info */
 .area-title { color: #9ca3af; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; }
@@ -1294,6 +1302,30 @@ TIP:
   }
 }
    
+
+.sound-toggle{
+  position:fixed;
+  right:28px;
+  bottom:24px;
+  z-index:999;
+  padding:10px 13px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(0,0,0,.46);
+  color:rgba(255,255,255,.72);
+  cursor:pointer;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  box-shadow:0 0 18px rgba(0,0,0,.45);
+}
+
+.sound-toggle:hover{
+  color:#fff;
+  border-color:rgba(255,255,255,.42);
+  background:rgba(255,255,255,.08);
+}
+
 </style>
 </head>
     
@@ -1366,13 +1398,20 @@ Respect structure strictly.
     <h1 class="title">THE STRATEGIC VAULT</h1>
     <h2 class="subtitle">Systems. Probability. Strategy.</h2>
 	<input id="emailInput" type="email" placeholder="Enter your school email" class="name-input">
-    <button class="start-btn" onclick="startGame()">
+    <button class="start-btn" onclick="startNewRun()">
       ENTER THE VAULT
+    </button>
+    <button id="continueRunBtn"
+            class="start-btn secondary-start-btn"
+            onclick="continueSavedRun()"
+            style="display:none;">
+      CONTINUE VAULT RUN
     </button>
   </div>
 </div>
 <div class="dungeon-container">
     <button class="fullscreenBtn" onclick="goFullscreen()">FULLSCREEN</button>
+    <button id="soundToggle" class="sound-toggle" onclick="toggleGameSound()" aria-label="Toggle sound">Sound On</button>
 <!-- =========================================
 TOP PANEL (HUD)
 
@@ -1496,6 +1535,38 @@ const hallwayImages = [
     "hallway2.png",
     "hallway3.png"
 ];
+
+let soundEnabled = true;
+
+function updateSoundToggle(){
+  const button = document.getElementById("soundToggle");
+  if(!button) return;
+  button.innerText = soundEnabled ? "Sound On" : "Sound Off";
+}
+
+function setAllGameAudioMuted(isMuted){
+  [bgMusic, bossMusic, finalBossMusic, sfxMilestone, sfxVictory, sfxBossHit, sfxCorrect, sfxWrong]
+    .filter(Boolean)
+    .forEach(audio => {
+      audio.muted = isMuted;
+    });
+}
+
+function toggleGameSound(){
+  soundEnabled = !soundEnabled;
+  localStorage.setItem("gauntletSoundEnabled", soundEnabled ? "true" : "false");
+  setAllGameAudioMuted(!soundEnabled);
+  updateSoundToggle();
+}
+
+function restoreSoundSetting(){
+  const saved = localStorage.getItem("gauntletSoundEnabled");
+  soundEnabled = saved !== "false";
+  setAllGameAudioMuted(!soundEnabled);
+  updateSoundToggle();
+}
+
+restoreSoundSetting();
   
 function goFullscreen(){
 let el = document.documentElement;
@@ -1567,7 +1638,7 @@ let remediationState = {
     careless: false
 };
 let conceptMemory = {};
-let masteryState = { byTag: {}, byObjective: {}, recent: [] };
+let masteryState = { byTag: {}, byObjective: {}, bySkill: {}, recent: [] };
 let adaptiveMode = "support";
 // =============================================
 // RAPID GUESSING / BUTTON-MASHING DETECTOR
@@ -1607,15 +1678,136 @@ let questionHistory = {
     finalBoss: [],
 };
 
+const SAVE_KEY = "strategicVaultSave_v1";
+const REALM_MISSION_KEY = "strategicVault";
+const REALM_STARTED_KEY = "microHub_strategicVault_started";
+const REALM_COMPLETE_KEY = "microHub_strategicVault_complete";
+const REALM_STATUS_KEY = "microHub_strategicVault_status";
+const REALM_ROOM_KEY = "microHub_strategicVault_room";
+
+function saveGameState(){
+    const saveData = {
+        room,
+        bossHealth,
+        bossCheckpoint,
+        correctAnswers,
+        totalAttempts,
+        maxStreak,
+        streak,
+        username,
+        studentEmail,
+        runID,
+        conceptMemory,
+        masteryState,
+        adaptiveMode,
+        tagHistory,
+        lastTypes,
+        usedQuestions,
+        questionHistory,
+        rapidGuessHistory,
+        rapidGuessWarnings,
+        rapidGuessLocked,
+        remediationState,
+        detourActive,
+        detourReturnRoom,
+        savedAt: Date.now(),
+        artifacts: {
+            vaultDice: localStorage.getItem("vaultDice") === "true",
+            vaultShield: localStorage.getItem("vaultShield") === "true",
+            vaultCore: localStorage.getItem("vaultCore") === "true"
+        }
+    };
+
+    localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
+    localStorage.setItem("gauntletRoom", String(room));
+    localStorage.setItem(REALM_STARTED_KEY, "true");
+    localStorage.setItem(REALM_STATUS_KEY, "contested");
+    localStorage.setItem(REALM_ROOM_KEY, String(room));
+
+    const autosave = document.getElementById("autosave");
+    if(autosave){
+        autosave.innerText = "💾 Progress Saved Locally";
+    }
+}
+
+function loadSavedGame(){
+    const rawSave = localStorage.getItem(SAVE_KEY);
+    if(!rawSave) return false;
+
+    try {
+        const saveData = JSON.parse(rawSave);
+
+        room = Number(saveData.room || 1);
+        bossHealth = Number(saveData.bossHealth || 3);
+        bossCheckpoint = Number(saveData.bossCheckpoint || 1);
+        correctAnswers = Number(saveData.correctAnswers || 0);
+        totalAttempts = Number(saveData.totalAttempts || 0);
+        maxStreak = Number(saveData.maxStreak || 0);
+        streak = Number(saveData.streak || 0);
+
+        username = saveData.username || username || "";
+        studentEmail = saveData.studentEmail || studentEmail || "";
+        runID = saveData.runID || runID || "";
+
+        conceptMemory = saveData.conceptMemory || {};
+        masteryState = saveData.masteryState || { byTag: {}, byObjective: {}, bySkill: {}, recent: [] };
+        if(!masteryState.byTag) masteryState.byTag = {};
+        if(!masteryState.byObjective) masteryState.byObjective = {};
+        if(!masteryState.bySkill) masteryState.bySkill = {};
+        if(!masteryState.recent) masteryState.recent = [];
+
+        adaptiveMode = saveData.adaptiveMode || "support";
+        tagHistory = saveData.tagHistory || [];
+        lastTypes = saveData.lastTypes || [];
+
+        usedQuestions = saveData.usedQuestions || usedQuestions;
+        questionHistory = saveData.questionHistory || questionHistory;
+
+        rapidGuessHistory = saveData.rapidGuessHistory || [];
+        rapidGuessWarnings = Number(saveData.rapidGuessWarnings || 0);
+        rapidGuessLocked = !!saveData.rapidGuessLocked;
+
+        remediationState = saveData.remediationState || remediationState;
+        detourActive = !!saveData.detourActive;
+        detourReturnRoom = saveData.detourReturnRoom || null;
+
+        if(saveData.artifacts?.vaultDice) localStorage.setItem("vaultDice", "true");
+        if(saveData.artifacts?.vaultShield) localStorage.setItem("vaultShield", "true");
+        if(saveData.artifacts?.vaultCore) localStorage.setItem("vaultCore", "true");
+
+        return true;
+    } catch(error){
+        console.warn("Saved game could not be loaded:", error);
+        localStorage.removeItem(SAVE_KEY);
+        return false;
+    }
+}
+
+function clearSavedGame(){
+    localStorage.removeItem(SAVE_KEY);
+    localStorage.removeItem("gauntletRoom");
+    localStorage.removeItem("vaultDice");
+    localStorage.removeItem("vaultShield");
+    localStorage.removeItem("vaultCore");
+
+    ["vaultDice", "vaultShield", "vaultCore"].forEach(id => {
+        const slot = document.getElementById(id);
+        if(slot) slot.classList.remove("unlocked");
+    });
+}
+
+
 function generatePseudonymFromEmail(email) {
-    const adjectives = [
-        "Iron", "Crimson", "Silent", "Golden", "Shadow", "Blazing",
-        "Stone", "Storm", "Obsidian", "Frost", "Ember", "Steel"
+    const titles = [
+        "Axiom", "Ledger", "Vector", "Meridian", "Signal", "Cipher",
+        "Frontier", "Equity", "Oracle", "Index", "Summit", "Nexus",
+        "Vault", "Prism", "Civic", "Astral", "Beacon", "Horizon"
     ];
 
-    const nouns = [
-        "Anvil", "Hammer", "Falcon", "Forge", "Sentinel", "Warden",
-        "Cipher", "Titan", "Raven", "Vanguard", "Crown", "Engine"
+    const roles = [
+        "Appraiser", "Cartographer", "Arbiter", "Custodian", "Warden", "Registrar",
+        "Archivist", "Surveyor", "Magistrate", "Keeper", "Analyst", "Mediator",
+        "Steward", "Scribe", "Sentinel", "Marshal", "Seeker", "Auditor"
     ];
 
     let hash = 0;
@@ -1628,11 +1820,11 @@ function generatePseudonymFromEmail(email) {
 
     const positiveHash = Math.abs(hash);
 
-    const adj = adjectives[positiveHash % adjectives.length];
-    const noun = nouns[Math.floor(positiveHash / adjectives.length) % nouns.length];
+    const title = titles[positiveHash % titles.length];
+    const role = roles[Math.floor(positiveHash / titles.length) % roles.length];
     const number = 1000 + (positiveHash % 9000);
 
-    return `${adj}${noun}${number}`;
+    return `${title}${role}${number}`;
 }
 
 // =============================================
@@ -1706,6 +1898,30 @@ function getTypeBucket(tag, type){
         };
     }
     return tagBucket.byType[key];
+}
+
+function getSkillKey(question){
+    return question?.primarySkill || question?.repairSkill || inferObjective(question) || null;
+}
+
+function getSkillBucket(question){
+    const skill = getSkillKey(question);
+    if(!skill) return null;
+
+    if(!masteryState.bySkill){
+        masteryState.bySkill = {};
+    }
+
+    if(!masteryState.bySkill[skill]){
+        masteryState.bySkill[skill] = {
+            attempts: 0,
+            correct: 0,
+            avgTime: 0,
+            byType: {}
+        };
+    }
+
+    return masteryState.bySkill[skill];
 }
 
 function inferObjective(question){
@@ -1806,10 +2022,12 @@ function recordAdaptiveAttempt(question, isCorrect, responseTime){
     const tagBucket = getTagBucket(question.tag);
     const typeBucket = getTypeBucket(question.tag, question.type);
     const objectiveBucket = getObjectiveBucket(question);
+    const skillBucket = getSkillBucket(question);
 
     updateBucket(tagBucket, isCorrect, responseTime);
     updateBucket(typeBucket, isCorrect, responseTime);
     updateBucket(objectiveBucket, isCorrect, responseTime);
+    updateBucket(skillBucket, isCorrect, responseTime);
 
     masteryState.recent.push({
         correct: !!isCorrect,
@@ -1947,12 +2165,15 @@ function planRemediation(question, responseTime){
     const carelessMiss = responseTime < expected * 0.55 && (objectiveAccuracy === null || objectiveAccuracy >= 0.45);
     const repeatedObjectiveMiss = objectiveAttempts >= 2 && objectiveAccuracy !== null && objectiveAccuracy < 0.6;
     const slowStruggle = responseTime > expected * 1.2;
+    const skill = getSkillKey(question);
 
     return {
         active: true,
         stage: carelessMiss ? "bridge" : "repair",
         tag: question.tag,
         objective: inferObjective(question),
+        skill: skill,
+        commonError: question.commonError || null,
         sourceType: question.type || "default",
         returnRoom: room,
         originQuestionId: question.id || null,
@@ -1966,6 +2187,26 @@ function getRemediationStageLabel(stage){
     if(stage === "repair") return "Concept Repair";
     if(stage === "bridge") return "Bridge Repair";
     return "Recovery Retest";
+}
+
+function getRecoveryLine(stage){
+  if(stage === "repair"){
+    return "Recovery chamber opened. The Vault is isolating the broken strategy.";
+  }
+
+  if(stage === "bridge"){
+    return "Bridge lock active. Apply the idea before the Vault lets you advance.";
+  }
+
+  if(stage === "retest"){
+    return "Retest gate opened. Same weakness. Less cover.";
+  }
+
+  if(stage === "miss"){
+    return "The structure is still cracked. Repair the concept before moving on.";
+  }
+
+  return "Recovery confirmed. Return to the Vault.";
 }
 
 function getQuestionsMatchingNeed(pool, objectiveKey, tag, excludeIds = []){
@@ -2248,6 +2489,27 @@ if (savedEmail && document.getElementById("emailInput")) {
     document.getElementById("emailInput").value = savedEmail;
 }
 
+function hasSavedGame(){
+    return !!localStorage.getItem(SAVE_KEY);
+}
+
+function showContinueButtonIfSaved(){
+    const btn = document.getElementById("continueRunBtn");
+    if(!btn) return;
+    btn.style.display = hasSavedGame() ? "block" : "none";
+}
+
+function startNewRun(){
+    clearSavedGame();
+    startGame(false);
+}
+
+function continueSavedRun(){
+    startGame(true);
+}
+
+showContinueButtonIfSaved();
+
 // =============================================
 // GAME INITIALIZATION — PARTIAL CUSTOMIZATION
 // =============================================
@@ -2277,7 +2539,7 @@ if (savedEmail && document.getElementById("emailInput")) {
 // - progression bugs
 // =============================================
 
-function startGame() {
+function startGame(shouldResume = false) {
     let inputEmail = document.getElementById("emailInput").value.trim().toLowerCase();
 
     if (!inputEmail) {
@@ -2292,25 +2554,33 @@ function startGame() {
         return;
     }
 
-studentEmail = inputEmail;
-username = generatePseudonymFromEmail(studentEmail);
+    studentEmail = inputEmail;
+    username = generatePseudonymFromEmail(studentEmail);
 
-runID = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const hasSavedRun = shouldResume ? loadSavedGame() : false;
 
-localStorage.setItem("gauntletEmail", studentEmail);
-localStorage.setItem("gauntletPseudonym", username);
-localStorage.setItem("gauntletRunID", runID);
+    if(!hasSavedRun){
+        bossCheckpoint = 1;
+        runID = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    }
+
+    localStorage.setItem("gauntletEmail", studentEmail);
+    localStorage.setItem("gauntletUser", username);
+    localStorage.setItem("gauntletPseudonym", username);
+    localStorage.setItem("gauntletRunID", runID);
+    localStorage.setItem(REALM_STARTED_KEY, "true");
+    localStorage.setItem(REALM_STATUS_KEY, "contested");
+    localStorage.setItem(REALM_ROOM_KEY, String(room || 1));
 
     sendGameData({
         runID: runID,
 		game: "The Strategic Vault",
-        event: "start",
+        event: hasSavedRun ? "resume" : "start",
         user: username,
         email: studentEmail
     });
 
-    bossCheckpoint = 1;
-
+    if(!hasSavedRun){
     room = 1;
     bossHealth = 3;
     streak = 0;
@@ -2320,7 +2590,7 @@ localStorage.setItem("gauntletRunID", runID);
     bossPool = [];
     calcBag = [];
     conceptMemory = {};
-    masteryState = { byTag: {}, byObjective: {}, recent: [] };
+    masteryState = { byTag: {}, byObjective: {}, bySkill: {}, recent: [] };
     tagHistory = [];
     lastTypes = [];
     adaptiveMode = "support";
@@ -2343,6 +2613,11 @@ localStorage.setItem("gauntletRunID", runID);
         easy: [], medium: [], hard: [], elite: [],
         easyBoss: [], mediumBoss: [], finalBoss: []
     };
+
+    localStorage.removeItem(REALM_COMPLETE_KEY);
+    localStorage.setItem(REALM_STATUS_KEY, "contested");
+    localStorage.setItem(REALM_ROOM_KEY, "1");
+    }
 
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("gameBox").style.display = "block";
@@ -2854,6 +3129,10 @@ function shuffleOptions(question){
         hint: question.hint,
         tag: question.tag,
         type: question.type,
+        objective: question.objective,
+        primarySkill: question.primarySkill,
+        repairSkill: question.repairSkill,
+        commonError: question.commonError,
 		image: question.image
     };
 
@@ -3259,6 +3538,7 @@ function updateMazeTrack() {
         // Determine the icon and state
         if (i < room) {
             box.innerText = "🟪";
+            box.classList.add("completed");
             box.style.opacity = "0.6";
         } else if (i === room) {
             box.classList.add("active"); // Trigger the gold pulse
@@ -3519,7 +3799,7 @@ function loadQuestion() {
     }
     else if(room === 20){
     bossImage = "underwriter.png";
-    bossClass = "enginerGlow";
+    bossClass = "underwriterGlow";
     }
     else{
     bossImage = "strategist.png";
@@ -3818,7 +4098,7 @@ recordAdaptiveAttempt(currentQuestion, isCorrect, responseTime);
         game: "The Strategic Vault",
         event: "question",
         user: username || "anonymous",
-		email: studentEmail,
+		email: studentEmail || "",
         room: room,
         questionId: currentQuestion.id || 0,
         correct: isCorrect ? 1 : 0,
@@ -3879,7 +4159,7 @@ if(remediationState.active){
                 currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
 
             msgElement.innerHTML =
-                `<span class='fade-out-text'>Stability returns. Now prove it under pressure.</span>`;
+                `<span class='fade-out-text'>${getRecoveryLine("bridge")}</span>`;
 
             displayQuestion();
             return;
@@ -3904,7 +4184,7 @@ if(remediationState.active){
                 currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
 
             msgElement.innerHTML =
-                `<span class='fade-out-text'>Concept recovered. One final proof.</span>`;
+                `<span class='fade-out-text'>${getRecoveryLine("retest")}</span>`;
 
             displayQuestion();
             return;
@@ -3917,9 +4197,10 @@ if(remediationState.active){
     adaptiveMode = "support";
 
     msgElement.innerHTML =
-        `<span class='fade-out-text'>Recovery confirmed. Return to the vault.</span>`;
+        `<span class='fade-out-text'>${getRecoveryLine("complete")}</span>`;
 
     room = returnRoom;
+    saveGameState();
     localStorage.setItem("gauntletRoom", room);
 
     setTimeout(loadQuestion, TIMING.normal);
@@ -3952,7 +4233,7 @@ if(remediationState.active){
 			game: "The Strategic Vault",
             event: "boss_defeated",
             user: username,
-			email: studentEmail,
+			email: studentEmail || "",
             room: room
          });
            
@@ -3978,6 +4259,7 @@ if(remediationState.active){
         }
 
 // ... (Inside the Boss Victory check)
+        saveGameState();
         showKnowledgeRoom(room);
         bossHealth = 3;
         bossPool = []; // Clear the pool so the next boss is fresh
@@ -3989,6 +4271,7 @@ if(remediationState.active){
     // AND it wasn't a Boss Room (or a Detour).
    msgElement.innerHTML = "";
    room++;
+   saveGameState();
    localStorage.setItem("gauntletRoom", room);
    showHallwayTransition(currentQuestion.feedback);
    return;
@@ -4039,7 +4322,7 @@ if(remediationState.active){
             currentQuestion.hint ? "💡 Hint: " + currentQuestion.hint : "";
 
         msgElement.innerHTML =
-            `<span class='fade-out-text'>Still cracked. Stay in repair until the concept holds.</span>`;
+            `<span class='fade-out-text'>${getRecoveryLine("miss")}</span>`;
 
         displayQuestion();
         return;
@@ -4069,7 +4352,7 @@ if (!remediationState.active && currentQuestion.tag && shouldTriggerDetour(curre
             ? "You rushed the vault. Slow down and prove the logic."
             : remediationState.slowStruggle
                 ? "The vault resists. Rebuild the concept before advancing."
-                : "The structure cracked. Repair the weakness before moving on.";
+                : getRecoveryLine(remediationState.stage);
 
         msgElement.innerHTML =
             `<span class='fade-out-text'>${remediationMessage}</span>`;
@@ -4091,6 +4374,7 @@ if (!remediationState.active && currentQuestion.tag && shouldTriggerDetour(curre
 // Never fall back behind the most recently cleared boss gate
 	room = Math.max(bossCheckpoint, newRoom);
 
+    saveGameState();
     localStorage.setItem("gauntletRoom", room);
 
     alert(`Incorrect! You trip in the darkness and tumble back to Room ${room}.`);
@@ -4375,6 +4659,7 @@ document.getElementById("continueBtn").onclick = () => {
         handleVictory();
     } else {
         room++;
+        saveGameState();
         localStorage.setItem("gauntletRoom", room);
         loadQuestion();
     }
@@ -4458,8 +4743,14 @@ function generateCode(name, acc, streak, total){
 // This is a PRESENTATION layer, not a logic layer.
 // =============================================     
 function handleVictory() {
+    localStorage.setItem(REALM_STARTED_KEY, "true");
+    localStorage.setItem(REALM_COMPLETE_KEY, "true");
+    localStorage.setItem(REALM_STATUS_KEY, "restored");
+    localStorage.setItem(REALM_ROOM_KEY, "30");
+    clearSavedGame();
     bgMusic.pause();
     bossMusic.pause();
+    finalBossMusic.pause();
     if (typeof sfxVictory !== 'undefined') {
         sfxVictory.currentTime = 0;
         sfxVictory.play();
@@ -4474,7 +4765,7 @@ sendGameData({
 	runID: runID,
 	event: "complete",
 	user: username,
-	email: studentEmail,
+	email: studentEmail || "",
     room: room,
     questionId: 0,
     correct: 1,
@@ -4703,12 +4994,12 @@ function sendGameData(data) {
     timestamp: new Date().toISOString(),
     runID: data.runID || localStorage.getItem("gauntletRunID") || "",
     token: data.token || "",
-    version: "SV-full-engine-ms-telemetry-v1",
+    version: "SV-ms-telemetry-v3.5",
     userAgent: navigator.userAgent || "",
     game: data.game || "The Strategic Vault",
     event: data.event || "",
     user: data.user || username || "anonymous",
-	email: studentEmail,
+	email: studentEmail || "",
     room: Number(data.room ?? 0),
     questionId: Number(data.questionId ?? data.question ?? 0),
     correct: Number(data.correct ?? 0),
@@ -4752,6 +5043,7 @@ function sendGameData(data) {
 </script>
 </body>
 </html>
+
 
 
 
